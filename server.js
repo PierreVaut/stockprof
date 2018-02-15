@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
 const http = require("http");
 const path = require('path');
@@ -12,6 +13,7 @@ const util = require('util');
 const cookieHandler = require('./custom_modules/cookie-handler');
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors({ origin: 'null', credentials: true }));
 app.use(express.static(__dirname));
