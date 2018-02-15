@@ -52,12 +52,12 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
-#Session files
-session/*
-
 # Yarn Integrity file
 .yarn-integrity
 
 # dotenv environment variables file
 .env
 
+# keeping the session folder, but not its content
+!session/.gitkeep
+session/*
