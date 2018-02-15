@@ -10,6 +10,8 @@ var uri = require('./connect/connect.js');
 var assert = require('assert');
 var util = require('util');
 
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors({ origin: 'null', credentials: true }));
@@ -24,13 +26,13 @@ app.use(function(req, res, next) {
 });
 app.set('port', (process.env.PORT || 5000));
 
-
 mongoose.connect(uri);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', ()=> {
   console.log("we're connected!");
 });
+
 
 
 const accountSchema = mongoose.Schema({

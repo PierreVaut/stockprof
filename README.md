@@ -1,18 +1,7 @@
-## jobs-API
+### StockProf API
 
-Back-end: Node, Express, Mongo DB (Atlas)
+#Features
+* Create userAccount =>  '/newAccount'
 
-Front-end: HTML, CSS
-
-Deployed on:  [Heroku](https://jobsapi-carb11.herokuapp.com/)
-
-
-**19/01/2018**
-- création de fiches aléatoires
-- filtrage combiné OK
-
-**TO DO:**
-- Filtrage à choix multiple combiné
-- CRUD: édition des fiches de poste
-- ANALYTICS: calcul de moyennes (salaires moyens, ventilation par catégorie, par compagnie)
-- DATA VISUALIZATION: évolution dans le temps des indicateurs
+#Misc
+* Do not forget to SET env variables !
