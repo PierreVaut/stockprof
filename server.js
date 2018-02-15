@@ -1,16 +1,15 @@
 
-var express = require('express');
-var app = express();
-var cors = require('cors');
-var bodyParser = require('body-parser');
-var http = require("http");
-var path = require('path');
-var mongoose = require('mongoose');
-var uri = require('./connect/connect.js');
-var assert = require('assert');
-var util = require('util');
-
-
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const http = require("http");
+const path = require('path');
+const mongoose = require('mongoose');
+const uri = require('./connect/connect.js');
+const assert = require('assert');
+const util = require('util');
+const cookieHandler = require('./custom_modules/cookie-handler');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -20,11 +19,13 @@ app.use(express.static(__dirname));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Credentials", true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json");
     next();
 });
 app.set('port', (process.env.PORT || 5000));
+
+
 
 mongoose.connect(uri);
 var db = mongoose.connection;
@@ -43,6 +44,7 @@ const accountSchema = mongoose.Schema({
       },
     name: String,
     email: String,
+    password: String,
     friends : [{type: mongoose.Schema.Types.ObjectId, default: mongoose.Types.ObjectId('5a857519c4bb2a0e3043ef3a') }],
     created: { type: Date, default: Date.now },
     cashAvailable: {type: Number, default: 5000 },
@@ -101,18 +103,31 @@ const randomize = () => Math.floor(Math.random() * 999942 );
 let newAccountID = randomize();
 if( 1 === 2 ){ /*insert check for duplicate ?*/ }
 
+app.get('/register', (req, res)=>{
+    res.render('register.ejs')
+})
 
+app.get('/login', (req, res)=>{
+    res.render('login.ejs')
+})
 
-app.get('/newAccount', (req, res)=>{
+app.post('/newAccount', (req, res)=>{
     let newAccount = new Account();
+    console.log('POST on newAccount: ', req.body)
+    newAccount.name = req.body.name;
+    newAccount.email = req.body.email;
+    newAccount.password = req.body.password;
     newAccount.save( console.log('New account saved'));
     newAccount.order( 'buy',  'some stockID', 135 );
     newAccount.order( 'sell', 'some other stockID', 175 );
     newAccount.order( 'status' );
-    
-
     res.send(  JSON.stringify(newAccount)  );
 });
+
+app.get('/', (req, res)=>{
+    cookieHandler(req, res);
+    res.render('index.ejs');
+})
 
 
 
