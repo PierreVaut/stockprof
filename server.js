@@ -1,39 +1,34 @@
 
 const express = require('express');
 const app = express();
-const cors = require('cors');
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
 const http = require("http");
 const path = require('path');
 const mongoose = require('mongoose');
-const uri = require('./connect/connect.js');
 const assert = require('assert');
 const util = require('util');
 const cookieHandler = require('./custom_modules/cookie-handler');
 
+const randomize = () => Math.floor(Math.random() * 999942 );
+
+// ES6 imports enabled by Babel
+import { uri }    from './config/connect';
+import { domain } from './config/domain';
+import { session, sessionHandler } from './custom_modules/session-handler';
+
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors({ origin: 'null', credentials: true }));
 app.use(express.static(__dirname));
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json");
-    next();
-});
 app.set('port', (process.env.PORT || 5000));
-
-
 
 mongoose.connect(uri);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', ()=> {
-  console.log("we're connected!");
+    console.log("we're connected!");
 });
 
 
@@ -43,7 +38,7 @@ const accountSchema = mongoose.Schema({
         type    : mongoose.Schema.Types.ObjectId,
         default : mongoose.Types.ObjectId,
         index   : { unique: true }
-      },
+    },
     name: String,
     email: String,
     password: String,
@@ -99,40 +94,64 @@ accountSchema.methods.order = function( operation, stockID, qty ){
     }
 }
 
-const Account = mongoose.model('Account', accountSchema)
+// ######### Mongoose Model = ACCOUNT ##################
+const Account = mongoose.model('Account', accountSchema);
 
-const randomize = () => Math.floor(Math.random() * 999942 );
+
 let newAccountID = randomize();
 if( 1 === 2 ){ /*insert check for duplicate ?*/ }
 
 app.get('/register', (req, res)=>{
-    res.render('register.ejs')
+    res.render('register.ejs', { msg: null })
+})
+
+app.post('/register', (req, res)=>{
+    let newName = req.body.name;
+    let newEmail= req.body.email;
+    let newPassword = req.body.password;
+    
+    if( !newName || !newEmail || !newPassword ){
+        let error = 'Please fill in all fields';
+        console.log('REGISTER error: ', error)  ;
+        res.render('register.ejs', {msg: error});
+    }
+
+    let query = Account.findOne({email: newEmail}, (error, result)=>{
+        if(result){
+            let error = 'Email already used';
+            console.log('REGISTER error: ', error)  
+            res.render('register.ejs', {msg: error})          
+        }
+        else{
+            let newAccount = new Account();
+            console.log('REGISTER newAccount: ', req.body);
+            newAccount.name = newName;
+            newAccount.email = newEmail;
+            newAccount.password = newPassword;
+            newAccount.save( console.log('New account saved'));
+            session.visit( req.cookies[domain] , newAccount.accountID, () => res.redirect(303, '/') );
+            
+        }
+    } )
 })
 
 app.get('/login', (req, res)=>{
     res.render('login.ejs')
 })
 
-app.post('/newAccount', (req, res)=>{
-    let newAccount = new Account();
-    console.log('POST on newAccount: ', req.body)
-    newAccount.name = req.body.name;
-    newAccount.email = req.body.email;
-    newAccount.password = req.body.password;
-    newAccount.save( console.log('New account saved'));
-    newAccount.order( 'buy',  'some stockID', 135 );
-    newAccount.order( 'sell', 'some other stockID', 175 );
-    newAccount.order( 'status' );
-    res.send(  JSON.stringify(newAccount)  );
-});
-
-app.get('/', (req, res)=>{
-    cookieHandler(req, res);
-    res.render('index.ejs');
+app.post('login', (req, res)=>{
+    session.visit(cook)
 })
 
-
-
+app.get('/', (req, res)=>{
+    let cookieID = cookieHandler( req, res );
+    session.visit(cookieID);
+    session.status(cookie, (data)=>{
+        // if login... (session)
+        // get Account.name
+        res.render('index.ejs', { user: 'guste' } );
+    })
+});
 
 app.listen(app.get('port'), () => {
 	console.log('We are live on port: '+ app.get('port'));

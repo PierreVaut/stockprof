@@ -1,0 +1,53 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+
+#header{
+    height: 60px;
+    border-bottom: 1px solid #000;
+    background: DarkGrey ;
+
+}
+
+
+
+#loginDiv{
+    border: 1px solid green;
+    margin: 10px;
+    height: 40px;
+    width: 25%;
+    float: right;
+    text-align: center;
+}
+
+
+.errorMsg{
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+
+    animation: fade 3s 1;
+    -webkit-animation: fade 0.5s 1;
+    animation-fill-mode: forwards;
+
+    animation-delay:6s;
+    -webkit-animation-delay:1s; /* Safari and Chrome */
+    -webkit-animation-fill-mode: forwards;
+
+}
+
+@keyframes  fade{
+    from {opacity :1;}
+    to {opacity :0;}
+}
+
+@-webkit-keyframes  fade{
+    from {opacity :1;}
+    to {opacity :0;}
+}

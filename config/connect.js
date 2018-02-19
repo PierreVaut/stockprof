@@ -12,7 +12,7 @@ else{
 
 
 
-module.exports = 
+export const uri = 
     "mongodb://"
     + login
     + ":" 

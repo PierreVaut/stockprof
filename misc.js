@@ -1,31 +1,49 @@
-// will return an object containing quantity detained, buyPrice, buyDate, log  (or undefined)
-accountSchema.methods.getStock = stockID => {
-    
-    // we try to match StockID to a stock code
-    let code = stocksNameCode.toLowerCase();
-    if(stocksNameCode.stockID){
-        console.log("getStock(): converting " + stockID + " to  code: " + code);
-        code = stocksNameCode.stockID;
-    }
+register: (cookieID, cb )=>    {
+    let sessionPath = process.cwd() + "/session/" + cookieID;
+    fs.readFile( sessionPath , (err, data)=> {
 
-    // check if the stock is already detained
-    let result = this.position.map((el) => {
-        if(el.stockCode === code){
-            return this.position[indexOf(el)]
+        // Session file does not exist =  we create it
+        if(err){
+            let newSession = {};
+            let login = false;
+            if(login){
+                newSession = {
+                    'visitCount': 1,
+                    'visitLast': (new Date() ).getTime(),
+                    'login': 'Guest',
+                    'isLogged': false
+                }
+            } else {
+                newSession = {
+                    'visitCount': 1,
+                    'visitLast': (new Date() ).getTime(),
+                    'login': login,
+                    'isLogged': true
+                }
+            }
+
+            fs.writeFile(newSessionPath, JSON.stringify(newSession), (err) =>{
+                if(err){ console.log(err)  }
+                console.log("newSession file created: ", cookieID);
+                if(cb){
+                    cb(newSession);
+                } 
+            })
         }
-    if(!result){
-        console.log('GetStock():  code unknown');
-        return undefined
-    }
-    console.log('GetStock:  code matching stock ' + result.stockName );
-    return result
+
+        // Session file already exists =  we update it
+        else{
+            let session = JSON.parse(data);
+            session.visitCount++;
+            session.visitLast = (new Date() ).getTime();
+
+            fs.writeFile(sessionPath, JSON.stringify(session), (err) =>{
+                if(err){ console.log(err)  }
+                console.log("visitCount++ : ", cookieID);
+                if(cb){
+                    cb(session);
+                } 
+            })
+        }
     })
-};
-
-
-accountSchema.methods.updatePosition = (accountID) => {
-
 }
-
-
-
