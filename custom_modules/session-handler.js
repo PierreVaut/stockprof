@@ -24,7 +24,10 @@ export const session = {
                 fs.writeFile(sessionPath, JSON.stringify(newSession), (err) =>{
                     if(err){ console.log(err)  }
                     console.log("newSession file created.");
-                    cb(newSession)
+                    if(cb){
+                        cb(newSession)
+                    }
+   
                 });
                 
             }
@@ -40,7 +43,10 @@ export const session = {
                 fs.writeFile(sessionPath, JSON.stringify(session), (err) =>{
                     if(err){ console.log(err)  }
                     console.log("visitCount++ : ", cookieID);
-                    cb(session);
+                    if(cb){
+                        cb(session);
+                    }
+
                 });
                 
             }
@@ -52,8 +58,10 @@ export const session = {
         let sessionPath = process.cwd() + "/session/" + cookieID;
         fs.readFile( sessionPath, (err, data)=> {
             if(err){console.log('Error at session.status: ', err)}
-            else{
+            if(cb){
                 cb(data);
+            } else{
+                console.log("Warning at session.status - no CB provided")
             }
         })
     }

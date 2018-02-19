@@ -146,7 +146,7 @@ app.post('login', (req, res)=>{
 app.get('/', (req, res)=>{
     let cookieID = cookieHandler( req, res );
     session.visit(cookieID);
-    session.status(cookie, (data)=>{
+    session.status(cookieID, (data)=>{
         // if login... (session)
         // get Account.name
         res.render('index.ejs', { user: 'guste' } );
