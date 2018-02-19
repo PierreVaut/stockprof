@@ -4,20 +4,22 @@ const fs = require("fs");
 export const session = {
 
     // handle visits by creating or updating session file
-    visit: function(cookieID, login, cb){
+    visit: function(cookieID, cb, accountID){
         let sessionPath = process.cwd() + "/session/" + cookieID;
         fs.readFile( sessionPath , (err, sessionData)=> {
             if(err){
                 // create default session file
+                let defaultLogin = 'Guest-' + cookieID;
                 let newSession =  {
                     'visitCount': 1,
                     'visitLast': (new Date() ).getTime(),
-                    'login': 'Guest',
+                    '_id': undefined,
                     'isLogged': false
                 }
 
-                if(login && login !== '' ){
-                    newSession['login']= login;
+                // For logged user
+                if(accountID && accountID !== '' ){
+                    newSession['_id']= accountID;
                     newSession.isLogged= true;
                 }
             
@@ -36,10 +38,12 @@ export const session = {
                 let session = JSON.parse(sessionData);
                 session.visitCount++;
                 session.visitLast = (new Date() ).getTime();
-                if(login){
-                    session['login']= login;
+
+                // For logged user
+                if(accountID && accountID !== '' ){
+                    session['_id']= accountID;
                     session.isLogged= true;
-                }       
+                } 
                 fs.writeFile(sessionPath, JSON.stringify(session), (err) =>{
                     if(err){ console.log(err)  }
                     console.log("visitCount++ : ", cookieID);

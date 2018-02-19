@@ -8,13 +8,13 @@ const path = require('path');
 const mongoose = require('mongoose');
 const assert = require('assert');
 const util = require('util');
-const cookieHandler = require('./custom_modules/cookie-handler');
 
 const randomize = () => Math.floor(Math.random() * 999942 );
 
 // ES6 imports enabled by Babel
 import { uri }    from './config/connect';
 import { domain } from './config/domain';
+import { cookie } from './custom_modules/cookie-handler';
 import { session, sessionHandler } from './custom_modules/session-handler';
 
 
@@ -34,11 +34,6 @@ db.once('open', ()=> {
 
 
 const accountSchema = mongoose.Schema({
-    accountID: {
-        type    : mongoose.Schema.Types.ObjectId,
-        default : mongoose.Types.ObjectId,
-        index   : { unique: true }
-    },
     name: String,
     email: String,
     password: String,
@@ -101,7 +96,11 @@ const Account = mongoose.model('Account', accountSchema);
 let newAccountID = randomize();
 if( 1 === 2 ){ /*insert check for duplicate ?*/ }
 
+
+
 app.get('/register', (req, res)=>{
+    let cookieID = cookie.handle( req, res );
+    session.visit(cookieID);
     res.render('register.ejs', { msg: null })
 })
 
@@ -128,28 +127,33 @@ app.post('/register', (req, res)=>{
             newAccount.name = newName;
             newAccount.email = newEmail;
             newAccount.password = newPassword;
-            newAccount.save( console.log('New account saved'));
-            session.visit( req.cookies[domain] , newAccount.accountID, () => res.redirect(303, '/') );
+            newAccount.save( console.log('New account saved', newAccount['_id'] ));
+            session.visit( req.cookies[domain], () => res.redirect(303, '/'), newAccount['_id'] );
             
         }
     } )
 })
 
+
+
 app.get('/login', (req, res)=>{
+    let cookieID = cookie.handle( req, res );
+    session.visit(cookieID);
     res.render('login.ejs')
 })
 
 app.post('login', (req, res)=>{
-    session.visit(cook)
+    
 })
 
 app.get('/', (req, res)=>{
-    let cookieID = cookieHandler( req, res );
-    session.visit(cookieID);
-    session.status(cookieID, (data)=>{
-        // if login... (session)
-        // get Account.name
-        res.render('index.ejs', { user: 'guste' } );
+    let cookieID = cookie.handle( req, res );
+    session.visit( cookieID, (sessionData)=> {
+        console.log('Searching for user ', sessionData['_id'] )
+        Account.findOne({ '_id' : mongoose.Types.ObjectId(sessionData['_id']) }, ( error, dbData )=> {
+            console.log(dbData);
+            res.render('index.ejs', { 'cookieID': cookieID, 'sessionData': sessionData, 'dbData': dbData } );
+        })
     })
 });
 
