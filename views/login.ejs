@@ -9,12 +9,17 @@
 </head>
 <body>
     <h1>Login</h1>
-    <form action="/" method="POST" >
+    <form action="/login" method="POST" >
         <label for="name">Email</label>
         <input type="text" name="email"><br><br>
         <label for="password">Password</label>
         <input type="text" name="password"><br><br>
         <button type="submit">Register</button>
     </form>
+    <% if(msg !== null){ %>  
+        <div class='errorMsg'>
+            <%=msg%>
+        </div>
+    <% }  %>
 </body>
 </html>

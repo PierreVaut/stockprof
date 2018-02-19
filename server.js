@@ -139,11 +139,21 @@ app.post('/register', (req, res)=>{
 app.get('/login', (req, res)=>{
     let cookieID = cookie.handle( req, res );
     session.visit(cookieID);
-    res.render('login.ejs')
+    res.render('login.ejs', { msg: null })
 })
 
-app.post('login', (req, res)=>{
-    
+app.post('/login', (req, res)=>{
+    let query = Account.findOne({'email': req.body.email}, (error, result)=>{
+        console.log('LOGIN try: pwdDB-', result.password, ' pwdREQ-', req.body.password)
+        if(result.password === req.body.password){
+            session.visit( req.cookies[domain], () => res.redirect(303, '/'), result['_id'] );
+        }
+        else{
+            let error = 'Incorrect login/password';
+            console.log('LOGIN error: ', error)  
+            res.render('login.ejs', {msg: error})        
+        }
+    })
 })
 
 app.get('/', (req, res)=>{
