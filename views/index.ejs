@@ -17,26 +17,23 @@
 
     <% if( sessionData.isLogged ){ %>  
         You are logged in (<%= sessionData.isLogged %>)
+        <br>        <br>
         <div class='data'>
                 <%= JSON.stringify(dbData) %>
-            </div>
-        <div class='main'>
-            Please
-            <a href="/login">login</a> or
-            <a href="/register">register</a>
         </div>
+        <br>
+        <a href="/disconnect">disconnect</a>
     <% }  %>
 
     <% if( !sessionData.isLogged ){ %>
         You are not logged in (<%= sessionData.isLogged %>)
-        <div class='data'>
-                <%= JSON.stringify(dbData) %>
-            </div>
+
         <div class='main'>
             Please
             <a href="/login">login</a> or
             <a href="/register">register</a>
         </div>
+
     <% }  %>
 
 
