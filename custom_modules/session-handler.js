@@ -6,22 +6,23 @@ export const session = {
     log: function(cookieID){
         let path = process.cwd() + "/session/" + cookieID;
         fs.readFile(path, (err, data)=>{
+            let session =  {}
             if (err) {
                 // create default session file
-                let session =  {
+                session =  {
                     'visitCount': 1,
                     'visitLast': (new Date() ).getTime(),
                     '_id': undefined,
                     'isLogged': false
                 }
-                console.log("[Session] new file created");  
+                console.log("[Session] New file");  
             }
             else {
                 // update existing file
-                let session = JSON.parse(sessionData);
+                session = JSON.parse(data);
                 session.visitCount++;
                 session.visitLast = (new Date() ).getTime();
-                console.log("[Session] file updated");  
+                console.log("[Session] " + cookieID + " - visitCount:", session.visitCount);  
             }
 
             fs.writeFile(path, JSON.stringify(session), (err) =>{
@@ -56,6 +57,6 @@ export const session = {
 
 
 
-export const sessionHandler = () => {}
+
 
 

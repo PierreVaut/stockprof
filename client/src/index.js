@@ -5,8 +5,13 @@ import App from './App';
 import {unregister} from './registerServiceWorker';
 // import registerServiceWorker from './registerServiceWorker';
 
+import { CookiesProvider } from 'react-cookie';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <CookiesProvider>
+        <App />
+    </ CookiesProvider>
+    , document.getElementById('root'));
 
 
 unregister();

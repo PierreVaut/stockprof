@@ -1,18 +1,23 @@
 // ES6 imports (enabled by Babel)
-import { uri } from './config/connect';
-import { domain } from './config/domain';
-import { cookie } from './custom_modules/cookie-handler';
-import { session } from './custom_modules/session-handler';
 
-// Modules
+import { domain } from './config/domain';
+
+
+import { cookie } from './custom_modules/cookie-handler';
+
+
+
+
+import { session } from './custom_modules/session-handler';
+import { db } from './custom_modules/db-handler';
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const cors = require('cors');
-const cookieID = cookie.handle();
-const userSession = session.log(cookieID);
+
+
+db.init();
 
 // Express server configuration
 app.use(bodyParser.json())
@@ -29,32 +34,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname));
 app.set('port', (process.env.PORT || 5000));
 
-// Mongoose
-mongoose.connect(uri)
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-    console.log("we're connected!")
-});
-
-const accountSchema = mongoose.Schema({
-    name: String,
-    email: String,
-    password: String,
-    friends: [{ type: mongoose.Schema.Types.ObjectId, default: mongoose.Types.ObjectId('5a857519c4bb2a0e3043ef3a') }],
-    created: { type: Date, default: Date.now },
-    cashAvailable: { type: Number, default: 5000 },
-    position: [
-        {   
-            stockCode: String,
-            detainedQty: Number,
-            buyPrice: Number,
-            buyDate: Date
-        }
-    ],
-    log: String
-});
-
 const stocksNameCode = {
     'iliad': 'ild.pa',
     'free': 'ild.pa',
@@ -64,40 +43,11 @@ const stocksNameCode = {
     'facebook': 'fb'
 }
 
-accountSchema.methods.order = function (operation, stockID, qty) {
-    // let stock = this.getStock(stockID);
-    if (operation === 'buy') {
-        // required = all parameters
-        // is the stock available ?
-        // is the cashAvailable >= budget ?
-        console.log (this.accountID, operation, stockID, qty)
-        // return
-    }
-    else if (operation === 'sell') {
-        // required = all parameters
-        // is the stock available ?
-        // is the stock detained ?
-        console.log(this.accountID, operation, stockID, qty)
-        // return
-    }
-    else if (operation === 'status') {
-        // required = only accountID & operation
-        // return position matching accountID
-        console.log(this.accountID, operation)
-        // return
-    }
-    else {
-        console.log('Error at order() : unknown operation')
-        // return
-    }
-}
-
-// ######### Mongoose Model = ACCOUNT ##################
-const Account = mongoose.model('Account', accountSchema)
 
 // Routes
 app.get('/register', (req, res) => {
 
+    userSession = session.log(cookieID);
     res.render('register.ejs', { msg: null })
 })
 
@@ -133,6 +83,8 @@ app.post('/register', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+
+    userSession = session.log(cookieID);
     res.render('login.ejs', { msg: null });
 });
 
@@ -165,32 +117,31 @@ app.get('/disconnect', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    Account.findOne({
-        '_id' : mongoose.Types.ObjectId(sessionData['_id'])
-    }, (error, dbData) => {
-        if(error){
-            console.log(error)
-        }
-        else {
-            console.log(dbData)
-            res.render('index.ejs', {'cookieID': cookieID, 'dbData': dbData})
-        }
-    })
+
+    // ############################################
+    cookie.handle(req, res);
+    // ############################################
+
+    let cookieID = req.cookies[domain];
+    console.log('[Server] cookie: ', cookieID);
+    let userSession = session.log(cookieID);
+
+    res.render('index.ejs', {
+        'cookieID': cookieID,
+        'sessionData': {
+            isLogged: false,
+            _id: 'test'},
+        'dbData': 'test'}
+    )
 });
 
 
-app.get('/api', (req, res) => {
-    session.visit(cookieID, (sessionData) => {
-        console.log('Searching for user ', sessionData['_id'])
-        Account.findOne({
-            '_id' : mongoose.Types.ObjectId(sessionData['_id'])
-        }, (error, data) => {
-            if(error){
-                res.send(error)
-            }
-            res.json(data);
-        })
-    })
+app.post('/api', (req, res) => {
+    
+    console.log('[API] cookie: ', cookieID);
+    let userSession = session.log(cookieID);
+    res.json({result: null});
+    
 })
 
 app.listen(app.get('port'), () => {
