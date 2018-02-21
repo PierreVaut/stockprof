@@ -6,8 +6,8 @@
 # testing
 /coverage
 
-# production
-/build
+# production => build passed to Heroku to avoid build delay 
+#/build
 
 # misc
 .DS_Store
