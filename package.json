@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "homepage":"https://stocks-carb11.herokuapp.com/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"babel-node server.js --presets env\" \"npm run client\" \"npm run build --prefix client\"",
