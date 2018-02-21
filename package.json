@@ -7,11 +7,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "babel-node server.js --presets env",
-    "start-build": "concurrently \"babel-node server.js --presets env\" \"npm run build --prefix client\"",
-    "dev": "concurrently \"babel-node server.js --presets env\" \"npm run client\" \"npm run build --prefix client\"",
-    "server": "nodemon server.js --exec babel-node --presets env",
+    "serve": "concurrently \"babel-node server.js --presets env\"  \"npm run client\"",
     "client": "node start-client.js",
-    "postinstall": "npm install --prefix client"
+    "postinstall": "npm install --prefix client",
+    "build":"npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",

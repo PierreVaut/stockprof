@@ -16,22 +16,27 @@ class App extends Component {
         this.state = {data: 'no data'};
     }
 
- 
-    userInfo() {
-
-        
+    getUserInfo(cb) {
         const { cookies } = this.props;
+        console.log('[React-userInfo]', cookies.get(domain));
         let params = {
-            method: 'POST',
-        }
-
-        console.log('[userInfo] Fetching data');
-        fetch('/api/', {
+            method: 'GET',
             accept: 'application/json',
             credentials: 'include'
-        }).then(
-            response => {console.log(response.json())}
-        )
+        }
+        fetch('/api/', params)
+            .then(function(data){
+                console.log('[React-userInfo] Fetch ok', data);
+                data.json().then(
+                    json => {console.log('[React-userInfo] JSON:', json)
+                    let obj = {'data': json};
+                    console.log('[React-userInfo] Obj:', obj)
+                    cb(obj);
+                    }
+                )
+            
+            })
+            .catch(function(err){console.log('Error:', err)})   
     }
 
     componentWillMount() {
@@ -40,14 +45,15 @@ class App extends Component {
             let rdm = Math.floor(Math.random() * 99999942 );
             cookies.set(domain, rdm, { path: '/' });
         }
-        console.log('[React-userInfo]', cookies.get(domain));
-        this.userInfo()
+        this.getUserInfo(  data=> this.setState(data) );
+
     }
+
 
     render() {
         return (
             <div className="App">
-                {this.state.data}
+                {this.state.data.express}
             </div>
         );
     }

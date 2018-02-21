@@ -6,7 +6,7 @@
 # testing
 /coverage
 
-# production => build passed to Heroku to avoid build delay 
+# production => build passed as-is to Heroku to avoid rebuild delay on server-side
 #/build
 
 # misc
