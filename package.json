@@ -5,11 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run heroku-server\" \"npm run client\"",
+    "start": "babel-node server.js --presets env",
+    "start2": "concurrently \"npm run heroku-server\" \"npm run client\"",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon server.js --exec babel-node --presets env",
     "client": "node start-client.js",
-    "heroku-server": "babel-node server.js --presets env"
+    
   },
   "author": "",
   "license": "ISC",
