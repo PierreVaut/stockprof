@@ -9,7 +9,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon server.js --exec babel-node --presets env",
     "client": "node start-client.js",
-    "heroku-server": "babel-node server.js"
+    "heroku-server": "babel-node server.js --presets env"
   },
   "author": "",
   "license": "ISC",
