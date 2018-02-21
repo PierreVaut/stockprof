@@ -1,6 +1,9 @@
 import { uri } from '../config/connect';
 import { accountSchema } from '../model/account';
 import { request } from 'https';
+import {domain}  from '../config/domain';
+import Cookies from 'universal-cookie';
+
 
 const mongoose = require('mongoose');
 mongoose.connect(uri);
@@ -13,7 +16,7 @@ export const db = {
         const Account = mongoose.model('Account', accountSchema)
         database.on('error', console.error.bind(console, 'connection error:'));
         database.once('open', () => {
-            console.log("we're connected!")
+            console.log("[DB-handler] we're connected !")
         });
     },
 
@@ -64,8 +67,10 @@ export const db = {
 
     },
 
-    getAccount: function(cb){
-        
+    handle: function(req, cb){
+        const cookies = new Cookies(req.headers.cookie);
+        console.log('[DB-handler] getAccount', cookies.get(domain) );
+
         cb({response: 'This is a test'})
     }
 

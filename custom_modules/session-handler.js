@@ -1,10 +1,12 @@
 const fs = require("fs");
-
+import Cookies from 'universal-cookie';
+import {domain}  from '../config/domain';
 
 export const session = {
 
-    log: function(cookieID){
-        let path = process.cwd() + "/session/" + cookieID;
+    handle: function(req, cb){
+        const cookies = new Cookies(req.headers.cookie);
+        let path = process.cwd() + "/session/" + cookies.get(domain);
         fs.readFile(path, (err, data)=>{
             let session =  {}
             if (err) {
@@ -22,19 +24,22 @@ export const session = {
                 session = JSON.parse(data);
                 session.visitCount++;
                 session.visitLast = (new Date() ).getTime();
-                console.log("[Session] " + cookieID + " - visitCount:", session.visitCount);  
+                console.log("[Session] " + cookies.get(domain) + " - visitCount:", session.visitCount);  
             }
 
             fs.writeFile(path, JSON.stringify(session), (err) =>{
                 if(err){ console.log(err)  }
+                if(cb){
+                    cb(session);
+                }
             });
         })
     },
 
     register: function(){},
 
-    disconnect: function(cookieID, cb){
-        let sessionPath = process.cwd() + "/session/" + cookieID;
+    disconnect: function(req, cb){
+        let sessionPath = process.cwd() + "/session/" + cookies.get(domain);
         fs.readFile( sessionPath, ( err, sessionData )=> {
             if(err){console.log('Error at session.status: ', err)
             }
@@ -44,7 +49,7 @@ export const session = {
                 session.isLogged = false;
                 fs.writeFile(sessionPath, JSON.stringify(session), (err) =>{
                     if(err){ console.log(err)  }
-                    console.log("visitCount++ : ", cookieID);
+                    console.log("visitCount++ : ", cookies.get(domain));
                     if(cb){
                         cb(session);
                     }
