@@ -3,5 +3,8 @@
 #Features
 * Create userAccount =>  '/newAccount'
 
-#Misc
+# Local
 * Do not forget to SET env variables !
+
+# Deployment
+* See (https://stocks-carb11.herokuapp.com/)[https://stocks-carb11.herokuapp.com/]

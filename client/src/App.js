@@ -53,7 +53,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                {this.state.data.express}
+                {this.state.data.express?this.state.data.express+' and From React!':'Fetch error...'} 
             </div>
         );
     }
