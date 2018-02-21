@@ -6,8 +6,8 @@
   "homepage":"https://stocks-carb11.herokuapp.com/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"babel-node server.js --presets env\" \"npm run client\" \"npm run build --prefix client\"",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "concurrently \"babel-node server.js --presets env\" \"npm run build --prefix client\"",
+    "dev": "concurrently \"babel-node server.js --presets env\" \"npm run client\" \"npm run build --prefix client\"",
     "server": "nodemon server.js --exec babel-node --presets env",
     "client": "node start-client.js",
     "postinstall": "npm install --prefix client"
