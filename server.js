@@ -29,20 +29,6 @@ app.get('/disconnect', (req, res) => {
     res.redirect(303, '/');
 });
 
-app.get('/', (req, res) => {
-    cookie.handle(req, res);
-    let cookieID = req.cookies[domain];
-    console.log('[Server] cookie: ', cookieID);
-    let userSession = session.log(cookieID);
-
-    res.render('index.ejs', {
-        'cookieID': cookieID,
-        'sessionData': {
-            isLogged: false,
-            _id: 'test'},
-        'dbData': 'test'}
-    )
-});
 
 
 app.get('/api/', (req, res) => {
