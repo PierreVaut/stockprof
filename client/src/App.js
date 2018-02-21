@@ -25,6 +25,7 @@ class App extends Component {
             credentials: 'include'
         }
         fetch('/api/', params)
+            .catch(function(err){console.log('Error:', err)})   
             .then(function(data){
                 console.log('[React-userInfo] Fetch ok', data);
                 data.json().then(
@@ -36,7 +37,7 @@ class App extends Component {
                 )
             
             })
-            .catch(function(err){console.log('Error:', err)})   
+            
     }
 
     componentWillMount() {
@@ -53,7 +54,8 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                {(this.state.data.express === 'Hello From Express')?this.state.data.express+' and From React!':'Fetch error...'} 
+                Hello!<br/>
+                {JSON.stringify(this.state.data)} 
             </div>
         );
     }

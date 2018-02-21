@@ -9,6 +9,7 @@ const database = mongoose.connection;
 export const db = {
 
     init: function(){
+        console.log('[DB-handler] Init')
         const Account = mongoose.model('Account', accountSchema)
         database.on('error', console.error.bind(console, 'connection error:'));
         database.once('open', () => {
@@ -63,8 +64,9 @@ export const db = {
 
     },
 
-    getAccount: function(id){
-        // retourne le fichier de session pour un 
+    getAccount: function(cb){
+        
+        cb({response: 'This is a test'})
     }
 
 }
