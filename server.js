@@ -3,9 +3,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 const cors = require('cors');
-app.use(bodyParser.json())
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: true}));
+
 app.use(express.static(__dirname));
 app.use(cors({ origin: 'null', credentials: true }));
 app.use(function(req, res, next) {
