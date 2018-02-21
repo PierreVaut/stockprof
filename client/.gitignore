@@ -6,8 +6,8 @@
 # testing
 /coverage
 
-# production => build passed as-is to Heroku to avoid rebuild delay on server-side
-#/build
+# production :  un-comment or comment to pass the bundle to Heroku (to avoid rebuild delay on server-side)
+/build
 
 # misc
 .DS_Store
