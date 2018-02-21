@@ -10,7 +10,7 @@ import { CookiesProvider } from 'react-cookie';
 ReactDOM.render(
     <CookiesProvider>
         <App />
-    </ CookiesProvider>
+    </CookiesProvider>
     , document.getElementById('root'));
 
 

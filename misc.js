@@ -1,49 +1,65 @@
-register: (cookieID, cb )=>    {
-    let sessionPath = process.cwd() + "/session/" + cookieID;
-    fs.readFile( sessionPath , (err, data)=> {
+app.get('/register', (req, res) => {
 
-        // Session file does not exist =  we create it
-        if(err){
-            let newSession = {};
-            let login = false;
-            if(login){
-                newSession = {
-                    'visitCount': 1,
-                    'visitLast': (new Date() ).getTime(),
-                    'login': 'Guest',
-                    'isLogged': false
-                }
-            } else {
-                newSession = {
-                    'visitCount': 1,
-                    'visitLast': (new Date() ).getTime(),
-                    'login': login,
-                    'isLogged': true
-                }
-            }
+    userSession = session.log(cookieID);
+    res.render('register.ejs', { msg: null })
+})
 
-            fs.writeFile(newSessionPath, JSON.stringify(newSession), (err) =>{
-                if(err){ console.log(err)  }
-                console.log("newSession file created: ", cookieID);
-                if(cb){
-                    cb(newSession);
-                } 
-            })
+app.post('/register', (req, res) => {
+    let newName = req.body.name;
+    let newEmail = req.body.email;
+    let newPassword = req.body.password;
+
+    if (!newName || !newEmail || !newPassword) {
+        let error = 'Please fill in all fields'
+        console.log('REGISTER error:', error)
+            res.render('register.ejs', {msg: error})       
+    }
+            
+    Account.findOne({email: newEmail}, (error, result) => {
+        if (error){
+            console.log(error)}
+        if (result) {
+            let errorMsg = 'Email already used';
+            console.log('REGISTER error: ', errorMsg)  ;
+            res.render('register.ejs', {msg: errorMsg});
         }
-
-        // Session file already exists =  we update it
-        else{
-            let session = JSON.parse(data);
-            session.visitCount++;
-            session.visitLast = (new Date() ).getTime();
-
-            fs.writeFile(sessionPath, JSON.stringify(session), (err) =>{
-                if(err){ console.log(err)  }
-                console.log("visitCount++ : ", cookieID);
-                if(cb){
-                    cb(session);
-                } 
-            })
+        else {
+            let newAccount = new Account();
+            console.log('REGISTER newAccount: ', req.body);
+            newAccount.name = newName;
+            newAccount.email = newEmail;
+            newAccount.password = newPassword;
+            newAccount.save(console.log('New account saved', newAccount['_id']));
+            session.visit(req.cookies[domain], () => res.redirect(303, '/'), newAccount['_id']);
         }
     })
-}
+});
+
+app.get('/login', (req, res) => {
+
+    userSession = session.log(cookieID);
+    res.render('login.ejs', { msg: null });
+});
+
+app.post('/login', (req, res) => {
+    Account.findOne({'email': req.body.email}, (error, result) => {
+        if(error){
+            console.log('[LOGIN]', error);
+            let errorMsg = 'Incorrect login/password';
+            res.render('login.ejs', { msg: errorMsg });
+        }
+        else if(result) {
+            if (result.password === req.body.password) {
+                session.visit(req.cookies[domain], () => res.redirect(303, '/'), result['_id']);
+                console.log('[LOGIN] ok, hello user', result.name)
+            }
+        }
+        else {
+            let errorMsg = 'Incorrect login/password';
+            console.log('LOGIN error: ', errorMsg);
+            res.render('login.ejs', {msg: errorMsg});      
+        }
+        
+
+    })
+});
