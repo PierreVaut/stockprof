@@ -67,11 +67,13 @@ export const db = {
 
     },
 
-    handle: function(req, cb){
+    handle: function(req, session, cb){
         const cookies = new Cookies(req.headers.cookie);
-        console.log('[DB-handler] getAccount', cookies.get(domain) );
-
-        cb({response: 'This is a test'})
+        let cookie = cookies.get(domain); 
+        console.log('[DB-handler] cookie:', cookie);
+        if(cb){
+            cb({response: 'This is a test'})
+        }
     }
 
 }
