@@ -27,6 +27,7 @@ class App extends Component {
 
         console.log('[userInfo] Fetching data');
         fetch('/api/', {
+            accept: 'application/json',
             credentials: 'include'
         }).then(
             response => {console.log(response.json())}
