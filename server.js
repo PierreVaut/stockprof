@@ -13,9 +13,7 @@ db.init();
 app.use(express.static('client/build'));
 //app.use(cors({ origin: 'null', credentials: true }));
 
-app.post('api/register', (req, res) => {
-    
-})
+
 
 app.get('/api/', (req, res) => {
 
