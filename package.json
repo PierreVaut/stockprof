@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "homepage":"https://stocks-carb11.herokuapp.com/",
+  "homepage": "https://stocks-carb11.herokuapp.com/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"babel-node server.js --presets env\" \"npm run build --prefix client\"",
     "local": "concurrently \"nodemon server.js --exec babel-node --presets env\"  \"node start-client.js\"",
-    "postinstall": "npm install --prefix client",
-    "build":"npm run build --prefix client"
+    "build": "npm run build --prefix client",
+    "postinstall": "npm install --prefix client"
   },
   "author": "",
   "license": "ISC",

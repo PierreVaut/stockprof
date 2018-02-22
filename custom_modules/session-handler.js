@@ -30,7 +30,7 @@ export const session = {
             fs.writeFile(path, JSON.stringify(session), (err) =>{
                 if(err){ console.log(err)  }
                 if(cb){
-                    cb(req, session, cb);
+                    cb(session);
                 }
             });
         })

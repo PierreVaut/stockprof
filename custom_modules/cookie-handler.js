@@ -20,11 +20,13 @@ export const cookie = {
             if(cb) {
                 cb(cookie);
             }
+            return cookie
         } else {
             console.log('[Cookie-handler] New visit:', cookie);
             if (cb) {
                 cb(cookie);
             }
+            return cookie
         }
     }
 }

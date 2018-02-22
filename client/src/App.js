@@ -10,7 +10,6 @@ class App extends Component {
         cookies: instanceOf(Cookies).isRequired
       };
 
-
     constructor(props) {
         super(props);
         this.state = {data: 'no data'};
@@ -35,9 +34,7 @@ class App extends Component {
                     cb(obj);
                     }
                 )
-            
-            })
-            
+            })    
     }
 
     componentWillMount() {
@@ -46,7 +43,7 @@ class App extends Component {
             let rdm = Math.floor(Math.random() * 99999942 );
             cookies.set(domain, rdm, { path: '/' });
         }
-        this.getUserInfo(  data=> this.setState(data) );
+        this.getUserInfo(  data => this.setState(data) );
 
     }
 
@@ -54,8 +51,12 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                Hello!<br/>
-                {JSON.stringify(this.state.data)} 
+                Hello !<br/>
+                <p>Cookie: {JSON.stringify(this.state.data.cookie)} </p>
+                <p>Session: {JSON.stringify(this.state.data.session)} </p>
+                <p>DB: {JSON.stringify(this.state.data.db)} </p>
+                <br/><br/><br/>
+                {/*JSON.stringify(this.state.data)*/} 
             </div>
         );
     }

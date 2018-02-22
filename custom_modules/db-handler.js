@@ -1,7 +1,7 @@
 import { uri } from '../config/connect';
 import { accountSchema } from '../model/account';
 import { request } from 'https';
-import {domain}  from '../config/domain';
+import { domain }  from '../config/domain';
 import Cookies from 'universal-cookie';
 
 
@@ -71,9 +71,26 @@ export const db = {
         const cookies = new Cookies(req.headers.cookie);
         let cookie = cookies.get(domain); 
         console.log('[DB-handler] cookie:', cookie);
-        if(cb){
-            cb({response: 'This is a test'})
+        console.log('[DB-handler] session:', session);
+        if(session.isLogged){
+            Account.findOne({'_id': session.id}, (err, res) => {
+                if(cb){               
+                    if(err){
+                        cb({'DB error': err});
+                    }
+                    else{
+                        cb(res);
+                    }
+                } else {
+                    console.log('No callback provided')
+                }
+
+
+            })
+        } else {
+            if(cb){    
+                cb({'DB Error': 'User not logged'})
+            }
         }
     }
-
 }
