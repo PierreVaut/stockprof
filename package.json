@@ -6,7 +6,7 @@
   "homepage": "https://stocks-carb11.herokuapp.com/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"babel-node server.js --presets env\" \"npm run build --prefix client\"",
+    "start": "babel-node server.js --presets env",
     "local": "concurrently \"nodemon server.js --exec babel-node --presets env\"  \"node start-client.js\"",
     "build": "npm run build --prefix client",
     "postinstall": "npm install --prefix client"
