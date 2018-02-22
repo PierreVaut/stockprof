@@ -4,7 +4,7 @@ import { request } from 'https';
 import { domain }  from '../config/domain';
 import Cookies from 'universal-cookie';
 
-
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 mongoose.connect(uri);
 const database = mongoose.connection;
@@ -21,10 +21,12 @@ export const db = {
     },
 
     register: function(req, cb){
-        console.log(req);
 
+        console.log('[DB REGISTER] Request:', req.body);
+        /*
         if(!req){
-            console.log('[DB REGISTER] Error: request is', req)
+            console.log('[DB REGISTER] Error: request is undefined');
+            res.json({'status': '[DB REGISTER] Error: request is undefined'})
         }
 
         if (typeof(req.body.name) === String
@@ -83,7 +85,8 @@ export const db = {
             // isLogged true
             // id = l'ID dans la base de donnée
         cb();
-
+        */
+    
     },
 
     handle: function(req, session, cb){
