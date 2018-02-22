@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 mongoose.connect(uri);
 const database = mongoose.connection;
 
+
 export const db = {
 
     init: function(){
@@ -21,71 +22,69 @@ export const db = {
     },
 
     register: function(req, cb){
+        const Account = mongoose.model('Account', accountSchema);
 
         console.log('[DB REGISTER] Request:', req.body);
-        /*
-        if(!req){
-            console.log('[DB REGISTER] Error: request is undefined');
-            res.json({'status': '[DB REGISTER] Error: request is undefined'})
-        }
 
-        if (typeof(req.body.name) === String
-            && typeof(req.body.email) === String
-            && typeof(req.body.password) === String
-            ) {
-            let newAccount = {
-                name: req.body.name,         
-                email: req.body.email,       
-                password: req.body.password} 
-        }
-        else {
-            let error = 'Please fill in all fields'
-            console.log('[DB REGISTER] Error', error)
+        let newAccount = {}
+        if(!req || req === ''){
+            let error = '[DB REGISTER] Error: request is undefined'
+            console.log(error);
             if(cb){ 
                 cb({'status': error});
-            }       
-        }
-                
-        Account.findOne({email: newEmail}, (error, result) => {
-            if (error){
-                console.log(error);
-                if(cb){ 
-                    cb({'[DB REGISTER] Error fetching DB': error});
-                } 
             }
-            if (result) {
-                let errorMsg = 'Email already used';
-                console.log('[DB REGISTER] Error', errorMsg)  ;
+        }
+
+        if( typeof(req.body.name) === '' || typeof(req.body.email) === '' || typeof(req.body.password) === ''
+            ) {
+                let error = 'Please fill in all fields'
+                console.log('[DB REGISTER] Error', error)
                 if(cb){ 
                     cb({'status': error});
+                }    
+        }
+        else{
+            Account.findOne({email: req.body.email}, (error, result) => {
+                if (error){
+                    console.log(error);
+                    if(cb){ 
+                        cb({'[DB REGISTER] Error fetching DB': error});
+                    } 
                 }
-            }
-            else {
-                // Crée le compte dans la base
-                // Info de base + name + email + password
-                let newAccount = new Account();
-                console.log('REGISTER newAccount: ', req.body);
-                newAccount.name = newName;
-                newAccount.email = newEmail;
-                newAccount.password = newPassword;
-                newAccount.save(
-                    ()=> {
-                        console.log('New account saved', newAccount['_id']);
-                        if(cb){ 
-                            cb(newAccount);
-                        }
+                if (result) {
+                    let errorMsg = 'Email already used';
+                    console.log('[DB REGISTER] Error', errorMsg)  ;
+                    if(cb){ 
+                        cb({'status': error});
                     }
-                
-                );
+                }
+                else {
+                    // Crée le compte dans la base
+                    // Info de base + name + email + password
+                    let newAccount = new Account();
+                    console.log('REGISTER newAccount: ', req.body);
+                    newAccount.name = req.body.name;
+                    newAccount.email = req.body.email;
+                    newAccount.password = req.body.password;
+                    newAccount.save(
+                        ()=> {
+                            console.log('New account saved', newAccount['_id']);
+                            if(cb){ 
+                                cb(newAccount);
+                            }
+                        }
+                    
+                    );
 
-            }
-        })
+                }
+            })
+        }
 
         // Mise à jour du fichier de session
             // isLogged true
             // id = l'ID dans la base de donnée
-        cb();
-        */
+        
+        
     
     },
 
