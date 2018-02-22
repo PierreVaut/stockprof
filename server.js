@@ -9,7 +9,7 @@ import { session } from './custom_modules/session-handler';
 
 db.init();
 
-//app.use(express.static(__dirname));
+app.use(express.static(__dirname));
 app.use(express.static('client/build'));
 app.use(cors({ origin: 'null', credentials: true }));
 app.use(function(req, res, next) {
