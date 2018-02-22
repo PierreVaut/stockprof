@@ -90,10 +90,8 @@ class App extends Component {
             <div className="App">
                 Hello !<br/>
                 <h2>User info</h2>
-                <p>Cookie: {JSON.stringify(this.state.data.cookie)}</p>
-                <p>Session: {JSON.stringify(this.state.data.session)}</p>
-                <p>DB: {JSON.stringify(this.state.data.db)}</p>
-                <p>Raw: {JSON.stringify(this.state.data)}</p>
+                <p>Status: {JSON.stringify(this.state.status)}</p>
+                <p>Data: {JSON.stringify(this.state.data)}</p>              
                 <br/>
                 <h2>Register</h2>
                 <form action='/register' onSubmit={this.handleSubmit}>

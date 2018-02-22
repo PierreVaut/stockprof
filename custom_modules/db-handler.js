@@ -97,7 +97,7 @@ export const db = {
             Account.findOne({'_id': session.id}, (err, res) => {
                 if(cb){               
                     if(err){
-                        cb({'DB error': err});
+                        cb({status: 'DB error', err});
                     }
                     else{
                         cb(res);
@@ -110,7 +110,7 @@ export const db = {
             })
         } else {
             if(cb){    
-                cb({'DB Error': 'User not logged'})
+                cb({status: 'User not logged', data: null})
             }
         }
     }

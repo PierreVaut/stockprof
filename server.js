@@ -25,7 +25,7 @@ app.post('/register', (req, res) => {
         (account) => {
             if(!account){res.json({})}
             else{
-                session.register(req, account['_id'], res.redirect(303, '/') )
+                session.register(req, account['_id'], (data) => res.json(data) )
             }
         }
     )
@@ -50,7 +50,7 @@ app.get('/api/', (req, res) => {
             // Pass session info to DB to get user info
             db.handle(req, session, data => {
                 console.log('[DB] response:', data);
-                res.json({'session': session, 'db': data, 'cookie': currentCookie});
+                res.json(data);
             });
         }
     );    
