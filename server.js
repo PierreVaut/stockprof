@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -9,30 +8,40 @@ import { session } from './custom_modules/session-handler';
 
 db.init();
 
-app.use(express.static(__dirname));
 app.use(express.static('client/build'));
-app.use(cors({ origin: 'null', credentials: true }));
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-    next();
+
+app.post('/register', (req, res) => {
+    // create new Account
+    db.register(req, 
+        // set in session 'isLogged= true'
+        (account) => {
+            session.register(req, account['_id'],
+            // callback : redirect to index
+            res.redirect(303, '/')
+        )}
+    )
 });
 
+app.post('/login', (req, res) => {
+    
+    res.redirect(303, '/');
+});
+
+app.post('/disconnect', (req, res) => {
+
+    res.redirect(303, '/');
+});
 
 app.get('/api/', (req, res) => {
-
-    // 1. set cookie
+    // Set/retrieve cookie
     let currentCookie = cookie.handle(req);
-
-    // 2. set session and return session info
+    // Set/retrieve session
     session.handle(req,
         (session) => {
-            db.handle(req, session, response => {
-                // 3. if connected return user info
-                console.log('[DB] response:', response);
-                res.json({'session': session, 'db': response, 'cookie': currentCookie});
+            // Pass session info to DB to get user info
+            db.handle(req, session, data => {
+                console.log('[DB] response:', data);
+                res.json({'session': session, 'db': data, 'cookie': currentCookie});
             });
         }
     );    

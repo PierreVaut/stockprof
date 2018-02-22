@@ -20,8 +20,13 @@ export const db = {
         });
     },
 
-    newAccount: function(requestBody, cb){
-        console.log(requestBody);
+    register: function(req, cb){
+        console.log(req);
+
+        if(!req){
+            console.log('[DB REGISTER] Error: request is', req)
+        }
+
         if (typeof(req.body.name) === String
             && typeof(req.body.email) === String
             && typeof(req.body.password) === String
@@ -33,19 +38,25 @@ export const db = {
         }
         else {
             let error = 'Please fill in all fields'
-            console.log('REGISTER error:', error)
-            res.json({'status': error});       
+            console.log('[DB REGISTER] Error', error)
+            if(cb){ 
+                cb({'status': error});
+            }       
         }
                 
         Account.findOne({email: newEmail}, (error, result) => {
             if (error){
                 console.log(error);
-                res.json({'status': error});
+                if(cb){ 
+                    cb({'[DB REGISTER] Error fetching DB': error});
+                } 
             }
             if (result) {
                 let errorMsg = 'Email already used';
-                console.log('REGISTER error: ', errorMsg)  ;
-                res.json({'status': error});
+                console.log('[DB REGISTER] Error', errorMsg)  ;
+                if(cb){ 
+                    cb({'status': error});
+                }
             }
             else {
                 // Crée le compte dans la base
@@ -55,7 +66,15 @@ export const db = {
                 newAccount.name = newName;
                 newAccount.email = newEmail;
                 newAccount.password = newPassword;
-                newAccount.save(console.log('New account saved', newAccount['_id']));
+                newAccount.save(
+                    ()=> {
+                        console.log('New account saved', newAccount['_id']);
+                        if(cb){ 
+                            cb(newAccount);
+                        }
+                    }
+                
+                );
 
             }
         })
