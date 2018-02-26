@@ -1,7 +1,7 @@
-### StockProf API
+# StockProf API
 
 
-# Local
+### Local
 
 ```$ NPM run local```
 
@@ -9,11 +9,11 @@
 
 * On local, remove  `"postinstall": "npm install --prefix client"` from package.json
 
-# Deployment
+### Deployment
 
 https://stocks-carb11.herokuapp.com/
 
-* Free Heroku dyno need sometime up to 45 sec. to start up
+* Free Heroku dyno need sometimes up to 45s to start up
 
-* Do not forget to `heroku config:set NPM_CONFIG_PRODUCTION=false`
+* Do not forget to `$ heroku config:set NPM_CONFIG_PRODUCTION=false --app stocks-carb11`
 
