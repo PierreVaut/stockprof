@@ -13,65 +13,108 @@ const database = mongoose.connection;
 export const db = {
 
     init: function(){
-        console.log('[DB-handler] Init')
+
         let Account = mongoose.model('Account', accountSchema)
         database.on('error', console.error.bind(console, 'connection error:'));
         database.once('open', () => {
-            console.log("[DB-handler] we're connected !")
+            console.log("[DB Init] we're connected !")
         });
     },
 
-    register: function(req, cb){
+    // return user Account info from DB
+    // or error if the user is undefined
+    handle: function(req, data, cb){
+        
+        let Account = mongoose.model('Account', accountSchema)
+
+        if(data.session.isLogged){
+            Account.findOne({'_id': data.session['_id']}, (err, result) => {
+                if(cb){               
+                    if(err){
+                        data.account = '[DB-handler] DB error'+ err;
+                        console.log( data.account );
+                        cb(data);
+                    }
+                    else{
+                        data.account = result;
+                        console.log('[DB-handler] ok', result);
+                        cb(data);
+                    }
+                }
+                
+                else {
+                    console.log('No callback provided')
+                }
+
+            })
+        }
+        
+        else{
+
+            if(cb){
+                data.account = 'User not logged or Error';
+                cb(data)
+            }
+        }
+    },
+
+    register: function(req, data, cb){
+
         let Account = mongoose.model('Account', accountSchema);
-        let cookies = new Cookies(req.headers.cookie);
-        let cookie = cookies.get(domain); 
-        console.log('[DB REGISTER] Request:', req.body);
-        console.log('[DB REGISTER] cookie:', cookie);
-        let newAccount = {}
+
+        console.log('[DB-register] Request:', req.body);
+
         if(!req || req === ''){
-            let error = '[DB REGISTER] Error: request is undefined'
-            console.log(error);
-            if(cb){ 
-                cb({'status': error});
+            data.account = '[DB-register] Error: request is undefined'
+            console.error( data.account );
+            if(cb){
+                console.log("[DB-register] Passing CB on:", data);
+                cb( data );
             }
         }
 
         if( typeof(req.body.name) === '' || typeof(req.body.email) === '' || typeof(req.body.password) === ''
             ) {
-                let error = 'Please fill in all fields'
-                console.log('[DB REGISTER] Error', error)
-                if(cb){ 
-                    cb({'status': error});
+                data.account = '[DB-register] Error : Please fill in all fields'
+                console.error( data.account );
+                if(cb){
+                    console.log("[DB-register] Passing CB on:", data);
+                    cb( data );
                 }    
         }
         else{
             Account.findOne({email: req.body.email}, (error, result) => {
+
                 if (error){
-                    console.log(error);
-                    if(cb){ 
-                        cb({'[DB REGISTER] Error fetching DB': error});
-                    } 
+                    data.account ='[DB-register] Error fetching DB: '+ error;
+                    console.error( data.account );
+                    if(cb){
+                        console.log("[DB-register] Passing CB on:", data);
+                        cb( data );
+                    }  
                 }
+
                 if (result) {
-                    let errorMsg = 'Email already used';
-                    console.log('[DB REGISTER] Error', errorMsg)  ;
-                    if(cb){ 
-                        cb({'status': error});
-                    }
+                    data.account ='[DB-register] Error:  Email already used';
+                    console.error( data.account );
+                    if(cb){
+                        console.log("[DB-register] Passing CB on:", data);
+                        cb( data );
+                    }         
                 }
+
                 else {
-                    // Crée le compte dans la base
-                    // Info de base + name + email + password
                     let newAccount = new Account();
-                    console.log('REGISTER newAccount: ', req.body);
                     newAccount.name = req.body.name;
                     newAccount.email = req.body.email;
                     newAccount.password = req.body.password;
+                    data.account = newAccount
                     newAccount.save(
-                        ()=> {
-                            console.log('New account saved', newAccount['_id']);
-                            if(cb){ 
-                                cb(newAccount);
+                        () => {
+                            console.log('[DB-register] New account saved', newAccount);
+                            if(cb){
+                                console.log("[DB-register] Passing CB on:", data);
+                                cb(data);
                             }
                         }
                     
@@ -84,35 +127,5 @@ export const db = {
         
         
     
-    },
-
-    // return user Account info from DB
-    // or error if the user is undefined
-    handle: function(req, session, cb){
-        let Account = mongoose.model('Account', accountSchema);
-        let cookies = new Cookies(req.headers.cookie);
-        let cookie = cookies.get(domain); 
-        console.log('[DB-handler] cookie:', cookie);
-        console.log('[DB-handler] session:', session);
-        if(session.isLogged){
-            Account.findOne({'_id': session.id}, (err, res) => {
-                if(cb){               
-                    if(err){
-                        cb({status: 'DB error', err});
-                    }
-                    else{
-                        cb(res);
-                    }
-                } else {
-                    console.log('No callback provided')
-                }
-
-
-            })
-        } else {
-            if(cb){    
-                cb({status: 'User not logged', data: null})
-            }
-        }
     }
 }

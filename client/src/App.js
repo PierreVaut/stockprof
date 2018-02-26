@@ -17,44 +17,39 @@ class App extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    getUserInfo(cb) {
-        const { cookies } = this.props;
-        console.log('[React-userInfo]', cookies.get(domain));
-        let params = {
-            method: 'GET',
-            accept: 'application/json',
-            credentials: 'include'
-        }
-        fetch('/api/', params)
-            .catch(function(err){
-                let result = {error: '[React-userInfo] Error:'+ err}
-                console.log(result.error)
-                cb(result);
-            })   
-            .then(function(data){
-                console.log('[React-userInfo] Fetch ok', data);
-                data.json().then(
-                    json => {console.log('[React-userInfo] JSON:', json)
-                    let result = {'data': json};
-                    console.log('[React-userInfo] result:', result)
-                    cb(result);
-                    }
-                )
-            })    
-    }
-
-    registerUser() {
-
-    }
 
     componentWillMount() {
         const { cookies } = this.props;
+
+        // setting cookie
         if(!cookies.get(domain)){
             let rdm = Math.floor(Math.random() * 99999942 );
             cookies.set(domain, rdm, { path: '/' });
         }
-        this.getUserInfo(  data => this.setState(data) );
 
+        // retrieving user Info
+        if(this.state.data === 'no data'){
+            console.log('[React-userInfo]', cookies.get(domain));
+            let params = {
+                method: 'GET',
+                accept: 'application/json',
+                credentials: 'include'
+            }
+            fetch('/api/', params)
+                .catch(function(err){
+                    let result = {error: '[React-userInfo] Error:'+ err}
+                    console.log(result.error)
+                })   
+                .then( (result) => {
+                    console.log('[React-userInfo] Fetch ok', result);
+                    result.json().then(
+                        json => {
+                            console.log('[React Fetch] API:', json)
+                            this.setState({'data': json})
+                        }
+                    )
+                }) 
+        }
     }
 
     handleSubmit(event) {
@@ -69,10 +64,16 @@ class App extends Component {
             body: JSON.stringify(this.state.post)
         })
             .catch( (err) => {
-                this.setState({'[React] Post': err})
+                console.log('[React Fetch] Error:', err)
+                this.setState({'data': err})
             })    
             .then( (result) => {
-                this.setState({'[React] data': result})
+                result.json().then(
+                    json => {
+                        console.log('[React Fetch] Register:', json)
+                        this.setState({'data': json})
+                    }
+                )
             })
 
         event.preventDefault();
@@ -80,7 +81,7 @@ class App extends Component {
 
     handleChange(event) {
         let newState = this.state;
-        newState['post'][event.target.name] = event.target.value;
+        newState.post[event.target.name] = event.target.value;
         this.setState(newState);
     }
 
@@ -89,7 +90,6 @@ class App extends Component {
             <div className="App">
                 Hello !<br/>
                 <h2>User info</h2>
-                <p>Status: {JSON.stringify(this.state.status)}</p>
                 <p>Data: {JSON.stringify(this.state.data)}</p>              
                 <br/>
                 <h2>Register</h2>

@@ -1,17 +1,19 @@
 const fs = require("fs");
 import Cookies from 'universal-cookie';
 import {domain}  from '../config/domain';
+const bodyParser = require('body-parser');
+
 
 export const session = {
 
-    handle: function(req, cb){
-        let cookies = new Cookies(req.headers.cookie);
-        let path = process.cwd() + "/session/" + cookies.get(domain);
-        fs.readFile(path, (err, data)=>{
-            let session =  {}
-            if (err) {
+    handle: function(req, data, cb){
+
+        let path = process.cwd() + "/session/" + data.cookie;
+
+        fs.readFile(path, (err, result)=>{
+            if (err || result === {} ) {
                 // create default session file
-                session =  {
+                data.session =  {
                     'visitCount': 1,
                     'visitLast': (new Date() ).getTime(),
                     '_id': false,
@@ -19,63 +21,111 @@ export const session = {
                     'role': 0,
                     'ip': [req.ip]
                 }
-                console.log("[Session] New file");  
+                console.log("[Session] New file.");  
+
+                fs.writeFile(path, JSON.stringify(data.session), (err) =>{
+                    if(err){
+                        data.session = '[Session-handler] Write File error'+ error
+                        console.error( data.session );
+                    }
+                    if(cb){
+                        console.log("[Session-handler] Passing CB on:", data);
+                        cb(data);
+                    }
+                });
             }
+
             else {
                 // update existing file
-                session = JSON.parse(data);
-                session.visitCount++;
-                session.visitLast = (new Date() ).getTime();
-                session['ip'].push(req.ip);
-                console.log("[Session] " + cookies.get(domain) + " - visitCount:", session.visitCount);  
-            } 
-
-            fs.writeFile(path, JSON.stringify(session), (err) =>{
-                if(err){ console.log(err)  }
-                if(cb){
-                    cb(session);
+                data.session = JSON.parse(result);
+                data.session.visitCount++;
+                data.session.visitLast = (new Date() ).getTime();
+                if(!data.session.ip){ data.session.ip = [] }
+                if(req.ip !== data.session['ip'][ (data.session['ip'].length - 1) ]){
+                    data.session['ip'].push(req.ip); 
                 }
-            });
+
+                console.log("[Session] Update file.");
+
+                fs.writeFile(path, JSON.stringify(data.session), (err) =>{
+                    if(err){
+                        data.session = '[Session-handler] Write File error'+ error
+                        console.error( data.session );
+                    }
+                    if(cb){
+                        console.log("[Session-handler] Passing CB on:", data);
+                        cb(data);
+                    }
+                });
+            } 
         })
     },
 
-    register: function(req, userId, cb){
-        let cookies = new Cookies(req.headers.cookie);
-        let path = process.cwd() + "/session/" + cookies.get(domain);
-        console.log("[Session] Register", cookies.get(domain)); 
+    register: function(req, data, cb){
 
-        fs.readFile(path, (err, data)=>{
-            let session =  {};
+        let path = process.cwd() + "/session/" + data.cookie;
 
-            if (err) {
-                console.log("[Session] Creating new file...", cookies.get(domain) );
+        fs.readFile(path, (err, result)=>{
+            if (err || result === {} ) {
                 // create default session file
-                session =  {
+                data.session =  {
                     'visitCount': 1,
                     'visitLast': (new Date() ).getTime(),
-                    '_id': userId,
                     'isLogged': true,
+                    '_id': data.account['_id'],
                     'role': 1,
                     'ip': [req.ip]
                 }
-                console.log("[Session] New file", session);  
-            }
-            else {
-                // update existing file
-                console.log("[Session] Updating file...", cookies.get(domain));
-                session = JSON.parse(data);
-                session.visitCount++;  
-                session.visitLast = (new Date() ).getTime();
-                session['ip'].push(req.ip); 
-                console.log("[Session] " + cookies.get(domain) + " - visitCount:", session.visitCount);  
+
+                if(data.account){
+                    data.session['_id'] = data.account['_id']
+                } else {
+                    data.session['_id'] = 'No ID...'
+                }
+
+
+                console.log("[Session] New file.");  
+
+                fs.writeFile(path, JSON.stringify(data.session), (err) =>{
+                    if(err){
+                        data.session = '[Session-handler] Write File error'+ error
+                        console.error( data.session );
+                        cb(data);
+                    }
+                    if(cb){
+                        console.log("[Session-handler] Passing CB on:", data);
+                        cb(data);
+                    }
+                });
             }
 
-            fs.writeFile(path, JSON.stringify(session), (err) =>{
-                if(err){ console.log(err)  }
-                if(cb){
-                    cb(session);
+            else {
+                // update existing file
+                data.session = JSON.parse(result);
+                data.session.visitCount++;
+                data.session.visitLast = (new Date() ).getTime();
+                data.session.isLogged = true;
+                data.session.role = 1;
+                data.session['_id'] = data.account['_id'];
+                if(!data.session.ip){ data.session.ip = [] }
+                if(req.ip !== data.session['ip'][ (data.session['ip'].length - 1) ]){
+                    data.session['ip'].push(req.ip); 
                 }
-            });
+
+                console.log("[Session-handler] Update file.");
+
+                fs.writeFile(path, JSON.stringify(data.session), (err) =>{
+                    if(err){
+                        data.session = '[Session-handler] Write File error'+ error
+                        console.error( data.session );
+                        cb(data);
+                    }
+                    if(cb){
+                        console.log("[Session-handler] Passing CB on:", data);
+                        cb(data);
+                    }
+                });
+            } 
         })
     },
 

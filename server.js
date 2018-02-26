@@ -18,24 +18,30 @@ app.use(function(req, res, next) {
   });
 
 app.post('/register', (req, res) => {
-    console.log('[API] Register:', JSON.stringify(req.body) );
-    let currentCookie = cookie.handle(req);
-    // create new Account
+    
+    console.log('*** Req.body: ', req.body.name);
 
-    db.register(req, 
-        // set in session 'isLogged= true'
-        (account) => {
-            if(!account){res.json({'status': error})}
-            else{
-                session.register(req, account['_id'], (session) => {
-                    db.handle(req, session, data => {
-                        console.log('[DB] response:', data);
-                        res.json(data);
-                    });
-                })
-            }
-        }
-    )
+    let data =  {
+        'cookie': '',
+        'session': {},
+        'account': {},
+        'request': req.body
+    }
+
+
+    // Set or retrieve cookie
+    cookie.handle( req, data, (data) => {
+
+        // First create user in the DB
+        db.register( req, data, (data) => {
+
+            // Then create/update session
+            session.register( req, data, (data) => {    
+                console.log('[DB-Register] Response:', data);
+                res.json(data);        
+            });
+        });
+    });
 });
 
 app.post('/login', (req, res) => {
@@ -49,18 +55,40 @@ app.post('/disconnect', (req, res) => {
 });
 
 app.get('/api/', (req, res) => {
-    // Set/retrieve cookie
-    let currentCookie = cookie.handle(req);
-    // Set/retrieve session info
-    session.handle(req,
-        (session) => {
-            // Pass session info to DB to get user info
-            db.handle(req, session, data => {
-                console.log('[DB] response:', data);
-                res.json(data);
-            });
+    
+    let data =  {
+        'cookie': '',
+        'session': {},
+        'account': {}
+    }
+
+    // Set or retrieve cookie
+    cookie.handle(
+        req,
+        data,
+        function(data){
+
+            // Set or retrieve session info
+            session.handle(
+                req,
+                data,
+                function(data){
+
+                    // Pass session info to DB to get user info
+                    db.handle(
+                        req,
+                        data,
+                        function(data){
+                            console.log('[DB] Response:', data);
+                            res.json(data);
+                        }
+                    );
+                }
+            );
         }
-    );    
+    )
 });
+
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
