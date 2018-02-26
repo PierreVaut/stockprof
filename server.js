@@ -26,16 +26,13 @@ app.post('/register', (req, res) => {
     }
     
     // Set or retrieve cookie
-    cookie.handle( req, data, (data) => {
+    cookie.handle( req, res, data, (data) => {
 
         // First create user in the DB
-        db.register( req, data, (data) => {
+        db.register( req, res, data, (data) => {
 
-            // Then create/update session
-            session.register( req, data, (data) => {    
-                console.log('[DB-Register] Response:', data);
-                res.json(data);        
-            });
+            // Then create/update session File
+            session.register( req, res, data);
         });
     });
 });
@@ -48,16 +45,13 @@ app.post('/login', (req, res) => {
     }
 
     // Set or retrieve cookie
-    cookie.handle( req, data, (data) => {
+    cookie.handle( req, res, data, (data) => {
 
         // Get user in the DB
-        db.login( req, data, (data) => {
+        db.login( req, res, data, (data) => {
 
             // Then create/update session
-            session.register( req, data, (data) => {    
-                console.log('[DB-Register] Response:', data);
-                res.json(data);        
-            });
+            session.register( req, res, data );
         });
     });
     
@@ -71,10 +65,8 @@ app.post('/disconnect', (req, res) => {
     }
 
     // Set or retrieve cookie
-    cookie.remove( req, data, (data) => {
-        session.disconnect( req, data, (data)=>{
-            res.json(data);
-        })
+    cookie.remove( req, res, data, (data) => {
+        session.disconnect( req, res, data )
     })
 
     
@@ -87,24 +79,18 @@ app.get('/api/', (req, res) => {
         'session': {},
         'account': {}
     }
+        
+    // Set or retrieve cookie
+    cookie.handle( req, res, data, function(data){
 
-    res.json(
-        // Set or retrieve cookie
-        cookie.handle( req, data, function(data){
+        // Set or retrieve session info
+        session.handle( req, res, data, function(data){
 
-            // Set or retrieve session info
-            session.handle( req, data, function(data){
-
-                // Pass session info to DB to get user info
-                db.handle( req, data, function(data){
-                    console.log('[DB] Response:', data);
-                    return ( data );
-                });
-            });
-        })
-    )
+            // Pass session info to DB to get user info
+            db.handle( req, res, data );
+        });
+    })
+    
 });
-
-
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
