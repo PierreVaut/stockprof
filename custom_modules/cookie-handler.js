@@ -15,7 +15,7 @@ export const cookie = {
             data.cookie = cookies.get(domain);
             console.log('[Cookie-handler] New visit:', data.cookie);
             console.log('[Cookie-handler] CB:', data);
-            cb(data)
+            return cb(data)
         }
         else{
   
@@ -28,7 +28,7 @@ export const cookie = {
                     data.cookie = cookies.get(domain);
                     console.log('[Cookie-handler] Cookie created:', data.cookie);
                     console.log('[Cookie-handler] CB:', data);
-                    cb(data);
+                    return cb(data);
                 }
                 
                 else {
@@ -36,7 +36,7 @@ export const cookie = {
                     data.cookie = '[Cookie-handler] Error on cookie creation:' + cookie + ', ' + domain +', '+ rdm;
                     console.error(data.cookie);
                     console.log('[Cookie-handler] CB:', data);
-                    cb(data);
+                    return cb(data);
                 }
             }
         }
@@ -46,6 +46,6 @@ export const cookie = {
         let cookies = new Cookies(req.headers.cookie);
         data.cookie = cookies.get(domain);
         cookies.remove(domain);
-        cb(data);
+        return cb(data);
     }
 }

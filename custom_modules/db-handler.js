@@ -28,24 +28,27 @@ export const db = {
         let Account = mongoose.model('Account', accountSchema)
 
         if(data.session.isLogged){
-            Account.findOne({'_id': data.session['_id']}, (err, result) => {
-                if(cb){               
-                    if(err){
-                        data.account = '[DB-handler] DB error'+ err;
-                        console.log( data.account );
-                        cb(data);
-                    }
-                    else{
-                        data.account = result;
-                        console.log('[DB-handler] ok', result);
-                        cb(data);
-                    }
-                }
-                
-                else {
-                    console.log('No callback provided')
+            Account.findOne({'_id': data.session['_id']}, (err, result) => {              
+                if(err){
+                    data.account = '[DB-handler] DB error'+ err;
+                    console.log( data.account );
+                    return data;
                 }
 
+                
+                if(result !== null){
+                    data.account = result;
+                    console.log('[DB-handler] ok', result);
+                    console.log('[DB-handler] Return', data);
+                    return data;
+                }
+
+                else{
+                    data.account = '[DB-handler] User not logged or Error';
+                    console.log( data.account );
+                    console.log('[DB-handler] Return', data)
+                    return data; 
+                }
             })
         }
         
@@ -53,7 +56,7 @@ export const db = {
 
             if(cb){
                 data.account = 'User not logged or Error';
-                cb(data)
+                return data
             }
         }
     },

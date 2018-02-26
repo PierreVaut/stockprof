@@ -27,10 +27,11 @@ export const session = {
                     if(err){
                         data.session = '[Session-handler] Write File error'+ error
                         console.error( data.session );
+                        return data
                     }
                     if(cb){
                         console.log("[Session-handler] Passing CB on:", data);
-                        cb(data);
+                        return cb(data);
                     }
                 });
             }
@@ -51,10 +52,11 @@ export const session = {
                     if(err){
                         data.session = '[Session-handler] Write File error'+ error
                         console.error( data.session );
+                        return data
                     }
                     if(cb){
                         console.log("[Session-handler] Passing CB on:", data);
-                        cb(data);
+                        return cb(data);
                     }
                 });
             } 

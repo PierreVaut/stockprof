@@ -88,19 +88,21 @@ app.get('/api/', (req, res) => {
         'account': {}
     }
 
-    // Set or retrieve cookie
-    cookie.handle( req, data, function(data){
+    res.json(
+        // Set or retrieve cookie
+        cookie.handle( req, data, function(data){
 
-        // Set or retrieve session info
-        session.handle( req, data, function(data){
+            // Set or retrieve session info
+            session.handle( req, data, function(data){
 
-            // Pass session info to DB to get user info
-            db.handle( req, data, function(data){
-                console.log('[DB] Response:', data);
-                res.json(data);
+                // Pass session info to DB to get user info
+                db.handle( req, data, function(data){
+                    console.log('[DB] Response:', data);
+                    return ( data );
+                });
             });
-        });
-    })
+        })
+    )
 });
 
 
