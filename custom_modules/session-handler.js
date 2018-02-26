@@ -90,11 +90,13 @@ export const session = {
                     if(err){
                         data.session = '[Session-handler] Write File error'+ error
                         console.error( data.session );
-                        cb(data);
+                        return cb(data);
                     }
-                    if(cb){
-                        console.log("[Session-handler] Passing CB on:", data);
-                        cb(data);
+                    else{
+                        if(cb){
+                            console.log("[Session-handler] Passing CB on:", data);
+                            cb(data);
+                        }
                     }
                 });
             }
@@ -133,7 +135,7 @@ export const session = {
 
         let path = process.cwd() + "/session/" + data.cookie;
         data.cookie += ' (expired)';
-        
+
         fs.unlink( path, (err) => {
             if(err){
                 data.session = '[Session-disconnect] Unlink File error '+ error

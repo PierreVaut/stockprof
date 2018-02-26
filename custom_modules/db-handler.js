@@ -75,7 +75,7 @@ export const db = {
         }
 
         // Check the request #2
-        if( typeof(req.body.name) === '' || typeof(req.body.email) === '' || typeof(req.body.password) === ''
+        if( req.body.name === '' || req.body.email === '' || req.body.password === '' || !req.body.name  || !req.body.email || !req.body.password 
             ) {
                 data.account = '[DB-register] Error : Please fill in all fields'
                 console.error( data.account );
@@ -159,11 +159,12 @@ export const db = {
                     return cb( data );
                 }  
             }
-
+            console.log('[DB-login] No error yet...');
             if (result) {
+                console.log('[DB-login] There should be a result...', result);
                 data.account = result;
                 if(cb){
-                    console.log("[DB-login] Passing CB on:", data);
+                    console.log("[DB-login] Passing CB on: ", data);
                     cb( data );
                 }         
             }

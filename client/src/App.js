@@ -12,9 +12,11 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {data: 'no data', post: {} };
+        this.state = {data: 'no data', post: {}, login: {} };
         this.handleChange = this.handleChange.bind(this);
+        this.handleChange2 = this.handleChange2.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit2 = this.handleSubmit2.bind(this);
         this.handleDisconnect = this.handleDisconnect.bind(this);
     }
 
@@ -80,8 +82,39 @@ class App extends Component {
         event.preventDefault();
     }
 
+
+    handleSubmit2(event){
+        console.log( '[App] Login:', this.state.login );
+        fetch('/login', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.login)
+        })
+            .catch( (err) => {
+                console.log('[React Fetch] Error:', err)
+                this.setState({'data': err})
+            })    
+            .then( (result) => {
+                result.json().then(
+                    json => {
+                        console.log('[React Fetch] Login:', json)
+                        this.setState({'data': json})
+                    }
+                )
+            })
+
+        event.preventDefault();
+    }
+
+
+
+
     handleDisconnect(event){
-        console.log( '[App] Submit:', this.state.post );
+
         fetch('/disconnect', {
             method: 'POST',
             credentials: 'include',
@@ -111,6 +144,12 @@ class App extends Component {
     handleChange(event) {
         let newState = this.state;
         newState.post[event.target.name] = event.target.value;
+        this.setState(newState);
+    }
+
+    handleChange2(event) {
+        let newState = this.state;
+        newState.login[event.target.name] = event.target.value;
         this.setState(newState);
     }
 
@@ -153,13 +192,15 @@ class App extends Component {
                     <button type='submit'>Register</button>
                 </form>
 
+
+
                 <h2>Login</h2>
-                <form action='/login' onSubmit={this.handleSubmit}>
+                <form action='/login' onSubmit={this.handleSubmit2}>
                     <label>Email<br/>
                         <input
                             name= 'email'
                             value= {this.state.value}
-                            onChange={this.handleChange}
+                            onChange={this.handleChange2}
                         >
                         </input><br/>
                     </label><br/>
@@ -167,13 +208,15 @@ class App extends Component {
                         <input
                             name= 'password'
                             value= {this.state.value}
-                            onChange={this.handleChange}
+                            onChange={this.handleChange2}
                         >
                         </input><br/>
                     </label><br/>
 
                     <button type='submit'>Login</button>
                 </form>
+
+
 
                 <h2>Disconnect</h2>
                 <form action='/disconnect' onSubmit={this.handleDisconnect}>

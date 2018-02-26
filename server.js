@@ -24,7 +24,7 @@ app.post('/register', (req, res) => {
         'session': {},
         'account': {}
     }
-
+    
     // Set or retrieve cookie
     cookie.handle( req, data, (data) => {
 
