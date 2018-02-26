@@ -2,14 +2,16 @@
 
 
 # Local
-* ```NPM run local```
 
-* Do not forget to SET env variables !
+```$ NPM run local```
 
-* On local, do not use:  `"postinstall": "npm install --prefix client"`
+* Do not forget to SET env variables!
+
+* On local, remove  `"postinstall": "npm install --prefix client"` from package.json
 
 # Deployment
-* Available on: https://stocks-carb11.herokuapp.com/
+
+https://stocks-carb11.herokuapp.com/
 
 * Free Heroku dyno need sometime up to 45 sec. to start up
 
