@@ -18,16 +18,12 @@ app.use(function(req, res, next) {
   });
 
 app.post('/register', (req, res) => {
-    
-    console.log('*** Req.body: ', req.body.name);
 
     let data =  {
         'cookie': '',
         'session': {},
-        'account': {},
-        'request': req.body
+        'account': {}
     }
-
 
     // Set or retrieve cookie
     cookie.handle( req, data, (data) => {
@@ -45,13 +41,43 @@ app.post('/register', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
+    let data =  {
+        'cookie': '',
+        'session': {},
+        'account': {}
+    }
+
+    // Set or retrieve cookie
+    cookie.handle( req, data, (data) => {
+
+        // Get user in the DB
+        db.login( req, data, (data) => {
+
+            // Then create/update session
+            session.register( req, data, (data) => {    
+                console.log('[DB-Register] Response:', data);
+                res.json(data);        
+            });
+        });
+    });
     
-    res.redirect(303, '/');
 });
 
 app.post('/disconnect', (req, res) => {
+    let data =  {
+        'cookie': '',
+        'session': {},
+        'account': {}
+    }
 
-    res.redirect(303, '/');
+    // Set or retrieve cookie
+    cookie.remove( req, data, (data) => {
+        session.disconnect( req, data, (data)=>{
+            res.json(data);
+        })
+    })
+
+    
 });
 
 app.get('/api/', (req, res) => {
@@ -63,30 +89,18 @@ app.get('/api/', (req, res) => {
     }
 
     // Set or retrieve cookie
-    cookie.handle(
-        req,
-        data,
-        function(data){
+    cookie.handle( req, data, function(data){
 
-            // Set or retrieve session info
-            session.handle(
-                req,
-                data,
-                function(data){
+        // Set or retrieve session info
+        session.handle( req, data, function(data){
 
-                    // Pass session info to DB to get user info
-                    db.handle(
-                        req,
-                        data,
-                        function(data){
-                            console.log('[DB] Response:', data);
-                            res.json(data);
-                        }
-                    );
-                }
-            );
-        }
-    )
+            // Pass session info to DB to get user info
+            db.handle( req, data, function(data){
+                console.log('[DB] Response:', data);
+                res.json(data);
+            });
+        });
+    })
 });
 
 

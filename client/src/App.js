@@ -15,6 +15,7 @@ class App extends Component {
         this.state = {data: 'no data', post: {} };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDisconnect = this.handleDisconnect.bind(this);
     }
 
 
@@ -79,6 +80,34 @@ class App extends Component {
         event.preventDefault();
     }
 
+    handleDisconnect(event){
+        console.log( '[App] Submit:', this.state.post );
+        fetch('/disconnect', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.post)
+        })
+            .catch( (err) => {
+                console.log('[React Fetch] Error:', err)
+                this.setState({'data': err})
+            })    
+            .then( (result) => {
+                result.json().then(
+                    json => {
+                        console.log('[React Fetch] Register:', json)
+                        this.setState({'data': json})
+                    }
+                )
+            })
+
+        event.preventDefault();
+
+    }
+
     handleChange(event) {
         let newState = this.state;
         newState.post[event.target.name] = event.target.value;
@@ -121,12 +150,33 @@ class App extends Component {
                         </input><br/>
                     </label><br/>
 
-                    <button type='submit'>Submit !</button>
+                    <button type='submit'>Register</button>
                 </form>
+
                 <h2>Login</h2>
+                <form action='/login' onSubmit={this.handleSubmit}>
+                    <label>Email<br/>
+                        <input
+                            name= 'email'
+                            value= {this.state.value}
+                            onChange={this.handleChange}
+                        >
+                        </input><br/>
+                    </label><br/>
+                    <label>Password<br/>
+                        <input
+                            name= 'password'
+                            value= {this.state.value}
+                            onChange={this.handleChange}
+                        >
+                        </input><br/>
+                    </label><br/>
+
+                    <button type='submit'>Login</button>
+                </form>
 
                 <h2>Disconnect</h2>
-                <form action='/disconnect' method='POST'>
+                <form action='/disconnect' onSubmit={this.handleDisconnect}>
                     <button type='submit'>Disconnect</button>
                 </form>
             </div>

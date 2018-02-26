@@ -129,22 +129,21 @@ export const session = {
         })
     },
 
-    disconnect: function(req, cb){
-        let sessionPath = process.cwd() + "/session/" + cookies.get(domain);
-        fs.readFile( sessionPath, ( err, sessionData )=> {
-            if(err){console.log('Error at session.status: ', err)
+    disconnect: function(req, data, cb){
+
+        let path = process.cwd() + "/session/" + data.cookie;
+        data.cookie += ' (expired)';
+        
+        fs.unlink( path, (err) => {
+            if(err){
+                data.session = '[Session-disconnect] Unlink File error '+ error
+                console.error( data.session );
+                cb(data);
             }
-            else {
-                // update existing file
-                let session = JSON.parse(sessionData);
-                session.isLogged = false;
-                fs.writeFile(sessionPath, JSON.stringify(session), (err) =>{
-                    if(err){ console.log(err)  }
-                    console.log("visitCount++ : ", cookies.get(domain));
-                    if(cb){
-                        cb(session);
-                    }
-                });
+            else{
+                data.session = 'Expired -' + (new Date() ).getTime();
+                data.account = 'Disconnected -' + (new Date() ).getTime();
+                cb(data);
             }
         });
     }

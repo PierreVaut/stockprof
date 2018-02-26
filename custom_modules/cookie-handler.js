@@ -40,5 +40,12 @@ export const cookie = {
                 }
             }
         }
+    },
+
+    remove: function(req, data, cb){
+        let cookies = new Cookies(req.headers.cookie);
+        data.cookie = cookies.get(domain);
+        cookies.remove(domain);
+        cb(data);
     }
 }

@@ -64,6 +64,7 @@ export const db = {
 
         console.log('[DB-register] Request:', req.body);
 
+        // Check the request #1
         if(!req || req === ''){
             data.account = '[DB-register] Error: request is undefined'
             console.error( data.account );
@@ -73,6 +74,7 @@ export const db = {
             }
         }
 
+        // Check the request #2
         if( typeof(req.body.name) === '' || typeof(req.body.email) === '' || typeof(req.body.password) === ''
             ) {
                 data.account = '[DB-register] Error : Please fill in all fields'
@@ -123,9 +125,49 @@ export const db = {
                 }
             })
         }
+    },
 
-        
-        
-    
+    login: function(req, data, cb){
+        let Account = mongoose.model('Account', accountSchema);
+
+        // Check the request #1
+        if(!req || req === ''){
+            data.account = '[DB-login] Error: request is undefined'
+            console.error( data.account );
+            if(cb){
+                console.log("[DB-login] Passing CB on:", data);
+                return cb( data );
+            }
+        }
+
+        // Check the request #2
+        if( typeof(req.body.name) === '' || typeof(req.body.email) === '' || typeof(req.body.password) === ''
+            ) {
+                data.account = '[DB-login] Error : Please fill in all fields'
+                console.error( data.account );
+                if(cb){
+                    console.log("[DB-login] Passing CB on:", data);
+                    return cb( data );
+                }    
+        }
+
+        Account.findOne({email: req.body.email, password: req.body.password }, (error, result) => {
+            if (error){
+                data.account ='[DB-login] Error fetching DB: '+ error;
+                console.error( data.account );
+                if(cb){
+                    return cb( data );
+                }  
+            }
+
+            if (result) {
+                data.account = result;
+                if(cb){
+                    console.log("[DB-login] Passing CB on:", data);
+                    cb( data );
+                }         
+            }
+        })
+
     }
 }
