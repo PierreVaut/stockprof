@@ -61,12 +61,11 @@ class App extends Component {
         console.log( '[App] Submit:', this.state.post );
         fetch('/register', {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            
-            credentials: 'include',
             body: JSON.stringify(this.state.post)
         })
             .catch( (err) => {
