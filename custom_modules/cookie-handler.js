@@ -1,12 +1,12 @@
 import Cookies from 'universal-cookie';
 import {domain}  from '../config/domain';
-const params = {path: '/', httpOnly: false}
+const params = {path: '/', httpOnly: false, withCredentials: true}
 
 // provides a cookieID and a visitLast to each user
 export const cookie = {
 
     handle: function(req, cb){
-        const cookies = new Cookies(req.headers.cookie);
+        let cookies = new Cookies(req.headers.cookie);
         let cookie = cookies.get(domain);        
         if(!cookie){
             let rdm = Math.floor(Math.random() * 99999942 );

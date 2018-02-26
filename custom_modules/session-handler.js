@@ -5,7 +5,7 @@ import {domain}  from '../config/domain';
 export const session = {
 
     handle: function(req, cb){
-        const cookies = new Cookies(req.headers.cookie);
+        let cookies = new Cookies(req.headers.cookie);
         let path = process.cwd() + "/session/" + cookies.get(domain);
         fs.readFile(path, (err, data)=>{
             let session =  {}
@@ -15,7 +15,9 @@ export const session = {
                     'visitCount': 1,
                     'visitLast': (new Date() ).getTime(),
                     '_id': false,
-                    'isLogged': false
+                    'isLogged': false,
+                    'role': 0,
+                    'ip': [req.ip]
                 }
                 console.log("[Session] New file");  
             }
@@ -24,8 +26,9 @@ export const session = {
                 session = JSON.parse(data);
                 session.visitCount++;
                 session.visitLast = (new Date() ).getTime();
+                session['ip'].push(req.ip);
                 console.log("[Session] " + cookies.get(domain) + " - visitCount:", session.visitCount);  
-            }
+            } 
 
             fs.writeFile(path, JSON.stringify(session), (err) =>{
                 if(err){ console.log(err)  }
@@ -37,25 +40,33 @@ export const session = {
     },
 
     register: function(req, userId, cb){
-        const cookies = new Cookies(req.headers.cookie);
+        let cookies = new Cookies(req.headers.cookie);
         let path = process.cwd() + "/session/" + cookies.get(domain);
+        console.log("[Session] Register", cookies.get(domain)); 
+
         fs.readFile(path, (err, data)=>{
-            let session =  {}
+            let session =  {};
+
             if (err) {
+                console.log("[Session] Creating new file...", cookies.get(domain) );
                 // create default session file
                 session =  {
                     'visitCount': 1,
                     'visitLast': (new Date() ).getTime(),
                     '_id': userId,
-                    'isLogged': true
+                    'isLogged': true,
+                    'role': 1,
+                    'ip': [req.ip]
                 }
-                console.log("[Session] New file");  
+                console.log("[Session] New file", session);  
             }
             else {
                 // update existing file
+                console.log("[Session] Updating file...", cookies.get(domain));
                 session = JSON.parse(data);
-                session.visitCount++;
+                session.visitCount++;  
                 session.visitLast = (new Date() ).getTime();
+                session['ip'].push(req.ip); 
                 console.log("[Session] " + cookies.get(domain) + " - visitCount:", session.visitCount);  
             }
 

@@ -66,7 +66,7 @@ class App extends Component {
                 'Content-Type': 'application/json'
             },
             
-            //credentials: 'include',
+            credentials: 'include',
             body: JSON.stringify(this.state.post)
         })
             .catch( (err) => {

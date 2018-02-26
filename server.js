@@ -19,13 +19,20 @@ app.use(function(req, res, next) {
 
 app.post('/register', (req, res) => {
     console.log('[API] Register:', JSON.stringify(req.body) );
+    let currentCookie = cookie.handle(req);
     // create new Account
+
     db.register(req, 
         // set in session 'isLogged= true'
         (account) => {
-            if(!account){res.json({})}
+            if(!account){res.json({'status': error})}
             else{
-                session.register(req, account['_id'], (data) => res.json(data) )
+                session.register(req, account['_id'], (session) => {
+                    db.handle(req, session, data => {
+                        console.log('[DB] response:', data);
+                        res.json(data);
+                    });
+                })
             }
         }
     )

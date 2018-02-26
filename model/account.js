@@ -16,7 +16,8 @@ const accountSchema = mongoose.Schema({
             buyDate: Date
         }
     ],
-    log: String
+    log: String,
+    source: String
 });
 
 accountSchema.methods.order = function (operation, stockID, qty) {

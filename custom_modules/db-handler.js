@@ -14,7 +14,7 @@ export const db = {
 
     init: function(){
         console.log('[DB-handler] Init')
-        const Account = mongoose.model('Account', accountSchema)
+        let Account = mongoose.model('Account', accountSchema)
         database.on('error', console.error.bind(console, 'connection error:'));
         database.once('open', () => {
             console.log("[DB-handler] we're connected !")
@@ -22,10 +22,11 @@ export const db = {
     },
 
     register: function(req, cb){
-        const Account = mongoose.model('Account', accountSchema);
-
+        let Account = mongoose.model('Account', accountSchema);
+        let cookies = new Cookies(req.headers.cookie);
+        let cookie = cookies.get(domain); 
         console.log('[DB REGISTER] Request:', req.body);
-
+        console.log('[DB REGISTER] cookie:', cookie);
         let newAccount = {}
         if(!req || req === ''){
             let error = '[DB REGISTER] Error: request is undefined'
@@ -80,16 +81,16 @@ export const db = {
             })
         }
 
-        // Mise à jour du fichier de session
-            // isLogged true
-            // id = l'ID dans la base de donnée
         
         
     
     },
 
+    // return user Account info from DB
+    // or error if the user is undefined
     handle: function(req, session, cb){
-        const cookies = new Cookies(req.headers.cookie);
+        let Account = mongoose.model('Account', accountSchema);
+        let cookies = new Cookies(req.headers.cookie);
         let cookie = cookies.get(domain); 
         console.log('[DB-handler] cookie:', cookie);
         console.log('[DB-handler] session:', session);
