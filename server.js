@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
-const socketPort = process.env.PORT || 8888;
 const bodyParser = require('body-parser');
 const io = require('socket.io')();
 import { cookie } from './custom_modules/cookie-handler';
@@ -116,6 +115,6 @@ io.on('connection', (client) => {
 });
  
 
-io.listen(socketPort, () => console.log(`Socket.io: listening on port ${socketPort}`) );
+io.listen(8888, () => console.log(`Socket.io: listening on port 8888`) );
 
 app.listen(port, () => console.log(`Listening on port ${port}`) ) 

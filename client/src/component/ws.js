@@ -1,6 +1,6 @@
 import React from 'react';
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:8888');
+const socket = openSocket('localhost:8888');
 
 class Ws extends React.Component {
 
@@ -37,6 +37,7 @@ class Ws extends React.Component {
 
 handleSubmit(event){
   socket.emit('message', this.state.msg);
+  console.log('message:', this.state.msg)
   event.preventDefault();
 }
 
