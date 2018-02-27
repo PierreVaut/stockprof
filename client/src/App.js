@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import './App.css';
+import Ws from './component/ws';
 const domain = 'stockprof-carb11.herokuapp.com';
-
 
 class App extends Component {
     static propTypes = {
@@ -155,74 +155,78 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
-                Hello !<br/>
-                <h2>User info</h2>
-                <p>Data: {JSON.stringify(this.state.data)}</p>              
-                <br/>
-                <h2>Register</h2>
-                <form action='/register' onSubmit={this.handleSubmit}>
-                    <label>Email<br/>
-                        <input
-                            name= 'email'
-                            value= {this.state.value}
-                            onChange={this.handleChange}
-                        >
-                        </input><br/>
-                    </label><br/>
 
-                    <label>Name<br/>
-                        <input
-                            name= 'name'
-                            value= {this.state.value}
-                            onChange={this.handleChange}
-                        >
-                        </input><br/>
-                    </label><br/>
+                <div className="App">
+                    Hello !<br/>
+                    <h2>User info</h2>
+                    <p>Data: {JSON.stringify(this.state.data)}</p>              
+                    <br/>
+                    <h2>Register</h2>
+                    <form action='/register' onSubmit={this.handleSubmit}>
+                        <label>Email<br/>
+                            <input
+                                name= 'email'
+                                value= {this.state.value}
+                                onChange={this.handleChange}
+                            >
+                            </input><br/>
+                        </label><br/>
 
-                    <label>Password<br/>
-                        <input
-                            name= 'password'
-                            value= {this.state.value}
-                            onChange={this.handleChange}
-                        >
-                        </input><br/>
-                    </label><br/>
+                        <label>Name<br/>
+                            <input
+                                name= 'name'
+                                value= {this.state.value}
+                                onChange={this.handleChange}
+                            >
+                            </input><br/>
+                        </label><br/>
 
-                    <button type='submit'>Register</button>
-                </form>
+                        <label>Password<br/>
+                            <input
+                                name= 'password'
+                                value= {this.state.value}
+                                onChange={this.handleChange}
+                            >
+                            </input><br/>
+                        </label><br/>
 
-
-
-                <h2>Login</h2>
-                <form action='/login' onSubmit={this.handleSubmit2}>
-                    <label>Email<br/>
-                        <input
-                            name= 'email'
-                            value= {this.state.value}
-                            onChange={this.handleChange2}
-                        >
-                        </input><br/>
-                    </label><br/>
-                    <label>Password<br/>
-                        <input
-                            name= 'password'
-                            value= {this.state.value}
-                            onChange={this.handleChange2}
-                        >
-                        </input><br/>
-                    </label><br/>
-
-                    <button type='submit'>Login</button>
-                </form>
+                        <button type='submit'>Register</button>
+                    </form>
 
 
 
-                <h2>Disconnect</h2>
-                <form action='/disconnect' onSubmit={this.handleDisconnect}>
-                    <button type='submit'>Disconnect</button>
-                </form>
-            </div>
+                    <h2>Login</h2>
+                    <form action='/login' onSubmit={this.handleSubmit2}>
+                        <label>Email<br/>
+                            <input
+                                name= 'email'
+                                value= {this.state.value}
+                                onChange={this.handleChange2}
+                            >
+                            </input><br/>
+                        </label><br/>
+                        <label>Password<br/>
+                            <input
+                                name= 'password'
+                                value= {this.state.value}
+                                onChange={this.handleChange2}
+                            >
+                            </input><br/>
+                        </label><br/>
+
+                        <button type='submit'>Login</button>
+                    </form>
+
+
+
+                    <h2>Disconnect</h2>
+                    <form action='/disconnect' onSubmit={this.handleDisconnect}>
+                        <button type='submit'>Disconnect</button>
+                    </form>
+
+                    <Ws />
+                </div>
+
         );
     }
 }
