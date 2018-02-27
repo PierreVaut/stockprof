@@ -18,7 +18,7 @@ app.use(function(req, res, next) {
     next();
   });
 
-app.post('/register', (req, res) => {
+  app.post('/register', (req, res) => {
 
     let data =  {
         'cookie': '',
@@ -84,21 +84,14 @@ app.get('/api/', (req, res) => {
     // Set or retrieve cookie
     cookie.handle( req, res, data, function(data){
 
-    res.json(
-        // Set or retrieve cookie
-        cookie.handle( req, data, function(data){
+        // Set or retrieve session info
+        session.handle( req, res, data, function(data){
 
-            // Set or retrieve session info
-            session.handle( req, data, function(data){
-
-                // Pass session info to DB to get user info
-                db.handle( req, data, function(data){
-                    console.log('[DB] Response:', data);
-                    return ( data );
-                });
-            });
-        })
-    )
+            // Pass session info to DB to get user info
+            db.handle( req, res, data );
+        });
+    })
+    
 });
 
 let arrayMsg = [];
@@ -117,6 +110,6 @@ io.on('connection', (client) => {
     });
 });
 
-io.listen(8888, () => console.log(`Socket.io: listening on port 8888`));
+io.listen(8888, () => console.log(`Socket.io: listening on port 8888`) );
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`) ) 
