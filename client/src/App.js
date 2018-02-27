@@ -3,6 +3,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import './App.css';
 import Ws from './component/ws';
+import Btc from './component/btc';
 const domain = 'stockprof-carb11.herokuapp.com';
 
 class App extends Component {

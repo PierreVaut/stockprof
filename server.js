@@ -98,20 +98,29 @@ app.get('/api/', (req, res) => {
 
 let arrayMsg = [];
 io.on('connection', (client) => {
-
+    console.log('[Socket.io] Connected');
     client.on('subscribeToTimer', (interval) => {
-        console.log('client is subscribing to timer with interval ', interval);
+        console.log('[Socket.io] Client is subscribing to timer with interval ', interval);
         setInterval(() => {
           client.emit('timer', new Date());
         }, interval);
     });
 
+    client.on('subscribeToArray', () => {
+        console.log('[Socket.io] Client is subscribing to Array');
+        setInterval(() => {
+            //console.log('[Socket.io] Emmitting arrayMsg', arrayMsg)
+            client.emit('arrayMessage', arrayMsg)
+            }, 1000);
+    });
+
     client.on('message', (msg) => {
         console.log('[Socket.io] receiving Msg: ', msg);
         arrayMsg.push(msg);
-        console.log('[Socket.io] Emmitting ArrayMsg: ', arrayMsg);
-        client.emit('arrayMessage', arrayMsg)
+        
     });
+
+
 
 
 });

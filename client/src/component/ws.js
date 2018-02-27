@@ -11,12 +11,14 @@ class Ws extends React.Component {
       msgArray: [],
       timestamp: 'no timestamp yet'
     };
+
     this.subscribeToTimer((err, timestamp) => this.setState({ 
       'timestamp': timestamp
     }));
     this.subscribeToArray((err, array) => this.setState({ 
       'msgArray': array
     }));
+
     this.handleChange= this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -28,7 +30,7 @@ class Ws extends React.Component {
 
   subscribeToArray(cb) {
     socket.on('arrayMessage', array => cb(null, array));
-    socket.emit('subscribeToArray', 1000);
+    socket.emit('subscribeToArray');
   }
 
   handleChange(event) {
