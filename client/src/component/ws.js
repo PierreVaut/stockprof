@@ -1,6 +1,6 @@
 import React from 'react';
 import openSocket from 'socket.io-client';
-const socket = openSocket('localhost:8888');
+const socket = openSocket();
 
 class Ws extends React.Component {
 
