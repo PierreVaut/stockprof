@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
+const socketPort = process.env.PORT || 8888;
 const bodyParser = require('body-parser');
 const io = require('socket.io')();
 import { cookie } from './custom_modules/cookie-handler';
@@ -96,20 +97,25 @@ app.get('/api/', (req, res) => {
 
 let arrayMsg = [];
 io.on('connection', (client) => {
+
     client.on('subscribeToTimer', (interval) => {
         console.log('client is subscribing to timer with interval ', interval);
         setInterval(() => {
           client.emit('timer', new Date());
         }, interval);
     });
+
     client.on('message', (msg) => {
         console.log('[Socket.io] receiving Msg: ', msg);
         arrayMsg.push(msg);
         console.log('[Socket.io] Emmitting ArrayMsg: ', arrayMsg);
         client.emit('arrayMessage', arrayMsg)
     });
-});
 
-io.listen(8888, () => console.log(`Socket.io: listening on port 8888`) );
+
+});
+ 
+
+io.listen(socketPort, () => console.log(`Socket.io: listening on port ${socketPort}`) );
 
 app.listen(port, () => console.log(`Listening on port ${port}`) ) 
