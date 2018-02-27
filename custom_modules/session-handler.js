@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 export const session = {
 
-    handle: function(req, data, cb){
+    handle: function(req, res, data, cb){
 
         let path = process.cwd() + "/session/" + data.cookie;
 
@@ -25,13 +25,13 @@ export const session = {
 
                 fs.writeFile(path, JSON.stringify(data.session), (err) =>{
                     if(err){
-                        data.session = '[Session-handler] Write File error'+ error
+                        data.session = '[Session-handler] Write File error'+ err;
                         console.error( data.session );
-                        return data
+                        res.json(data)
                     }
                     if(cb){
                         console.log("[Session-handler] Passing CB on:", data);
-                        return cb(data);
+                        cb(data);
                     }
                 });
             }
@@ -52,18 +52,18 @@ export const session = {
                     if(err){
                         data.session = '[Session-handler] Write File error'+ error
                         console.error( data.session );
-                        return data
+                        res.json(data)
                     }
                     if(cb){
                         console.log("[Session-handler] Passing CB on:", data);
-                        return cb(data);
+                        cb( data );
                     }
                 });
             } 
         })
     },
 
-    register: function(req, data, cb){
+    register: function(req, res, data, cb){
 
         let path = process.cwd() + "/session/" + data.cookie;
 
@@ -85,19 +85,22 @@ export const session = {
                     data.session['_id'] = 'No ID...'
                 }
 
-
                 console.log("[Session] New file.");  
 
                 fs.writeFile(path, JSON.stringify(data.session), (err) =>{
                     if(err){
                         data.session = '[Session-handler] Write File error'+ error
+                        data.status = {'error': data.session}
                         console.error( data.session );
-                        return cb(data);
+                        res.json(data);
                     }
                     else{
                         if(cb){
                             console.log("[Session-handler] Passing CB on:", data);
                             cb(data);
+                        } else {
+                            console.log("[Session-handler] Response:", data);
+                            res.json(data)
                         }
                     }
                 });
@@ -118,36 +121,41 @@ export const session = {
 
                 console.log("[Session-handler] Update file.");
 
-                fs.writeFile(path, JSON.stringify(data.session), (err) =>{
+                fs.writeFile(path, JSON.stringify(data.session), (err) => {
                     if(err){
                         data.session = '[Session-handler] Write File error'+ error
+                        data.status = {'error': data.session}
                         console.error( data.session );
-                        cb(data);
+                        res.json(data);
                     }
                     if(cb){
                         console.log("[Session-handler] Passing CB on:", data);
                         cb(data);
+                    } else {
+                        console.log("[Session-handler] Response:", data);
+                        res.json(data);
                     }
                 });
             } 
         })
     },
 
-    disconnect: function(req, data, cb){
+    disconnect: function(req, res, data, cb){
 
         let path = process.cwd() + "/session/" + data.cookie;
         data.cookie += ' (expired)';
 
         fs.unlink( path, (err) => {
             if(err){
-                data.session = '[Session-disconnect] Unlink File error '+ error
+                data.session = '[Session-disconnect] Unlink File error '+ err;
+                data.status = {'error': data.session}
                 console.error( data.session );
-                cb(data);
+                res.json(data);
             }
             else{
                 data.session = 'Expired -' + (new Date() ).getTime();
                 data.account = 'Disconnected -' + (new Date() ).getTime();
-                cb(data);
+                res.json(data);
             }
         });
     }

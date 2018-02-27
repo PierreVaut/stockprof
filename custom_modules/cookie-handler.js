@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 // provides a cookieID and a visitLast to each user
 export const cookie = {
 
-    handle: function(req, data, cb){
+    handle: function(req, res, data, cb){
         
         let cookies = new Cookies(req.headers.cookie);
 
@@ -15,7 +15,7 @@ export const cookie = {
             data.cookie = cookies.get(domain);
             console.log('[Cookie-handler] New visit:', data.cookie);
             console.log('[Cookie-handler] CB:', data);
-            return cb(data)
+            cb(data)
         }
         else{
   
@@ -28,24 +28,24 @@ export const cookie = {
                     data.cookie = cookies.get(domain);
                     console.log('[Cookie-handler] Cookie created:', data.cookie);
                     console.log('[Cookie-handler] CB:', data);
-                    return cb(data);
+                    cb(data);
                 }
                 
                 else {
                     // Error on cookie creation.
                     data.cookie = '[Cookie-handler] Error on cookie creation:' + cookie + ', ' + domain +', '+ rdm;
+                    data.status = {'error': data.cookie}
                     console.error(data.cookie);
-                    console.log('[Cookie-handler] CB:', data);
-                    return cb(data);
+                    res.json(data);
                 }
             }
         }
     },
 
-    remove: function(req, data, cb){
+    remove: function(req, res, data, cb){
         let cookies = new Cookies(req.headers.cookie);
         data.cookie = cookies.get(domain);
         cookies.remove(domain);
-        return cb(data);
+        cb(data);
     }
 }
