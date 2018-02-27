@@ -2,8 +2,9 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
-const server = app.listen(port, () => console.log(`Listening on port ${port}`) );
+const server = app.listen(port);
 const io = require('socket.io')(server);
+console.log(`[Server] Node and Socket.io : listening on port ${port}`)
 import { cookie } from './custom_modules/cookie-handler';
 import { db } from './custom_modules/db-handler';
 import { session } from './custom_modules/session-handler';
