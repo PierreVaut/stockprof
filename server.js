@@ -10,16 +10,14 @@ console.log(`[Server] Node and Socket.io : listening on port ${port}`)
 import { cookie } from './custom_modules/cookie-handler';
 import { db } from './custom_modules/db-handler';
 import { session } from './custom_modules/session-handler';
-import { secret } from  './config/secret';
-
+import { apiKey, apiSecret } from './config/connect';
 
 // Trying to connect to CEX ws-api
 const WebSocket = require('ws');
 const socket = new WebSocket('wss://ws.cex.io/ws/', { perMessageDeflate: false });
 let timestamp = Math.floor(Date.now() / 1000);
 
-let apiKey = secret.apiKey || process.env.API_KEY;
-let apiSecret = secret.apiSecret || process.env.API_SECRET;
+
 
 
 let signature = crypto.createHmac('sha256', apiSecret).update(timestamp + apiKey).digest('hex')
@@ -34,11 +32,19 @@ let args = {
 
 socket.on('open', (res) => {
     socket.on('message', (el) => {
-        console.log('[CEX.io] message: ',el)
+        console.log('[CEX server] message:', el);
         let msg = JSON.parse(el);
         if(msg['e'] === 'ping'){
             console.log('[CEX client] message: {e:pong}')
             socket.send(JSON.stringify({"e":"pong"}));
+        }
+
+        if(msg.data){
+            //let parseData = JSON.parse(msg.data);
+            if((msg.data.symbol1 === "BTC") ){
+                console.log('[CEX server] tick: ', msg.data)
+            //}
+            }
         }
     });
     socket.on('open',    (el) => console.log('[CEX.io] open: ',el) );
@@ -51,11 +57,6 @@ socket.on('open', (res) => {
           rooms: ['tickers']
         })
     )
-    socket.on('tick', (data) => {
-        if(data.symbol1 === "BTC"){
-            console.log('[CEX.io] tick: ', data)
-        }
-    })
    
 });
 
