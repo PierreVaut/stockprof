@@ -106,7 +106,7 @@ app.get('/api/', (req, res) => {
 */
 
 let arrayMsg = [];
-io.on('connection', (client) => {
+io.on('connection', function(client){
     
     console.log('[Socket.io] Connected');
     client.on('subscribeToTimer', (interval) => {
