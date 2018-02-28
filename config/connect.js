@@ -1,4 +1,6 @@
 
+
+const crypto = require('crypto');
 let database = "stockprof";
 let login = process.env.USER_LOGIN;
 let pwd = process.env.DB_PWD;
@@ -17,9 +19,20 @@ else{
     console.log('Connect.js:  trying to log as ' + process.env.USER_LOGIN);
 }
 
-export const apiKey =  process.env.API_KEY;
-export const apiSecret =  process.env.API_SECRET;
+let apiKey =  process.env.API_KEY;
+let apiSecret =  process.env.API_SECRET;
+let timestamp = Math.floor(Date.now() / 1000);
+let signature = crypto.createHmac('sha256', apiSecret).update(timestamp + apiKey).digest('hex');
 
+
+export const args = {
+    e: 'auth',
+    auth: {
+      key: apiKey,
+      signature: signature,
+      timestamp: timestamp
+    }
+}
 
 export const uri = 
     "mongodb://"

@@ -12,13 +12,8 @@ class Ws extends React.Component {
       timestamp: 'no timestamp yet'
     };
 
-    this.subscribeToTimer((err, timestamp) => this.setState({ 
-      'timestamp': timestamp
-    }));
-    this.subscribeToArray((err, array) => this.setState({ 
-      'msgArray': array
-    }));
-
+    this.subscribeToTimer((err, timestamp) => this.setState({ 'timestamp': timestamp } ));
+    this.getArray((err, array) => this.setState({ 'msgArray': array }));
     this.handleChange= this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -28,9 +23,8 @@ class Ws extends React.Component {
     socket.emit('subscribeToTimer', 1000);
   }
 
-  subscribeToArray(cb) {
+  getArray(cb) {
     socket.on('arrayMessage', array => cb(null, array));
-    socket.emit('subscribeToArray');
   }
 
   handleChange(event) {
@@ -38,8 +32,8 @@ class Ws extends React.Component {
 }
 
 handleSubmit(event){
-  socket.emit('message', this.state.msg);
-  console.log('message:', this.state.msg)
+  socket.emit('chatMessage', this.state.msg);
+  console.log('[React-ws] chatMessage:', this.state.msg)
   event.preventDefault();
 }
 

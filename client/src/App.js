@@ -226,6 +226,7 @@ class App extends Component {
                     </form>
 
                     <Ws />
+                    <Btc />
                 </div>
 
         );
