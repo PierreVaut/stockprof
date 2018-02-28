@@ -122,7 +122,7 @@ io.on('connection', (client) => {
         client.emit('arrayMessage', arrayMsg)
     });
 
-    cexWS.on('open', function(){
+    /*cexWS.on('open', function(){
         cexWS.on('message', function(el){
             console.log('[CEX server] message:', el)
             let msg = JSON.parse(el);
@@ -154,12 +154,44 @@ io.on('connection', (client) => {
             rooms: ['tickers']
             })
         )
-    });
+    });*/
 
 });
 
 
+cexWS.on('open', function(){
+    cexWS.on('message', function(el){
+        console.log('[CEX server] message:', el)
+        let msg = JSON.parse(el);
 
+        //client.emit('btc', msg);
+
+        if(msg['e'] === 'ping'){
+            console.log('[CEX client] Connection active')
+            cexWS.send(JSON.stringify({"e":"pong"}));
+        }
+
+        if(msg.data){
+            if((msg.data.symbol1 === "BTC" && msg.data.symbol2 === "EUR") ){
+                console.log('[CEX server] BTC: ', msg.data)
+                let temp = msg.data;
+
+            }
+        }
+    });
+
+
+    cexWS.on('open',    (el) => console.log('[CEX.io] open: ',el) );
+    cexWS.on('error',   (el) => console.log('[CEX.io] error: ',el) );
+    cexWS.on('close',   (el) => console.log('[CEX.io] close: ',el) );
+    cexWS.send( JSON.stringify(args) );
+
+    cexWS.send(JSON.stringify({
+        e: 'subscribe',
+        rooms: ['tickers']
+        })
+    )
+});
 
 
 
@@ -170,4 +202,3 @@ io.on('connection', (client) => {
 
 
 
-//io.listen(8888, () => console.log(`Socket.io: listening on port 8888`) );
