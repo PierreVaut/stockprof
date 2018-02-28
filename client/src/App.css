@@ -1,28 +1,52 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: black;
   color: white;
+  text-align: center
 }
 
-.App-title {
-  font-size: 1.5em;
+.header{
+  background: #104f55;
+  color: white;
+  height: 80px;
+
 }
 
-.App-intro {
-  font-size: large;
+.menu{
+  height: 30px;
+  width: 30px;
+  border: 1px solid white;
+  display: inline-block;
+  position: absolute;
+  top: 25px;
+  left: 15px;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.title{
+  height: 60px;
+  font-weight: bold;
+  font-size: 28pt;
+  line-height: 60px;
+  text-align: center;
+  border: 1px solid white;
+  font-family: 'Leckerli One',serif;
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  left: 60px;
+  right: 60px;
+}
+
+.account{
+  height: 40px;
+  width: 40px;
+  border: 1px solid white;
+  border-radius: 100%;
+  display: inline-block;
+  position: absolute;
+  top: 20px;
+  right: 10px;
 }

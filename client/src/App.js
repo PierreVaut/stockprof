@@ -4,6 +4,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import './App.css';
 import Ws from './component/ws';
 import Btc from './component/btc';
+import Header from './component/header';
 const domain = 'stockprof-carb11.herokuapp.com';
 
 class App extends Component {
@@ -156,8 +157,9 @@ class App extends Component {
 
     render() {
         return (
-
+                
                 <div className="App">
+                <Header />
                     Hello !<br/>
                     <h2>User info</h2>
                     <p>Data: {JSON.stringify(this.state.data)}</p>              

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const server = app.listen(port);
 const io = require('socket.io')(server);
 const WebSocket = require('ws');
+
 console.log(`[Server] Node and Socket.io : listening on port ${port}`)
 import { cookie } from './custom_modules/cookie-handler';
 import { db } from './custom_modules/db-handler';
