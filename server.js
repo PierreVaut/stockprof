@@ -161,19 +161,19 @@ io.on('connection', function(client){
 
 cexWS.on('open', function(){
     cexWS.on('message', function(el){
-        console.log('[CEX server] message:', el)
+        console.log('[CEX server2] message:', el)
         let msg = JSON.parse(el);
 
         //client.emit('btc', msg);
 
         if(msg['e'] === 'ping'){
-            console.log('[CEX client] Connection active')
+            console.log('[CEX client2] Connection active')
             cexWS.send(JSON.stringify({"e":"pong"}));
         }
 
         if(msg.data){
             if((msg.data.symbol1 === "BTC" && msg.data.symbol2 === "EUR") ){
-                console.log('[CEX server] BTC: ', msg.data)
+                console.log('[CEX server2] BTC: ', msg.data)
                 let temp = msg.data;
 
             }
@@ -181,9 +181,9 @@ cexWS.on('open', function(){
     });
 
 
-    cexWS.on('open',    (el) => console.log('[CEX.io] open: ',el) );
-    cexWS.on('error',   (el) => console.log('[CEX.io] error: ',el) );
-    cexWS.on('close',   (el) => console.log('[CEX.io] close: ',el) );
+    cexWS.on('open',    (el) => console.log('[CEX.io2] open: ',el) );
+    cexWS.on('error',   (el) => console.log('[CEX.io2] error: ',el) );
+    cexWS.on('close',   (el) => console.log('[CEX.io2] close: ',el) );
     cexWS.send( JSON.stringify(args) );
 
     cexWS.send(JSON.stringify({
