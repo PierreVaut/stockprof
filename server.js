@@ -4,10 +4,62 @@ const port = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
 const server = app.listen(port);
 const io = require('socket.io')(server);
+const crypto = require('crypto');
+
 console.log(`[Server] Node and Socket.io : listening on port ${port}`)
 import { cookie } from './custom_modules/cookie-handler';
 import { db } from './custom_modules/db-handler';
 import { session } from './custom_modules/session-handler';
+import { secret } from  './config/secret';
+
+
+// Trying to connect to CEX ws-api
+const WebSocket = require('ws');
+const socket = new WebSocket('wss://ws.cex.io/ws/', { perMessageDeflate: false });
+let timestamp = Math.floor(Date.now() / 1000);
+
+let apiKey = secret.apiKey || process.env.API_KEY;
+let apiSecret = secret.apiSecret || process.env.API_SECRET;
+
+
+let signature = crypto.createHmac('sha256', apiSecret).update(timestamp + apiKey).digest('hex')
+let args = {
+    e: 'auth',
+    auth: {
+      key: apiKey,
+      signature: signature,
+      timestamp: timestamp
+    }
+}
+
+socket.on('open', (res) => {
+    socket.on('message', (el) => {
+        console.log('[CEX.io] message: ',el)
+        let msg = JSON.parse(el);
+        if(msg['e'] === 'ping'){
+            console.log('[CEX client] message: {e:pong}')
+            socket.send(JSON.stringify({"e":"pong"}));
+        }
+    });
+    socket.on('open',    (el) => console.log('[CEX.io] open: ',el) );
+    socket.on('error',   (el) => console.log('[CEX.io] error: ',el) );
+    socket.on('close',   (el) => console.log('[CEX.io] close: ',el) );
+    socket.send( JSON.stringify(args) );
+
+    socket.send(JSON.stringify({
+          e: 'subscribe',
+          rooms: ['tickers']
+        })
+    )
+    socket.on('tick', (data) => {
+        if(data.symbol1 === "BTC"){
+            console.log('[CEX.io] tick: ', data)
+        }
+    })
+   
+});
+
+
 
 db.init();
 
