@@ -121,6 +121,7 @@ export const db = {
     },
 
     login: function(req, res, data, cb){
+        console.log('[DB-login] starting', data)
         let Account = mongoose.model('Account', accountSchema);
 
         // Check the request #1
@@ -141,6 +142,7 @@ export const db = {
         }
 
         Account.findOne({email: req.body.email, password: req.body.password }, (error, result) => {
+            console.log('[DB-login] Checking DB')
             if (error){
                 data.account ='[DB-login] Error fetching DB: '+ error;
                 data.status = {'error': data.account}

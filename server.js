@@ -46,6 +46,7 @@ app.use(function(req, res, next) {
 });
 
 app.post('/login', (req, res) => {
+    console.log('[API] Login', req.body)
     let data =  {
         'cookie': '',
         'session': {},
@@ -115,19 +116,19 @@ const cexioWS = function(client){
     cexWS.on('open', function(){
         console.log('[cexioWS] - open'); 
         cexWS.on('message', function(el){
-            console.log('[CEX server] message:', el)
+            //console.log('[CEX server] message:', el)
             let msg = JSON.parse(el);
             if(client){
                 client.emit('btc', msg);
             }
             if(msg['e'] === 'ping'){
-                console.log('[CEX client] Connection active')
+                //console.log('[CEX client] Connection active')
                 cexWS.send(JSON.stringify({"e":"pong"}));
             }
     
             if(msg.data){
                 if((msg.data.symbol1 === "BTC" && msg.data.symbol2 === "EUR") ){
-                    console.log('[CEX server] BTC: ', msg.data)
+                    //console.log('[CEX server] BTC: ', msg.data)
                     let temp = msg.data;
     
                 }
