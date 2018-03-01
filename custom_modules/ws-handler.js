@@ -2,21 +2,25 @@ import { args } from '../config/connect';
 import { server } from '../api/routes.js';
 const io = require('socket.io')(server);
 const WebSocket = require('ws');
+const chalk = require('chalk');
+console.log(chalk.green('[Chalk] Hello world!'));
 
 let arrayMsg = [];
+let data = 'data incoming...'
 
-export const cexioWS = function(client){
-    // Connect to CEX.io ws-APi
+const cexioWS = function(client){
     
+    // Connect to CEX.io ws-APi
     const cexWS = new WebSocket('wss://ws.cex.io/ws/', { perMessageDeflate: false });
     console.log('[cexioWS] - starting'); 
     cexWS.on('open', function(){
-        console.log('[cexioWS] - open'); 
+        console.log(chalk.green('[cexioWS] - open') ); 
         cexWS.on('message', function(el){
-            //console.log('[CEX server] message:', el)
+            //console.log('[CEX server] message:', el);
             let msg = JSON.parse(el);
+            
             if(client){
-                client.emit('btc', msg);
+                client.emit('btc', data);
             }
             if(msg['e'] === 'ping'){
                 //console.log('[CEX client] Connection active')
@@ -24,9 +28,12 @@ export const cexioWS = function(client){
             }
     
             if(msg.data){
-                if((msg.data.symbol1 === "BTC" && msg.data.symbol2 === "EUR") ){
-                    //console.log('[CEX server] BTC: ', msg.data)
-                    let temp = msg.data;
+                if(msg.data.symbol1 ){
+                    //console.log(chalk.green('[CEX server] BTC'));
+                    
+                    console.log('[CEX server]', JSON.stringify(msg) );
+                    data = msg.data;
+                    
     
                 }
             }
@@ -63,6 +70,7 @@ export const ioServer = io.on('connection', function(client){
         client.emit('arrayMessage', arrayMsg)
     });
 
+    //
     cexioWS(client);
 
 });

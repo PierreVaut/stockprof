@@ -9,8 +9,6 @@ import { session } from '../custom_modules/session-handler';
 export const port = process.env.PORT || 5000;
 export const server = app.listen(port);
 
-
-
 app.use(express.static('client/build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

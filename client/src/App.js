@@ -172,7 +172,7 @@ class App extends Component {
                 <Header />
 
                 <SubHeader
-                    name = {(this.state.data.account.name)?(this.state.data.account.name):'Guest ('+ this.state.data.session.ip +')'} 
+                    name = {(this.state.data.account.name)?(this.state.data.account.name):'Guest ('+ this.state.data.session.ip[this.state.data.session.ip.length - 1] +')'} 
                     lastVisit = {this.state.data.session.visitLast}
                 />
                 

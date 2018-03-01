@@ -1,4 +1,6 @@
 
+
+
 // Routes and API requests handling
 import { port } from './api/routes.js';
 
@@ -7,9 +9,8 @@ import { db } from './custom_modules/db-handler';
 db.init();
 
 // Websockets
-import { cexioWS, ioServer } from './custom_modules/ws-handler.js';
+import { ioServer } from './custom_modules/ws-handler.js';
 
 console.log(`[Server] Node and Socket.io : listening on port ${port}`)
-
 
 
