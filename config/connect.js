@@ -16,7 +16,7 @@ if(!process.env.API_KEY || !process.env.API_SECRET){
     console.log('Do not forget to SET API_SECRET and API_KEY !!')
 }
 else{
-    console.log('Connect.js:  trying to log as ' + process.env.USER_LOGIN);
+    console.log('[Connect-handler] Trying to log as ' + process.env.USER_LOGIN);
 }
 
 let apiKey =  process.env.API_KEY;
