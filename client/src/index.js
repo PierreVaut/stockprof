@@ -1,23 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { CookiesProvider } from 'react-cookie';
+import reducer from './reducers'
+import IndexWithCookies from './indexWithCookies';
 import './index.css';
-import App from './App';
-import {unregister} from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 // import registerServiceWorker from './registerServiceWorker';
 
-import { CookiesProvider } from 'react-cookie';
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import App from './components/App'
-import reducer from './reducers'
-
-
-const store = createStore(reducer);
+let store = createStore(reducer)
 
 ReactDOM.render(
     <CookiesProvider>
         <Provider store={store}>
-            <App />
+            <IndexWithCookies />
         </Provider>
     </CookiesProvider>
     , document.getElementById('root'));
