@@ -1,31 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-
-class SubHeader extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {visible: true}
-        this.close = this.close.bind(this);
-    }
-
-    close(){
-        this.setState({visible: false})
-    }
-
-    render(){
-        if(this.state.visible){
-            return(
-                <div className = 'subHeader'>
-                    <span className= 'subHeader-close' onClick= {this.close}> X </span>
-                        <div className= 'subHeader-content'>
-                            <p>Hello {this.props.name}</p>
-                            <p>Last visit: {new Date(this.props.lastVisit).toLocaleString()}</p>
-                        </div>
-                </div>
-        )} else {
-            return <div className = 'subHeader' id='notVisible'></div>
-        }
+const SubHeader = (props) =>{
+    console.log('[Subheader]', props)
+    if(1){
+        return(
+            <div className = 'subHeader'>
+                <span className= 'subHeader-close' onClick= {this.close}> X </span>
+                    <div className= 'subHeader-content'>
+                        <p>Hello {props.account.name}</p>
+                        <p>Last visit: {new Date(props.session.lastVisit).toLocaleString()}</p>
+                    </div>
+            </div>
+    )} else {
+        return <div className = 'subHeader' id='notVisible'></div>
     }
 }
 
-export default SubHeader
+
+const mapStateToProps = state => state.dataReducer
+
+export default connect(mapStateToProps)(SubHeader);

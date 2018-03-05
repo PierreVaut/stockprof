@@ -1,5 +1,5 @@
 import React from 'react';
-
+import SubHeader  from './subHeader';
 
 export default class Header extends React.Component {
 
@@ -10,10 +10,13 @@ export default class Header extends React.Component {
 
     render() {
         return(
-            <div className = 'header'>
-                <div className = 'menu'></div>
-                <div className = 'title'>Stocks</div>
-                <div className = 'account'></div>
+            <div>
+                <div className = 'header'>
+                    <div className = 'menu'></div>
+                    <div className = 'title'>Stocks</div>
+                    <div className = 'account'></div>
+                </div>
+                <SubHeader />
             </div>
         )
     }
