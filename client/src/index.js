@@ -8,11 +8,11 @@ import { CookiesProvider } from 'react-cookie';
 import reducer             from './reducers'
 import { unregister }      from './registerServiceWorker';
 import IndexWithCookies    from './indexWithCookies';
-import { fetchApi }       from './actions/'
+import { apiFetch }       from './actions/'
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware) )
 
-store.dispatch( () => fetchApi() );
+store.dispatch( () => apiFetch() );
 
 ReactDOM.render(
     <CookiesProvider>

@@ -1,16 +1,19 @@
-import * as action from './actionType';
+import * as actionType from './actionType';
 
 
 export const toggleSubheader = (visible) => {
-    type: action.TOGGLE_SUBHEADER,
+    type: actionType.TOGGLE_SUBHEADER,
     visible
 }
 
-
-export const fetchApi = () => {
-    type: action.API_FETCH
+export const apiFetch = () => {
+    type: actionType.API_FETCH
 }
 
-export const postApi = () => {
-    type: action.API_POST
+export const apiPost = () => {
+    type: actionType.API_POST
+}
+
+export const requestBody = () => {
+    return {type: actionType.REQUEST_BODY}
 }

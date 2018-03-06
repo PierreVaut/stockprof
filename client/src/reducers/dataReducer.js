@@ -1,4 +1,4 @@
-import * as action from '../actions/actionType'
+import * as actionType from '../actions/actionType'
 import * as params from '../config/params'
 
 
@@ -10,7 +10,8 @@ let initialState = {
         ip:['ip']
     },
     account: { name: 'Guest' },
-    status: 'initializing...'
+    status: 'initializing...',
+    requestBody:{}
 }
 
 
@@ -18,16 +19,15 @@ const dataReducer = (state = initialState, action) => {
 
     switch (action.type){
 
-        case action.API_FETCH:
-            fetch('/api', params.get)
-                .catch( err => { 
-                    return Object.assign({}, state, {status: err} )   })
-                .then( result => result.json.then(
-                    json => { 
-                        return Object.assign({}, state, json )   } )
-                )
-        case action.API_POST:
+        case actionType.API_FETCH:
             return state
+        case actionType.API_POST:
+            return state
+        case actionType.REQUEST_BODY:
+            console.log('dataReducer !', state)
+            let newState = Object.assign({}, state)
+            newState.requestBody = {'test': 'glut'}
+            return newState
         default:
             return state
 
