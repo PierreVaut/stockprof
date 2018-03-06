@@ -11,7 +11,7 @@ let initialState = {
     },
     account: { name: 'Guest' },
     status: 'initializing...',
-    requestBody:{}
+    requestBody:{email: '', pwd: '', name: ''}
 }
 
 
@@ -24,9 +24,10 @@ const dataReducer = (state = initialState, action) => {
         case actionType.API_POST:
             return state
         case actionType.REQUEST_BODY:
-            console.log('dataReducer !', state)
-            let newState = Object.assign({}, state)
-            newState.requestBody = {'test': 'glut'}
+            console.log('[dataReducer]', action)
+            let newRequestBody = state.requestBody;
+            newRequestBody[action.field] = action.content;
+            let newState = Object.assign({}, state, {requestBody: newRequestBody} )
             return newState
         default:
             return state

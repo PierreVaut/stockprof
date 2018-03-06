@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux';
 import { requestBody } from '../actions/'
-import { apiFetch } from '../actions/'
+import { apiPost } from '../actions/'
 import Login from '../component/login'
 
 
@@ -12,7 +12,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch) {
     return { 
-        onChange: () => { dispatch( requestBody() ) }
+        onChange: (field, content) => { dispatch( requestBody(field, content) ) },
+        onSubmit: stuff => { dispatch( apiPost( stuff ) ) },
     }
 }
 const LoginContainer =  connect(

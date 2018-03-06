@@ -15,9 +15,10 @@ class Login extends React.Component {
         e.preventDefault();
     }
 
-    handleChange(){
-        console.log( '[App] Login:', this.props );
-        this.props.onChange()
+    handleChange(field, content){
+
+        console.log( '[HandleChange] field:', field, ' content:', content );
+        this.props.onChange(field, content)
     }
 
 
@@ -29,16 +30,16 @@ class Login extends React.Component {
                     <label>Email<br/>
                         <input
                             name= 'email'
-                            value= ''
-                            onChange={e => { this.handleChange() }}
+                            value= {this.props.data.dataReducer.requestBody.email}
+                            onChange={e => { this.handleChange('email', e.target.value) }}
                         >
                         </input><br/>
                     </label><br/>
                     <label>Password<br/>
                         <input
                             name= 'password'
-                            value= ''
-                            onChange= {e => { this.handleChange() }}
+                            value= {this.props.data.dataReducer.requestBody.pwd}
+                            onChange={e => { this.handleChange('pwd', e.target.value) }}
                         >
                         </input><br/>
                     </label><br/>
