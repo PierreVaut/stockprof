@@ -13,7 +13,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch) {
     return { 
         onChange: (field, content) => { dispatch( requestBody(field, content) ) },
-        onSubmit: stuff => { dispatch( apiPost( stuff ) ) },
+        onSubmit: () => { dispatch( apiPost( ) ) },
     }
 }
 const LoginContainer =  connect(

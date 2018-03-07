@@ -1,5 +1,5 @@
 import * as actionType from '../actions/actionType'
-import * as params from '../config/params'
+
 
 
 let initialState = {
@@ -16,19 +16,21 @@ let initialState = {
 
 
 const dataReducer = (state = initialState, action) => {
-
+    console.log('[DataReducer] action:', action);
     switch (action.type){
 
-        case actionType.API_FETCH:
-            return state
+        case actionType.RECEIVE_DATA:
+            return Object.assign({}, state, {fetch: action.data} )
+
         case actionType.API_POST:
+            console.log('[DataReducer] action:', action);
             return state
+
         case actionType.REQUEST_BODY:
-            console.log('[dataReducer]', action)
             let newRequestBody = state.requestBody;
             newRequestBody[action.field] = action.content;
-            let newState = Object.assign({}, state, {requestBody: newRequestBody} )
-            return newState
+            return Object.assign({}, state, {requestBody: newRequestBody} )
+
         default:
             return state
 

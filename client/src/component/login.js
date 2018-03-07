@@ -10,14 +10,13 @@ class Login extends React.Component {
     }
 
     handleSubmit(e){
-        console.log( '[HandleSubmit]:', this.props );
-        this.props.onChange()
+        // console.log( '[HandleSubmit]:', this.props );
+        this.props.onSubmit()
         e.preventDefault();
     }
 
     handleChange(field, content){
-
-        console.log( '[HandleChange] field:', field, ' content:', content );
+        // console.log( '[HandleChange] field:', field, ' content:', content );
         this.props.onChange(field, content)
     }
 

@@ -2,17 +2,18 @@ import './index.css';
 import React        from 'react';
 import ReactDOM     from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware     from 'redux-thunk'
+import thunk        from 'redux-thunk'
 import { CookiesProvider } from 'react-cookie';
 import reducer             from './reducers'
 import { unregister }      from './registerServiceWorker';
 import IndexWithCookies    from './indexWithCookies';
-import { apiFetch }       from './actions/'
+import { apiFetch }        from './actions/'
+import { createStore, applyMiddleware } from 'redux';
 
-const store = createStore(reducer, applyMiddleware(thunkMiddleware) )
 
-store.dispatch( () => apiFetch() );
+const store = createStore(reducer, applyMiddleware(thunk) )
+
+store.dispatch( apiFetch() );
 
 ReactDOM.render(
     <CookiesProvider>

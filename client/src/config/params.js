@@ -2,8 +2,9 @@
 
 export const get = { 
     method: 'GET',
+    credentials: 'include',
     accept: 'application/json',
-    credentials: 'include'
+    
 };
 
 export const post = {

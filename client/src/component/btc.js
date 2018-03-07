@@ -16,7 +16,7 @@ class Btc extends React.Component {
 
     getBTC(cb) {
         socket.on('btc',  msg => {
-            console.log('[React] socket.io client:', msg)
+            //console.log('[React] socket.io client:', msg)
             cb(null, msg)
         });
         
