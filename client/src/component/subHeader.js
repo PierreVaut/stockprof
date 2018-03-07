@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 
 const SubHeader = (props) =>{
     console.log('[Subheader]', props)
-    if(1){
+    if(props.viewReducer.visible.subheader){
         return(
             <div className = 'subHeader'>
                 <span className= 'subHeader-close' onClick= {this.close}> X </span>
                     <div className= 'subHeader-content'>
-                        <p>Hello {props.account.name}</p>
-                        <p>Last visit: {new Date(props.session.lastVisit).toLocaleString()}</p>
+                        <p>Hello {props.dataReducer.account.name}</p>
+                        <p>Last visit: {new Date(props.dataReducer.session.lastVisit).toLocaleString()}</p>
                     </div>
             </div>
     )} else {
@@ -18,6 +18,6 @@ const SubHeader = (props) =>{
 }
 
 
-const mapStateToProps = state => state.dataReducer
+const mapStateToProps = state => state
 
 export default connect(mapStateToProps)(SubHeader);

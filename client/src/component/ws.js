@@ -33,7 +33,7 @@ class Ws extends React.Component {
 
 handleSubmit(event){
   socket.emit('chatMessage', this.state.msg);
-  console.log('[React-ws] chatMessage:', this.state.msg)
+  //console.log('[React-ws] chatMessage:', this.state.msg)
   event.preventDefault();
 }
 
