@@ -19,22 +19,22 @@ const cexioWS = function(client){
             //console.log('[CEX server] message:', el);
             let msg = JSON.parse(el);
             
-            if(client){
-                client.emit('btc', data);
+            if(client && msg.data){
+                
             }
             if(msg['e'] === 'ping'){
-                //console.log('[CEX client] Connection active')
+                console.log('[CEX client] Connection active')
                 cexWS.send(JSON.stringify({"e":"pong"}));
             }
     
-            if(msg.data){
-                if(msg.data.symbol1 ){
-                    //console.log(chalk.green('[CEX server] BTC'));
-                    
-                    console.log('[CEX server]', JSON.stringify(msg) );
-                    data = msg.data;
-                    
-    
+            if(client && msg.data){
+                if(msg.data.symbol1){            
+                    if(msg.data.symbol2 === 'USD'){
+                        console.log(chalk.green('[CEX server]', JSON.stringify(msg) ) );
+                        client.emit('btc', msg.data);
+                    } else {
+                        console.log('[CEX server] BTC', JSON.stringify(msg.data) );
+                    }
                 }
             }
         });

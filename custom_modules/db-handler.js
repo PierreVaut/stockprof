@@ -13,7 +13,6 @@ const database = mongoose.connection;
 export const db = {
 
     init: function(){
-
         let Account = mongoose.model('Account', accountSchema)
         database.on('error', console.error.bind(console, 'connection error:'));
         database.once('open', () => {

@@ -19,11 +19,11 @@ else{
     console.log('[Connect-handler] Trying to log as ' + process.env.USER_LOGIN);
 }
 
+// CEX.io websocket service
 let apiKey =  process.env.API_KEY;
 let apiSecret =  process.env.API_SECRET;
 let timestamp = Math.floor(Date.now() / 1000);
 let signature = crypto.createHmac('sha256', apiSecret).update(timestamp + apiKey).digest('hex');
-
 
 export const args = {
     e: 'auth',
@@ -34,6 +34,7 @@ export const args = {
     }
 }
 
+// MongoDB
 export const uri = 
     "mongodb://"
     + login
