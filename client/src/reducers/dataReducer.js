@@ -23,9 +23,6 @@ const dataReducer = (state = initialState, action) => {
             console.log('[DataReducer] action:', action);
             return Object.assign({}, state, action.data )
 
-        case actionType.API_POST:
-            console.log('[DataReducer] action:', action);
-            return state
 
         case actionType.REQUEST_BODY:
             console.log('[DataReducer] action:', action);

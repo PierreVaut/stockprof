@@ -5,9 +5,9 @@ export const toggleSubheader = (visible) => {
     return {type: actionType.TOGGLE_SUBHEADER, visible}
 }
 
-export const apiPost = (body) => {
+export const apiPost = (body, url) => {
     return dispatch => {
-        return fetch('/login', params.post(body))
+        return fetch(url, params.post(body))
         .then(response => {
             console.log('[API Fetch] success:', response);
             response.json().then(

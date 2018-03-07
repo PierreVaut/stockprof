@@ -11,8 +11,8 @@ class Login extends React.Component {
 
     handleSubmit(e){
         let body = {email: this.props.data.dataReducer.requestBody.email, password: this.props.data.dataReducer.requestBody.pwd}
-        console.log( '[HandleSubmit]:', body );
-        this.props.onSubmit(body)
+        console.log( '[HandleSubmit] Login:', body );
+        this.props.onSubmit(body, '/login')
         e.preventDefault();
     }
 
@@ -26,7 +26,7 @@ class Login extends React.Component {
         return(
             <div className = 'login'>
             <h2>Login</h2>
-                <form action='/login' onSubmit={ e => this.handleSubmit(e)}>
+                <form onSubmit={ e => this.handleSubmit(e)}>
                     <label>Email<br/>
                         <input
                             name= 'email'

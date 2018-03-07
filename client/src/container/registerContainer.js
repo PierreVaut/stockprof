@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { requestBody } from '../actions/'
 import { apiPost } from '../actions/'
-import Login from '../component/login'
+import Register from '../component/register'
 
 
 function mapStateToProps(state){
@@ -14,9 +14,9 @@ function mapDispatchToProps(dispatch) {
         onSubmit: (body, url) => { dispatch( apiPost(body, url) ) },
     }
 }
-const LoginContainer =  connect(
+const RegisterContainer =  connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login);
+)(Register);
 
-export default LoginContainer
+export default RegisterContainer

@@ -9,5 +9,5 @@
 export const TOGGLE_SUBHEADER = 'TOGGLE_SUBHEADER';
 export const API_FETCH = 'API_FETCH';
 export const RECEIVE_DATA = 'RECEIVE_DATA';
-export const API_POST = 'API_POST';
+
 export const REQUEST_BODY = 'REQUEST_BODY'; 
