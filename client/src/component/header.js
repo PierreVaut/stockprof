@@ -1,25 +1,17 @@
 import React from 'react';
-import SubHeader  from './subHeader';
+import SubheaderContainer  from '../container/subheader';
+import { connect } from 'react-redux';
+import { toggleSubheader } from '../actions/'
 
-export default class Header extends React.Component {
+const Header = () => ( 
+    <div>
+        <div className = 'header'>
+            <div className = 'menu'></div>
+            <div className = 'title'>Stocks</div>
+            <div className = 'account'></div>
+        </div>
+        <SubheaderContainer />
+    </div>
+)
 
-    constructor(props) {
-        super(props);
-    this.state= {}
-    }
-
-    render() {
-        return(
-            <div>
-                <div className = 'header'>
-                    <div className = 'menu'></div>
-                    <div className = 'title'>Stocks</div>
-                    <div className = 'account'></div>
-                </div>
-                <SubHeader />
-            </div>
-        )
-    }
-
-
-}
+export default Header

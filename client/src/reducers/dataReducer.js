@@ -16,17 +16,19 @@ let initialState = {
 
 
 const dataReducer = (state = initialState, action) => {
-    console.log('[DataReducer] action:', action);
+    
     switch (action.type){
 
         case actionType.RECEIVE_DATA:
-            return Object.assign({}, state, {fetch: action.data} )
+            console.log('[DataReducer] action:', action);
+            return Object.assign({}, state, action.data )
 
         case actionType.API_POST:
             console.log('[DataReducer] action:', action);
             return state
 
         case actionType.REQUEST_BODY:
+            console.log('[DataReducer] action:', action);
             let newRequestBody = state.requestBody;
             newRequestBody[action.field] = action.content;
             return Object.assign({}, state, {requestBody: newRequestBody} )

@@ -52,9 +52,6 @@ export const db = {
             res.json( data ); 
         }
             
-        
-
- 
     },
 
     register: function(req, res, data, cb){

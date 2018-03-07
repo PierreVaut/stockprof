@@ -5,8 +5,6 @@ export const toggleSubheader = (visible) => {
     return {type: actionType.TOGGLE_SUBHEADER, visible}
 }
 
-
-
 export const apiPost = () => {
     return {type: actionType.API_POST}
 }

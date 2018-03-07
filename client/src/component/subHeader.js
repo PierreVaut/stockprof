@@ -1,15 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-const SubHeader = (props) =>{
+export const Subheader = (props) => {
     console.log('[Subheader]', props)
     if(props.viewReducer.visible.subheader){
         return(
             <div className = 'subHeader'>
-                <span className= 'subHeader-close' onClick= {this.close}> X </span>
+                <span className= 'subHeader-close' onClick= { ()=>props.onClick()  }> X </span>
                     <div className= 'subHeader-content'>
-                        <p>Hello {props.dataReducer.account.name}</p>
-                        <p>Last visit: {new Date(props.dataReducer.session.lastVisit).toLocaleString()}</p>
+                        <p>Hello {(props.dataReducer.account.name)?props.dataReducer.account.name:'Guest'}</p>
+                        <p>Last visit: {(props.dataReducer.session.visitLast)?
+                        new Date(props.dataReducer.session.visitLast).toLocaleString():
+                        new Date(Date.now()).toLocaleString()}</p>
                     </div>
             </div>
     )} else {
@@ -18,6 +19,4 @@ const SubHeader = (props) =>{
 }
 
 
-const mapStateToProps = state => state
 
-export default connect(mapStateToProps)(SubHeader);
