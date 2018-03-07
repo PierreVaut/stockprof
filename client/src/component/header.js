@@ -1,7 +1,5 @@
 import React from 'react';
 import SubheaderContainer  from '../container/subheader';
-import { connect } from 'react-redux';
-import { toggleSubheader } from '../actions/'
 
 const Header = () => ( 
     <div>

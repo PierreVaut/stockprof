@@ -10,8 +10,9 @@ class Login extends React.Component {
     }
 
     handleSubmit(e){
-        // console.log( '[HandleSubmit]:', this.props );
-        this.props.onSubmit()
+        let body = {email: this.props.data.dataReducer.requestBody.email, password: this.props.data.dataReducer.requestBody.pwd}
+        console.log( '[HandleSubmit]:', body );
+        this.props.onSubmit(body)
         e.preventDefault();
     }
 
@@ -45,7 +46,6 @@ class Login extends React.Component {
 
                     <button type='submit'>Login</button>
                 </form>
-                <p>{/*JSON.stringify(this.props.data)*/}</p>
             </div>
         )
     }
