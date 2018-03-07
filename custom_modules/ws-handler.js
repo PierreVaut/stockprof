@@ -1,5 +1,6 @@
 import { args } from '../config/connect';
 import { server } from '../api/routes.js';
+import { priceDB } from './price-handler';
 const io = require('socket.io')(server);
 const WebSocket = require('ws');
 const chalk = require('chalk');
@@ -31,7 +32,9 @@ const cexioWS = function(client){
                 if(msg.data.symbol1){            
                     if(msg.data.symbol2 === 'USD'){
                         console.log(chalk.green('[CEX server]', JSON.stringify(msg) ) );
-                        client.emit('btc', msg.data);
+                        // client.emit('btc', msg.data);
+                        // priceDB.handle(msg.data)
+                         priceDB.handle(msg.data, function(docs){client.emit('btc', docs)} )
                     } else {
                         console.log('[CEX server] BTC', JSON.stringify(msg.data) );
                     }

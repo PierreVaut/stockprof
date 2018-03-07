@@ -1,7 +1,5 @@
 import { uri } from '../config/connect';
 import { accountSchema } from '../model/account';
-import { request } from 'https';
-import { domain }  from '../config/domain';
 import Cookies from 'universal-cookie';
 
 const bodyParser = require('body-parser');
@@ -13,7 +11,7 @@ const database = mongoose.connection;
 export const db = {
 
     init: function(){
-        let Account = mongoose.model('Account', accountSchema)
+        const Account = mongoose.model('Account', accountSchema)
         database.on('error', console.error.bind(console, 'connection error:'));
         database.once('open', () => {
             console.log("[DB Init] we're connected !")
@@ -24,7 +22,7 @@ export const db = {
     // or error if the user is undefined
     handle: function(req, res, data, cb){
         
-        let Account = mongoose.model('Account', accountSchema)
+        const Account = mongoose.model('Account', accountSchema)
         console.log('[DB-handler] Starting: ', data)
         if(data.session.isLogged){
             Account.findOne({'_id': data.session['_id']}, (err, result) => {              

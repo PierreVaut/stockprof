@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const priceSchema = mongoose.Schema({
+export const priceSchema = mongoose.Schema({
     timestamp: { type: Date, default: Date.now },
     symbol1: String,
     symbol2: String,
@@ -8,4 +8,3 @@ const priceSchema = mongoose.Schema({
     open24: Number
 })
 
-export { priceSchema }
