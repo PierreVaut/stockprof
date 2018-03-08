@@ -1,6 +1,11 @@
 import React from 'react';
 import Hbg from '../container/hbg';
-import SubheaderContainer  from '../container/subheaderContainer';
+import { connect } from 'react-redux';
+import Subheader  from '../container/subheaderContainer';
+
+const mapDispatchToProps = dispatch => {
+    return { disconnect: () => { dispatch(  ) } }
+}
 
 const Header = () => ( 
     <div>
@@ -11,7 +16,7 @@ const Header = () => (
             <div className = 'title'>Stocks</div>
             <div className = 'account'></div>
         </div>
-        <SubheaderContainer />
+        <Subheader />
     </div>
 )
 

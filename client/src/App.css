@@ -76,4 +76,7 @@ body {
 .hbg{
   width: 80px;
   background: #d8d4d5;
+  position: relative;
+  top:  40px;
+
 }
