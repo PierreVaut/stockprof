@@ -85,25 +85,10 @@ export const ioServer = io.on('connection', function(client){
                     console.log(chalk.blue('[WS-handler] Emitting...'))
                 }
             )
-        }, interval);
+        }, 4000);
 });
 
-    client.on('userList', () => {
-        console.log(chalk.blue('[WS-handler] userList update...'))
-        setInterval(
-            ()=> {
-                
-                db.getUsers(
-                    function(list){
-                        client.emit('userList', list)
-                        console.log(chalk.blue('[WS-handler] Emitting...'))
-                    }
-                )
-            }, 1000
-        )
 
-        }
-    )
     
 
     //
