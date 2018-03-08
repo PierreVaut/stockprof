@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { toggleSubheader } from '../actions/'
+import { toggleVisibility } from '../actions/'
 
 export const Subheader = (props) => {
     console.log('[Subheader]', props)
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => {
     return {
       onClick: () => {
         console.log('[Subheader Cont] click')
-        dispatch( toggleSubheader() )
+        dispatch( toggleVisibility('subheader') )
       }
     }
   }

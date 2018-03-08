@@ -6,7 +6,7 @@
  * 
 */
 
-export const TOGGLE_SUBHEADER = 'TOGGLE_SUBHEADER';
+export const TOGGLE_VISIBILITY = 'TOGGLE_VISIBILITY';
 export const API_FETCH = 'API_FETCH';
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 

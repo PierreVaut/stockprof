@@ -9,9 +9,11 @@ let initialState = {
 
 const viewReducer = (state = initialState, action) => {
     switch (action.type){
-        case actionType.TOGGLE_SUBHEADER:
+        case actionType.TOGGLE_VISIBILITY:
             console.log('[ViewReducer] action:', action);
-            return  Object.assign({}, state, {visible:{subheader: !state.visible.subheader}})
+            let newVisible = {...state.visible};
+            newVisible[action.target] = !newVisible[action.target]
+            return  {...state, visible: newVisible }
         default:
             return state
 

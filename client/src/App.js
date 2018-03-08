@@ -1,9 +1,12 @@
 import React from 'react';
 import './App.css';
 import Header     from './component/header';
-import RawData    from './container/rawData';
-import Menu    from './container/menu';
-import Social     from './component/social';
+
+
+import Play       from './component/play';
+import Menu       from './container/menu';
+import Dashboard  from './component/dashboard';
+
 import Btc        from './component/btc';
 import Login      from './container/login';
 import Register   from './container/register';
@@ -18,12 +21,11 @@ const App = () => (
         <HashRouter>
             <div>
                 <Header />             
-                <RawData />
 
                 <Switch>
-                    <Route exact path = "/"           component= { Social }/>
+                    <Route exact path = "/"           component= { Play }/>
                     <Route exact path = "/menu"       component= { Menu }/>
-                    <Route exact path = "/home"       component= { Btc }/>
+                    <Route exact path = "/dashboard"  component= { Dashboard }/>
                     <Route exact path = "/login"      component= { Login } />
                     <Route exact path = "/register"   component= { Register }     />
                     <Route exact path = "/disconnect" component= { Disconnect }     />                    

@@ -20,23 +20,12 @@ body {
 
 }
 
-.menu-link{
-  height: 30px;
-  width: 30px;
-  border: 1px solid white;
-  display: inline-block;
-  position: absolute;
-  top: 25px;
-  left: 15px;
-}
-
 .title{
   height: 60px;
   font-weight: bold;
   font-size: 28pt;
   line-height: 60px;
   text-align: center;
-  border: 1px solid white;
   font-family: 'Leckerli One',serif;
   display: inline-block;
   position: absolute;
@@ -45,10 +34,18 @@ body {
   right: 60px;
 }
 
-.account{
+.menu-link{
   height: 40px;
   width: 40px;
-  border: 1px solid white;
+  display: inline-block;
+  position: absolute;
+  top: 20px;
+  left: 10px;
+}
+
+.notification-link{
+  height: 40px;
+  width: 40px;
   border-radius: 100%;
   display: inline-block;
   position: absolute;

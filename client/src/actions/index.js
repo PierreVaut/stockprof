@@ -1,8 +1,8 @@
 import * as actionType from './actionType';
 import * as params from '../config/params'
 
-export const toggleSubheader = (visible) => {
-    return {type: actionType.TOGGLE_SUBHEADER, visible}
+export const toggleVisibility = (target) => {
+    return {type: actionType.TOGGLE_VISIBILITY, target}
 }
 
 export const apiPost = (body, url) => {
