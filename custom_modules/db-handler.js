@@ -68,8 +68,8 @@ export const db = {
         // Check the request #2
         if( req.body.name === '' || req.body.email === '' || req.body.password === '' || !req.body.name  || !req.body.email || !req.body.password 
             ) {
-                data.account = '[accountDB-register] Error : Please fill in all fields'
-                console.error( data.account );
+                data.account = 'Error : Please fill in all fields'
+                console.error( '[accountDB-register]' + data.account );
                 data.error = data.account;
                 res.json(data);  
         }
@@ -84,9 +84,9 @@ export const db = {
                 }
 
                 if (result) {
-                    data.account ='[accountDB-register] Error:  Email already used';
+                    data.account ='Email already used';
                     data.error = data.account;
-                    console.error( data.account );
+                    console.error( '[accountDB-register] Error:  ' + data.account );
                     res.json(data);       
                 }
 

@@ -3,11 +3,11 @@
 
 ### Local
 
-```$ NPM run local```
+```$ NPM run dev```
 
 * Do not forget to SET env variables!
 
-* On local, remove  `"postinstall": "npm install --prefix client"` from package.json
+* Removed  `"postinstall": "npm install --prefix client"` from package.json, so you'll need to run `npm install` in the client directory
 
 ### Deployment
 

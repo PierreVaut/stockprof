@@ -8,14 +8,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "babel-node server.js --presets env",
     "dev": "concurrently \"nodemon server.js --exec babel-node --presets env\"  \"node start-client.js\"",
-    "build": "npm run build --prefix client",
-    "postinstall": "npm install --prefix client"
+    "build": "npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "chalk": "^2.3.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "ejs": "^2.5.7",
@@ -27,6 +25,7 @@
     "universal-cookie": "^2.1.2"
   },
   "devDependencies": {
+    "chalk": "^2.3.1",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "concurrently": "^3.5.1",
