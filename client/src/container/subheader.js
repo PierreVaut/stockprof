@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { toggleSubheader } from '../actions/'
 
 export const Subheader = (props) => {
     console.log('[Subheader]', props)
@@ -19,4 +21,19 @@ export const Subheader = (props) => {
 }
 
 
+const mapDispatchToProps = dispatch => {
+    return {
+      onClick: () => {
+        console.log('[Subheader Cont] click')
+        dispatch( toggleSubheader() )
+      }
+    }
+  }
+
+const mapStateToProps = state => state
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Subheader);
 

@@ -1,5 +1,8 @@
 
 import React from 'react';
+import { connect } from 'react-redux';
+import { requestBody } from '../actions/'
+import { apiPost } from '../actions/'
 
 
 class Login extends React.Component {
@@ -51,4 +54,18 @@ class Login extends React.Component {
     }
 }
 
-export default Login
+function mapStateToProps(state){
+    return {data: state}
+}
+
+function mapDispatchToProps(dispatch) {
+    return { 
+        onChange: (field, content) => { dispatch( requestBody(field, content) ) },
+        onSubmit: (body, url) => { dispatch( apiPost(body, url) ) },
+    }
+}
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Login);
+

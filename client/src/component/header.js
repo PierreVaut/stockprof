@@ -1,7 +1,6 @@
 import React from 'react';
-import Hbg from '../container/hbg';
 import { connect } from 'react-redux';
-import Subheader  from '../container/subheaderContainer';
+import Subheader  from '../container/subheader';
 
 const mapDispatchToProps = dispatch => {
     return { disconnect: () => { dispatch(  ) } }
@@ -10,9 +9,7 @@ const mapDispatchToProps = dispatch => {
 const Header = () => ( 
     <div>
         <div className = 'header'>
-            <div className = 'menu'>
-                <Hbg />
-            </div>
+            <div className = 'menu-link'></div>
             <div className = 'title'>Stocks</div>
             <div className = 'account'></div>
         </div>

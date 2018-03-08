@@ -20,7 +20,7 @@ body {
 
 }
 
-.menu{
+.menu-link{
   height: 30px;
   width: 30px;
   border: 1px solid white;
@@ -73,10 +73,6 @@ body {
   font-weight: bold;
 }
 
-.hbg{
-  width: 80px;
-  background: #d8d4d5;
-  position: relative;
-  top:  40px;
-
+.menu-entry{
+  
 }
