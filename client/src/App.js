@@ -2,13 +2,15 @@ import React from 'react';
 import './App.css';
 import Header     from './component/header';
 import RawData    from './container/rawData';
-import LoginContainer      from './container/loginContainer';
-import RegisterContainer   from './container/registerContainer';
-import DisconnectContainer from './container/disconnectContainer';
-import Ws         from './component/ws';
+import Social     from './component/social';
 import Btc        from './component/btc';
-import NotFound        from './component/404';
-import { HashRouter, Link, NavLink, Switch, Route } from 'react-router-dom';
+import Login      from './container/loginContainer';
+import Register   from './container/registerContainer';
+import Disconnect from './container/disconnect';
+import Contact    from './component/contact';
+import About      from './component/about';
+import NotFound   from './component/404';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 
 const App = () => (
     <div className="App">
@@ -18,11 +20,14 @@ const App = () => (
                 <RawData />
 
                 <Switch>
-                    <Route exact path = "/"          component= { Btc }/>
-                    <Route exact path = "/home"      component= { Ws }/>
-                    <Route exact path = "/login"     component= { LoginContainer } />
-                    <Route exact path = "/register"  component= { RegisterContainer }     />
-                    <Route path= "/*"                component= { NotFound }     />}
+                    <Route exact path = "/"           component= { Social }/>
+                    <Route exact path = "/home"       component= { Btc }/>
+                    <Route exact path = "/login"      component= { Login } />
+                    <Route exact path = "/register"   component= { Register }     />
+                    <Route exact path = "/disconnect" component= { Disconnect }     />                    
+                    <Route exact path = "/contact"    component= { Contact }     />
+                    <Route exact path = "/about"      component= { About }     />
+                    <Route path= "/*"                 component= { NotFound }     />}
 
                 </Switch>
             </div>

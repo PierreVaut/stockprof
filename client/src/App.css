@@ -72,3 +72,8 @@ body {
 .subHeader-close:hover{
   font-weight: bold;
 }
+
+.hbg{
+  width: 80px;
+  background: #d8d4d5;
+}

@@ -1,6 +1,6 @@
 import { uri } from '../config/connect';
 import { priceSchema } from '../model/price';
-
+const chalk = require('chalk');
 const mongoose = require('mongoose');
 mongoose.connect(uri);
 const database2 = mongoose.connection;
@@ -57,7 +57,7 @@ export const priceDB = {
         const Price = mongoose.model('Price', priceSchema);
         Price.find().lean().exec( function(err, docs){
             if(err){return err}
-            //console.log('[priceDB] get: ', docs)
+            console.log(chalk.green('[priceDB] get: '+ JSON.stringify(docs).substr(0, 30)));
             cb(docs)
         } )
     }

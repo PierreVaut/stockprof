@@ -16,13 +16,17 @@ const cexioWS = function(client){
     console.log('[cexioWS] - starting'); 
     cexWS.on('open', function(){
         console.log(chalk.green('[cexioWS] - open') ); 
+
         cexWS.on('message', function(el){
             //console.log('[CEX server] message:', el);
             let msg = JSON.parse(el);
-            
-            if(client && msg.data){
-                
+
+            if(client){
+                priceDB.get(function(docs){client.emit('btc', docs)} )
             }
+            else(
+                console.log(chalk.red('[CEX server] WS client error'))
+            )
             if(msg['e'] === 'ping'){
                 console.log('[CEX client] Connection active')
                 cexWS.send(JSON.stringify({"e":"pong"}));

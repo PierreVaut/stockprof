@@ -2,7 +2,7 @@ import React from 'react';
 import openSocket from 'socket.io-client';
 const socket = openSocket();
 
-class Ws extends React.Component {
+class Social extends React.Component {
 
   constructor(props) {
     super(props);
@@ -41,7 +41,7 @@ handleSubmit(event){
   render() {
     return (
       <div>
-            <h2>Websocket</h2>
+            <h2>Activity feed</h2>
             This is the timer value: {this.state.timestamp}
 
             <form onSubmit={this.handleSubmit}>
@@ -61,4 +61,4 @@ handleSubmit(event){
   }
 }
 
-export default Ws;
+export default Social;

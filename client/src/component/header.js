@@ -1,10 +1,13 @@
 import React from 'react';
-import SubheaderContainer  from '../container/subheader';
+import Hbg from '../container/hbg';
+import SubheaderContainer  from '../container/subheaderContainer';
 
 const Header = () => ( 
     <div>
         <div className = 'header'>
-            <div className = 'menu'></div>
+            <div className = 'menu'>
+                <Hbg />
+            </div>
             <div className = 'title'>Stocks</div>
             <div className = 'account'></div>
         </div>
