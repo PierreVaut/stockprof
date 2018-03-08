@@ -23,7 +23,10 @@ const dataReducer = (state = initialState, action) => {
             console.log('[DataReducer] action:', action);
             return Object.assign({}, state, action.data )
 
-
+        case actionType.RECEIVE_USERLIST:
+            console.log('[DataReducer] action:', action);
+            return {...state, userList: action.list}
+            
         case actionType.REQUEST_BODY:
             console.log('[DataReducer] action:', action);
             let newRequestBody = state.requestBody;

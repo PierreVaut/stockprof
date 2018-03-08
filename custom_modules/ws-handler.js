@@ -1,13 +1,16 @@
-import { args } from '../config/connect';
-import { server } from '../api/routes.js';
+import { args }    from '../config/connect';
+import { server }  from '../api/routes.js';
 import { priceDB } from './price-handler';
+import { db }      from './db-handler';
+const chalk = require('chalk');
 const io = require('socket.io')(server);
 const WebSocket = require('ws');
-const chalk = require('chalk');
+
 console.log(chalk.green('[Chalk] Hello world!'));
 
 let arrayMsg = [];
 let data = 'data incoming...'
+
 
 const cexioWS = function(client){
     
@@ -64,18 +67,19 @@ const cexioWS = function(client){
 export const ioServer = io.on('connection', function(client){
     
     console.log('[Socket.io] Connected');
-    client.on('subscribeToTimer', (interval) => {
-        console.log('[Socket.io] Client is subscribing to timer with interval ', interval);
-        setInterval(() => {
-            client.emit('timer', new Date());
-        }, interval);
-    });
 
     client.on('chatMessage', (msg) => {
         console.log('[Socket.io] receiving Msg: ', msg);
         arrayMsg.push(msg);
         client.emit('arrayMessage', arrayMsg)
     });
+
+    client.on('userList', function(){
+        db.getUsers(function(list){client.emit('userList', list)})
+        console.log(chalk.blue('[WS-handler] userList update...'))
+        }
+    )
+    
 
     //
     cexioWS(client);

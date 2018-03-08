@@ -1,12 +1,9 @@
 import React from 'react';
 import './App.css';
 import Header     from './component/header';
-
-
 import Play       from './component/play';
 import Menu       from './container/menu';
 import Dashboard  from './component/dashboard';
-
 import Btc        from './component/btc';
 import Login      from './container/login';
 import Register   from './container/register';
@@ -23,8 +20,8 @@ const App = () => (
                 <Header />             
 
                 <Switch>
-                    <Route exact path = "/"           component= { Play }/>
-                    <Route exact path = "/menu"       component= { Menu }/>
+                    <Route exact path = "/"           component= { Menu }/>
+                    <Route exact path = "/play"       component= { Play }/>
                     <Route exact path = "/dashboard"  component= { Dashboard }/>
                     <Route exact path = "/login"      component= { Login } />
                     <Route exact path = "/register"   component= { Register }     />

@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 
 const Menu = (props) => (
     <div className = 'menu' >
+        <div className = 'menu-entry'><NavLink to="/play">Start !</NavLink></div>
+        <div className = 'menu-entry'><NavLink to="/dashboard">Dashboard</NavLink></div>
         <div className = 'menu-entry'><NavLink to="/login">Login </NavLink></div>
         <div className = 'menu-entry'>
             {props.isLogged?

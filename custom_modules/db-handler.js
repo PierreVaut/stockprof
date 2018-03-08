@@ -1,7 +1,7 @@
 import { uri } from '../config/connect';
 import { accountSchema } from '../model/account';
 import Cookies from 'universal-cookie';
-
+const chalk = require('chalk');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 mongoose.connect(uri);
@@ -14,7 +14,7 @@ export const db = {
         const Account = mongoose.model('Account', accountSchema)
         database.on('error', console.error.bind(console, 'connection error:'));
         database.once('open', () => {
-            console.log("[DB Init] we're connected !")
+            console.log("[accountDB-init] we're connected !")
         });
     },
 
@@ -23,11 +23,11 @@ export const db = {
     handle: function(req, res, data, cb){
         
         const Account = mongoose.model('Account', accountSchema)
-        console.log('[DB-handler] Starting: ', data)
+        console.log('[accountDB-handler] Starting: ', data)
         if(data.session.isLogged){
             Account.findOne({'_id': data.session['_id']}, (err, result) => {              
                 if(err){
-                    data.account = '[DB-handler] DB error'+ err;
+                    data.account = '[accountDB-handler] DB error'+ err;
                     console.log( data.account );
                     res.json( data );
                 }
@@ -35,17 +35,17 @@ export const db = {
                 
                 if(result !== null){
                     data.account = result;
-                    console.log('[DB-handler] ok', result);
-                    console.log('[DB-handler] Return', data);
+                    console.log('[accountDB-handler] ok', result);
+                    console.log('[accountDB-handler] Return', data);
                     res.json( data );
                 }
             })
         }
 
         else{
-            data.account = '[DB-handler] User not logged or Error';
+            data.account = '[accountDB-handler] User not logged or Error';
             console.log( data.account );
-            console.log('[DB-handler] Return', data)
+            console.log('[accountDB-handler] Return', data)
             res.json( data ); 
         }
             
@@ -53,13 +53,13 @@ export const db = {
 
     register: function(req, res, data, cb){
 
-        let Account = mongoose.model('Account', accountSchema);
+        const Account = mongoose.model('Account', accountSchema)
 
-        console.log('[DB-register] Request:', req.body);
+        console.log('[accountDB-register] Request:', req.body);
 
         // Check the request #1
         if(!req || req === ''){
-            data.account = '[DB-register] Error: request is undefined'
+            data.account = '[accountDB-register] Error: request is undefined'
             data.status = {'error': data.account}
             console.error( data.account );
             res.json(data);
@@ -68,7 +68,7 @@ export const db = {
         // Check the request #2
         if( req.body.name === '' || req.body.email === '' || req.body.password === '' || !req.body.name  || !req.body.email || !req.body.password 
             ) {
-                data.account = '[DB-register] Error : Please fill in all fields'
+                data.account = '[accountDB-register] Error : Please fill in all fields'
                 console.error( data.account );
                 data.status = {'error': data.account}
                 console.error( data.account );
@@ -78,7 +78,7 @@ export const db = {
             Account.findOne({email: req.body.email}, (error, result) => {
 
                 if (error){
-                    data.account ='[DB-register] Error fetching DB: '+ error;
+                    data.account ='[accountDB-register] Error fetching DB: '+ error;
                     console.error( data.account );
                     data.status = {'error': data.account}
                     res.json(data); 
@@ -86,7 +86,7 @@ export const db = {
                 }
 
                 if (result) {
-                    data.account ='[DB-register] Error:  Email already used';
+                    data.account ='[accountDB-register] Error:  Email already used';
                     data.status = {'error': data.account}
                     console.error( data.account );
                     res.json(data);       
@@ -100,9 +100,9 @@ export const db = {
                     data.account = newAccount
                     newAccount.save(
                         () => {
-                            console.log('[DB-register] New account saved', newAccount);
+                            console.log('[accountDB-register] New account saved', newAccount);
                             if(cb){
-                                console.log("[DB-register] Passing CB on:", data);
+                                console.log("[accountDB-register] Passing CB on:", data);
                                 cb(data);
                             }
                         }
@@ -115,12 +115,12 @@ export const db = {
     },
 
     login: function(req, res, data, cb){
-        console.log('[DB-login] starting', data)
-        let Account = mongoose.model('Account', accountSchema);
+        console.log('[accountDB-login] starting', data)
+        const Account = mongoose.model('Account', accountSchema)
 
         // Check the request #1
         if(!req || req === ''){
-            data.account = '[DB-login] Error: request is undefined'
+            data.account = '[accountDB-login] Error: request is undefined'
             data.status = {'error': data.account}
             console.error( data.account );
             res.json(data);
@@ -129,26 +129,26 @@ export const db = {
         // Check the request #2
         if( req.body.name === '' || typeof(req.body.email) === '' || req.body.password === ''
             ) {
-                data.account = '[DB-login] Error : Please fill in all fields'
+                data.account = '[accountDB-login] Error : Please fill in all fields'
                 data.status = {'error': data.account}
                 console.error( data.account );
                 res.json(data);  
         }
 
         Account.findOne({email: req.body.email, password: req.body.password }, (error, result) => {
-            console.log('[DB-login] Checking DB')
+            console.log('[accountDB-login] Checking DB')
             if (error){
-                data.account ='[DB-login] Error fetching DB: '+ error;
+                data.account ='[accountDB-login] Error fetching DB: '+ error;
                 data.status = {'error': data.account}
                 console.error( data.account );
                 res.json(data); 
             }
 
             if (result) {
-                console.log('[DB-login] Result:', result);
+                console.log('[accountDB-login] Result:', result);
                 data.account = result;
                 if(cb){
-                    console.log("[DB-login] Passing CB on: ", data);
+                    console.log("[accountDB-login] Passing CB on: ", data);
                     cb( data );
                 } else {
                     res.json(data);
@@ -156,12 +156,23 @@ export const db = {
             }
 
             else {
-                data.account ='[DB-login] Invalid login/pwd... ';
+                data.account ='[accountDB-login] Invalid login/pwd... ';
                 data.status = {'error': data.account}
                 console.error( data.account );
                 res.json(data); 
             }
         })
+
+    },
+
+    // called by ws-handler.js 
+    getUsers(cb){
+        const Account = mongoose.model('Account', accountSchema);
+        Account.find().lean().exec( function(err, list){
+            if(err){return err}
+            console.log(chalk.blue('[accountDB] get: '+ JSON.stringify(list).substr(0, 30)));
+            cb(list)
+        } )
 
     }
 }

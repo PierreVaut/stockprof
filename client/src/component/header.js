@@ -10,7 +10,7 @@ const Header = (props) => (
     <div>
         <div className = 'header'>
             <div className = 'menu-link'>
-                <NavLink to="/menu">
+                <NavLink to="/">
                     <img src = {homeIcon} alt ="Home" style = {{width: 40}}/>
                 </NavLink>
             </div>
