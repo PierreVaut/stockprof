@@ -50,8 +50,8 @@ export const session = {
 
                 fs.writeFile(path, JSON.stringify(data.session), (err) =>{
                     if(err){
-                        data.session = '[Session-handler] Write File error'+ error
-                        console.error( data.session );
+                        data.error = '[Session-handler] Write File error'+ error
+                        console.error( data.error );
                         res.json(data)
                     }
                     if(cb){
@@ -90,7 +90,7 @@ export const session = {
                 fs.writeFile(path, JSON.stringify(data.session), (err) =>{
                     if(err){
                         data.session = '[Session-handler] Write File error'+ error
-                        data.status = {'error': data.session}
+                        data.error = data.session;
                         console.error( data.session );
                         res.json(data);
                     }
@@ -124,7 +124,7 @@ export const session = {
                 fs.writeFile(path, JSON.stringify(data.session), (err) => {
                     if(err){
                         data.session = '[Session-handler] Write File error'+ error
-                        data.status = {'error': data.session}
+                        data.error = data.session;
                         console.error( data.session );
                         res.json(data);
                     }
@@ -148,7 +148,7 @@ export const session = {
         fs.unlink( path, (err) => {
             if(err){
                 data.session = '[Session-disconnect] Unlink File error '+ err;
-                data.status = {'error': data.session}
+                data.error = data.session;
                 console.error( data.session );
                 res.json(data);
             }

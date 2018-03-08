@@ -16,6 +16,11 @@ export const requestBody = (field, content) => {
     return {type: actionType.REQUEST_BODY, field, content}
 }
 
+
+export const resetRequestBody = () => {
+    return {type: actionType.RESET_REQUEST_BODY}
+}
+
 // sets Session, Account, Cookies into State
 /*** dispatched by apiFetch callback***/
 export const receiveData = (data) => {

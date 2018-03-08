@@ -10,7 +10,6 @@ let initialState = {
         ip:['ip']
     },
     account: { name: 'Guest' },
-    status: 'initializing...',
     requestBody:{email: '', pwd: '', name: ''}
 }
 
@@ -32,6 +31,11 @@ const dataReducer = (state = initialState, action) => {
             let newRequestBody = state.requestBody;
             newRequestBody[action.field] = action.content;
             return Object.assign({}, state, {requestBody: newRequestBody} )
+
+        case actionType.RESET_REQUEST_BODY:
+            console.log('[DataReducer] action:', action);
+            return {...state, requestBody: {} }
+
 
         default:
             return state

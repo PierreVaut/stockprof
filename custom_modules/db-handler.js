@@ -60,7 +60,7 @@ export const db = {
         // Check the request #1
         if(!req || req === ''){
             data.account = '[accountDB-register] Error: request is undefined'
-            data.status = {'error': data.account}
+            data.error = data.account;
             console.error( data.account );
             res.json(data);
         }
@@ -70,8 +70,7 @@ export const db = {
             ) {
                 data.account = '[accountDB-register] Error : Please fill in all fields'
                 console.error( data.account );
-                data.status = {'error': data.account}
-                console.error( data.account );
+                data.error = data.account;
                 res.json(data);  
         }
         else{
@@ -80,14 +79,13 @@ export const db = {
                 if (error){
                     data.account ='[accountDB-register] Error fetching DB: '+ error;
                     console.error( data.account );
-                    data.status = {'error': data.account}
+                    data.error = data.account;
                     res.json(data); 
- 
                 }
 
                 if (result) {
                     data.account ='[accountDB-register] Error:  Email already used';
-                    data.status = {'error': data.account}
+                    data.error = data.account;
                     console.error( data.account );
                     res.json(data);       
                 }
@@ -121,7 +119,7 @@ export const db = {
         // Check the request #1
         if(!req || req === ''){
             data.account = '[accountDB-login] Error: request is undefined'
-            data.status = {'error': data.account}
+            data.error =  data.account;
             console.error( data.account );
             res.json(data);
         }
@@ -130,7 +128,7 @@ export const db = {
         if( req.body.name === '' || typeof(req.body.email) === '' || req.body.password === ''
             ) {
                 data.account = '[accountDB-login] Error : Please fill in all fields'
-                data.status = {'error': data.account}
+                data.error = data.account;
                 console.error( data.account );
                 res.json(data);  
         }
@@ -139,7 +137,7 @@ export const db = {
             console.log('[accountDB-login] Checking DB')
             if (error){
                 data.account ='[accountDB-login] Error fetching DB: '+ error;
-                data.status = {'error': data.account}
+                data.error = data.account;
                 console.error( data.account );
                 res.json(data); 
             }
@@ -157,7 +155,7 @@ export const db = {
 
             else {
                 data.account ='[accountDB-login] Invalid login/pwd... ';
-                data.status = {'error': data.account}
+                data.error = data.account;
                 console.error( data.account );
                 res.json(data); 
             }

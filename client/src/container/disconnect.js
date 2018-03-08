@@ -1,10 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { apiPost } from '../actions/'
+import { apiPost, resetRequestBody } from '../actions/'
 
 const mapDispatchToProps = dispatch => {
-    return { disconnect: () => { dispatch( apiPost({}, '/disconnect') ) } }
+    return { 
+        disconnect: () => { dispatch( apiPost({}, '/disconnect') ) }, 
+        reset: () => { dispatch( resetRequestBody() ) }
+    }
 }
 
 const Disconnect = connect(null, mapDispatchToProps)(
@@ -17,6 +20,7 @@ const Disconnect = connect(null, mapDispatchToProps)(
                     function(){
                         props.disconnect();
                         console.log('[Disconnecting]');
+                        props.reset();
                     }
                 }
             >

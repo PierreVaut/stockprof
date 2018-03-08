@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { requestBody } from '../actions/'
-import { apiPost } from '../actions/'
+import { requestBody, resetRequestBody, apiPost } from '../actions/'
 import { NavLink } from 'react-router-dom';
 
 const Login = props => {
@@ -37,6 +36,7 @@ const Login = props => {
                                 email: props.data.dataReducer.requestBody.email, password: props.data.dataReducer.requestBody.pwd
                             }
                             props.onSubmit(body, '/login');
+                            props.reset();
                             console.log('[Login]', body);
                         }
                     }
@@ -54,7 +54,8 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch) {
     return { 
         onChange: (field, content) => { dispatch( requestBody(field, content) ) },
-        onSubmit: (body, url) => { dispatch( apiPost(body, url) ) },
+        onSubmit: (body, url) => { dispatch( apiPost(body, url) )  },
+        reset: () => { dispatch( resetRequestBody() ) }
     }
 }
 export default connect(

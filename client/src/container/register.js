@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { requestBody } from '../actions/'
-import { apiPost } from '../actions/'
+import { requestBody, resetRequestBody, apiPost } from '../actions/'
 import { NavLink } from 'react-router-dom';
 
 const Register = props => {
@@ -48,6 +47,7 @@ const Register = props => {
                                 name: props.dataReducer.requestBody.name
                             }
                             props.onSubmit(body, '/register');
+                            props.reset();
                             console.log('[Register]', body);
                         }
                     }
@@ -64,6 +64,7 @@ function mapDispatchToProps(dispatch) {
     return { 
         onChange: (field, content) => { dispatch( requestBody(field, content) ) },
         onSubmit: (body, url) => { dispatch( apiPost(body, url) ) },
+        reset: () => { dispatch( resetRequestBody() ) }
     }
 }
 export default connect(

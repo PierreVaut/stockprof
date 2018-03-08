@@ -34,7 +34,7 @@ export const cookie = {
                 else {
                     // Error on cookie creation.
                     data.cookie = '[Cookie-handler] Error on cookie creation:' + cookie + ', ' + domain +', '+ rdm;
-                    data.status = {'error': data.cookie}
+                    data.error = data.account;
                     console.error(data.cookie);
                     res.json(data);
                 }
