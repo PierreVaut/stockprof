@@ -64,6 +64,19 @@ const cexioWS = function(client){
 
 }
 
+
+const getUsers = (client) => {
+    db.getUsers(
+        (list) => {
+            client.emit('userList', list)
+            console.log(chalk.blue('[WS-handler] Emitting...'))
+            setTimeout(() => {
+                getUsers(client)
+            }, 4000);
+        }
+    )
+}
+
 export const ioServer = io.on('connection', function(client){
     
     console.log(chalk.blue('[Socket.io] Connected'));
@@ -74,18 +87,9 @@ export const ioServer = io.on('connection', function(client){
         client.emit('arrayMessage', arrayMsg)
     });
 
-    client.on('subscribeToListUpdates', (interval) => {
-        console.log('[Socket.io] Client is subscribing to timer with interval ', interval);
-        setInterval(() => {
-            console.log('[WS-handler] userList update...')
-            client.emit('userList', 'newList+' + new Date());
-            db.getUsers(
-                (list) => {
-                    client.emit('userList', list)
-                    console.log(chalk.blue('[WS-handler] Emitting...'))
-                }
-            )
-        }, 4000);
+    client.on('subscribeToListUpdates', () => {
+        console.log('[Socket.io] Client is subscribing to timer with interval 4000');
+        getUsers(client);
 });
 
 
