@@ -9,14 +9,15 @@ class Users extends React.Component {
     constructor(props) {
         super(props);
         this.timer;
+        this.getUserList = this.getUserList.bind(this);
     }
 
-    getUserList(){
-        let that = this;
+    getUserList(props){
+        console.log('[getUserList]', this.props);
         socket.emit('userList')
         socket.on('userList', 
             list => {
-                that.props.update(list);
+                this.props.update(list);
                 console.log('[Users] update list', list);
             } 
         )
