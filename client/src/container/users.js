@@ -14,10 +14,12 @@ class Users extends React.Component {
     getUserList(){
         let that = this;
         socket.emit('userList')
-        socket.on('userList',  (list)=>{
-            that.props.update(list);
-            console.log('[Users] update list', list);
-        }  )
+        socket.on('userList', 
+            list => {
+                that.props.update(list);
+                console.log('[Users] update list', list);
+            } 
+        )
     }
 
     componentDidMount(){
