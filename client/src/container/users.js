@@ -9,38 +9,26 @@ class Users extends React.Component {
     constructor(props) {
         super(props);
         this.timer;
-        this.getUserList = this.getUserList.bind(this);
-    }
-
-    getUserList(props){
-        console.log('[getUserList]', this.props);
-        socket.emit('userList')
-        socket.on('userList', 
-            list => {
-                this.props.update(list);
-                console.log('[Users] update list', list);
-            } 
+        this.subscribeToListUpdates(list => {
+            this.setState({'userList': list});
+            console.log('[Users] update list', list)}
         )
+        this.state = {}
+    }
+    
+    subscribeToListUpdates(cb) {
+        socket.on('userList', list => cb(list));
+        console.log('[subscribeToListUpdates] ', 1000);
+        socket.emit('subscribeToListUpdates', 1000);
     }
 
-    componentDidMount(){
-        this.timer = setTimeout(
-           this.getUserList 
-        , 1000 )
-    }
 
-    componentWillMount(){
-        clearTimeout(this.timer)
-    }
+
 
     render(){
         return(
             <div>
-            <p>props : {JSON.stringify(this.props)}</p>
-            <br/><br/>
-            <p>dataReducer : {JSON.stringify(this.props.dataReducer)}</p>
-            <br/>
-            <p>userList : {JSON.stringify(this.props.dataReducer.userList)}</p>      
+            <p>userList : {JSON.stringify(this.state)}</p>      
             </div>
         )
     }

@@ -61,5 +61,4 @@ export const priceDB = {
             cb(docs)
         } )
     }
-
 }
