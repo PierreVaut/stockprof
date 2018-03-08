@@ -9,7 +9,7 @@ const mapDispatchToProps = dispatch => {
     return {
       onClick: () => {
         console.log('[Subheader Cont] click')
-        dispatch(toggleSubheader())
+        dispatch( toggleSubheader() )
       }
     }
   }
