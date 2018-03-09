@@ -62,6 +62,16 @@ export const session = {
             } 
         })
     },
+    login: function(req, res, data, cb){
+        // Prevent multiple logins
+        if(data.session.isLogged){
+            data.error = 'You are already logged in, please disconnect first';
+            console.error( '[accountDB-register]' + data.account );
+            res.json(data);
+        } else {
+            this.register(req, res, data, cb)
+        }
+    },
 
     register: function(req, res, data, cb){
 

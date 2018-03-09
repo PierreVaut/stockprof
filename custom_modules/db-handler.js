@@ -66,12 +66,6 @@ export const db = {
         const Account = mongoose.model('Account', accountSchema)
         console.log('[accountDB-register] Request:', req.body);
 
-        // Prevent multiple logins
-        if(data.session.isLogged){
-            data.error = 'You are already logged in, please disconnect first';
-            console.error( '[accountDB-register]' + data.account );
-            res.json(data);
-        }
         // Check the request #1
         if(!req || req === ''){
             data.account = 'Error: request is undefined'
@@ -133,13 +127,6 @@ export const db = {
     login: function(req, res, data, cb){
         console.log('[accountDB-login] starting', data)
         const Account = mongoose.model('Account', accountSchema)
-
-        // Prevent multiple logins
-        if(data.session.isLogged){
-            data.error = 'You are already logged in, please disconnect first';
-            console.error( '[accountDB-register]' + data.account );
-            res.json(data);
-        }
 
         // Check the request #1
         if(!req || req === ''){

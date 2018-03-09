@@ -10,6 +10,7 @@ import Register   from './container/register';
 import Disconnect from './container/disconnect';
 import Contact    from './component/contact';
 import About      from './component/about';
+import Admin      from './component/admin';
 import NotFound   from './component/404';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 
@@ -28,6 +29,7 @@ const App = () => (
                     <Route exact path = "/disconnect" component= { Disconnect }     />                    
                     <Route exact path = "/contact"    component= { Contact }     />
                     <Route exact path = "/about"      component= { About }     />
+                    <Route exact path = "/admin"      component= { Admin }     />
                     <Route path= "/*"                 component= { NotFound }     />}
 
                 </Switch>
