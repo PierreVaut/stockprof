@@ -32,7 +32,7 @@ export const priceDB = {
                     console.log("[priceDB] " , result.symbol1, " - price updated:", result.price)
 
                 }
-                else{
+                /*else{
                     let newPrice = new Price();
                     newPrice.timestamp = Date();
                     newPrice.symbol1   = data.symbol1;
@@ -43,7 +43,7 @@ export const priceDB = {
                        this.get(cb)
                     );
                     console.log("[priceDB] new Currency:", data, newPrice)
-                }
+                }*/
                 //console.log("[priceDB] else ?", data)
                 
             })
