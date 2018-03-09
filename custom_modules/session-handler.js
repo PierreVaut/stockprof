@@ -145,7 +145,9 @@ export const session = {
         let path = process.cwd() + "/session/" + data.cookie;
         data.cookie += ' (expired)';
 
-        fs.unlink( path, (err) => {
+        fs.readFile( path, (err, result) => {
+            data.session = JSON.parse(result);
+
             if(err){
                 data.session = '[Session-disconnect] Unlink File error '+ err;
                 data.error = data.session;
@@ -153,9 +155,31 @@ export const session = {
                 res.json(data);
             }
             else{
-                data.session = 'Expired -' + (new Date() ).getTime();
-                data.account = 'Disconnected -' + (new Date() ).getTime();
-                res.json(data);
+                console.log("[Session-disconnect]");
+                data.session = JSON.parse(result);
+                data.session.isLogged = false;
+                data.session.status = 'Session Disconnected -' + (new Date() ).getTime();
+                data.session.visitLast = (new Date() ).getTime();
+                if(!data.session.ip){ data.session.ip = [] }
+                if(req.ip !== data.session['ip'][ (data.session['ip'].length - 1) ]){
+                    data.session['ip'].push(req.ip); 
+                }
+
+                fs.writeFile(path, JSON.stringify(data.session), (err) =>{
+
+                    if(err){
+                        data.error = '[Session-disconnect] Write File error'+ error
+                        console.error( data.error );
+                        res.json(data)
+                    }
+                    if(cb){
+                        console.log("[Session-disconnect] Passing CB on:", data);
+                        cb( data );
+                    } 
+                    else{
+                        res.json(data)
+                    }
+                });
             }
         });
     }

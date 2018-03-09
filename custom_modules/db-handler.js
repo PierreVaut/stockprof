@@ -37,7 +37,12 @@ export const db = {
                     data.account = result;
                     console.log('[accountDB-handler] ok', result);
                     console.log('[accountDB-handler] Return', data);
-                    res.json( data );
+                    if(cb){
+                        console.log("[accountDB-handler] Passing CB on:", data);
+                        cb(data);
+                    } else {
+                        res.json(data)
+                    }
                 }
             })
         }
@@ -46,7 +51,12 @@ export const db = {
             data.account = '[accountDB-handler] User not logged or Error';
             console.log( data.account );
             console.log('[accountDB-handler] Return', data)
-            res.json( data ); 
+            if(cb){
+                console.log("[accountDB-handler] Passing CB on:", data);
+                cb(data);
+            } else {
+                res.json(data)
+            } 
         }
             
     },
@@ -54,9 +64,14 @@ export const db = {
     register: function(req, res, data, cb){
 
         const Account = mongoose.model('Account', accountSchema)
-
         console.log('[accountDB-register] Request:', req.body);
 
+        // Prevent multiple logins
+        if(data.session.isLogged){
+            data.error = 'You are already logged in, please disconnect first';
+            console.error( '[accountDB-register]' + data.account );
+            res.json(data);
+        }
         // Check the request #1
         if(!req || req === ''){
             data.account = 'Error: request is undefined'
@@ -92,6 +107,7 @@ export const db = {
 
                 else {
                     let newAccount = new Account();
+                    newAccount.isLogged = true;
                     newAccount.name = req.body.name;
                     newAccount.email = req.body.email;
                     newAccount.password = req.body.password;
@@ -102,6 +118,8 @@ export const db = {
                             if(cb){
                                 console.log("[accountDB-register] Passing CB on:", data);
                                 cb(data);
+                            } else {
+                                res.json(data)
                             }
                         }
                     
@@ -115,6 +133,13 @@ export const db = {
     login: function(req, res, data, cb){
         console.log('[accountDB-login] starting', data)
         const Account = mongoose.model('Account', accountSchema)
+
+        // Prevent multiple logins
+        if(data.session.isLogged){
+            data.error = 'You are already logged in, please disconnect first';
+            console.error( '[accountDB-register]' + data.account );
+            res.json(data);
+        }
 
         // Check the request #1
         if(!req || req === ''){
@@ -144,6 +169,8 @@ export const db = {
 
             if (result) {
                 console.log('[accountDB-login] Result:', result);
+                result.isLogged = true;
+                result.save();
                 data.account = result;
                 if(cb){
                     console.log("[accountDB-login] Passing CB on: ", data);
@@ -157,10 +184,50 @@ export const db = {
                 data.account ='[accountDB-login] Invalid login/pwd... ';
                 data.error = data.account;
                 console.error( data.account );
-                res.json(data); 
-            }
+            
+                if(cb){
+                    cb(data);
+                }
+                else{
+                    res.json(data);
+                }            }
         })
 
+    },
+
+    disconnect(req, res, data, cb){
+        const Account = mongoose.model('Account', accountSchema)
+        Account.findOne({'_id': data.session['_id']}, (err, result) => {              
+            if(err){
+                data.account = '[accountDB-disconnect] DB error'+ err;
+                console.log( data.account );
+                res.json( data );
+            }
+            
+            if(result !== null){
+                result.isLogged = false;
+                result.save();
+                data.account = result;
+                console.log('[accountDB-disconnect] OK', data);
+            
+            
+                if(cb){
+                    cb(data);
+                }
+                else{
+                    res.json(data);
+                }
+            }
+
+            else{
+                if(cb){
+                    cb(data);
+                }
+                else{
+                    res.json(data);
+                }
+            }
+        })
     },
 
     // called by ws-handler.js 
