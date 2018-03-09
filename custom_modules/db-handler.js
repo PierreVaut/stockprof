@@ -29,7 +29,7 @@ export const db = {
                 if(err){
                     data.account = '[accountDB-handler] DB error'+ err;
                     console.log( data.account );
-                    res.json( data );
+                    return res.json( data );
                 }
 
                 
@@ -41,7 +41,7 @@ export const db = {
                         console.log("[accountDB-handler] Passing CB on:", data);
                         cb(data);
                     } else {
-                        res.json(data)
+                        return res.json(data)
                     }
                 }
             })
@@ -55,7 +55,7 @@ export const db = {
                 console.log("[accountDB-handler] Passing CB on:", data);
                 cb(data);
             } else {
-                res.json(data)
+                return res.json(data)
             } 
         }
             
@@ -71,7 +71,7 @@ export const db = {
             data.account = 'Error: request is undefined'
             data.error = data.account;
             console.error( '[accountDB-register] ' + data.account );
-            res.json(data);
+            return res.json(data);
         }
 
         // Check the request #2
@@ -80,7 +80,7 @@ export const db = {
                 data.account = 'Error : Please fill in all fields'
                 console.error( '[accountDB-register]' + data.account );
                 data.error = data.account;
-                res.json(data);  
+                return res.json(data);  
         }
         else{
             Account.findOne({email: req.body.email}, (error, result) => {
@@ -89,14 +89,14 @@ export const db = {
                     data.account ='[accountDB-register] Error fetching DB: '+ error;
                     console.error( data.account );
                     data.error = data.account;
-                    res.json(data); 
+                    return res.json(data); 
                 }
 
                 if (result) {
                     data.account ='Email already used';
                     data.error = data.account;
                     console.error( '[accountDB-register] Error:  ' + data.account );
-                    res.json(data);       
+                    return res.json(data);       
                 }
 
                 else {
@@ -113,7 +113,7 @@ export const db = {
                                 console.log("[accountDB-register] Passing CB on:", data);
                                 cb(data);
                             } else {
-                                res.json(data)
+                                return res.json(data)
                             }
                         }
                     
@@ -133,7 +133,7 @@ export const db = {
             data.account = '[accountDB-login] Error: request is undefined'
             data.error =  data.account;
             console.error( data.account );
-            res.json(data);
+            return res.json(data);
         }
 
         // Check the request #2
@@ -142,7 +142,7 @@ export const db = {
                 data.account = '[accountDB-login] Error : Please fill in all fields'
                 data.error = data.account;
                 console.error( data.account );
-                res.json(data);  
+                return res.json(data);  
         }
 
         Account.findOne({email: req.body.email, password: req.body.password }, (error, result) => {
@@ -151,7 +151,7 @@ export const db = {
                 data.account ='[accountDB-login] Error fetching DB: '+ error;
                 data.error = data.account;
                 console.error( data.account );
-                res.json(data); 
+                return res.json(data); 
             }
 
             if (result) {
@@ -163,7 +163,7 @@ export const db = {
                     console.log("[accountDB-login] Passing CB on: ", data);
                     cb( data );
                 } else {
-                    res.json(data);
+                    return res.json(data);
                 }      
             }
 
@@ -176,7 +176,7 @@ export const db = {
                     cb(data);
                 }
                 else{
-                    res.json(data);
+                    return res.json(data);
                 }            }
         })
 
@@ -188,7 +188,7 @@ export const db = {
             if(err){
                 data.account = '[accountDB-disconnect] DB error'+ err;
                 console.log( data.account );
-                res.json( data );
+                return res.json( data );
             }
             
             if(result !== null){
@@ -202,7 +202,7 @@ export const db = {
                     cb(data);
                 }
                 else{
-                    res.json(data);
+                    return res.json(data);
                 }
             }
 
@@ -211,7 +211,7 @@ export const db = {
                     cb(data);
                 }
                 else{
-                    res.json(data);
+                    return res.json(data);
                 }
             }
         })

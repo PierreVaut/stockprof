@@ -62,24 +62,16 @@ export const session = {
             } 
         })
     },
-    login: function(req, res, data, cb){
-        // Prevent multiple logins
-        if(data.session.isLogged){
-            data.error = 'You are already logged in, please disconnect first';
-            console.error( '[accountDB-register]' + data.account );
-            res.json(data);
-        } else {
-            this.register(req, res, data, cb)
-        }
-    },
 
     register: function(req, res, data, cb){
 
         let path = process.cwd() + "/session/" + data.cookie;
 
         fs.readFile(path, (err, result)=>{
+
+            // Create default session file
             if (err || result === {} ) {
-                // create default session file
+            
                 data.session =  {
                     'visitCount': 1,
                     'visitLast': (new Date() ).getTime(),
@@ -116,9 +108,18 @@ export const session = {
                 });
             }
 
+            // Updating session file
             else {
-                // update existing file
                 data.session = JSON.parse(result);
+
+                // Prevent multiple logins
+                if(data.session.isLogged){
+                    data.error = 'You are already logged in, please disconnect first';
+                    console.error( '[accountDB-register]' + data.account );
+                    res.json(data);
+                } 
+
+                // Update existing file               
                 data.session.visitCount++;
                 data.session.visitLast = (new Date() ).getTime();
                 data.session.isLogged = true;
