@@ -59,9 +59,9 @@ export const db = {
 
         // Check the request #1
         if(!req || req === ''){
-            data.account = '[accountDB-register] Error: request is undefined'
+            data.account = 'Error: request is undefined'
             data.error = data.account;
-            console.error( data.account );
+            console.error( '[accountDB-register] ' + data.account );
             res.json(data);
         }
 

@@ -21,6 +21,7 @@ export const priceDB = {
             const Price = mongoose.model('Price', priceSchema);
             Price.findOne({symbol1: data.symbol1}, (err, result)=>{
                 if(result){
+                    result.timestamp = Date();
                     result.symbol1   = data.symbol1;
                     result.symbol2   = data.symbol2;
                     result.price     = data.price;
