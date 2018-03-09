@@ -68,8 +68,8 @@ app.post('/disconnect', (req, res) => {
 
     // Set or retrieve cookie
     cookie.remove( req, res, data, (data) => {
-        session.disconnect( req, res, data, data => {
-            db.disconnect(req, res,)
+        session.disconnect( req, res, data, cb => {
+            db.disconnect(req, res, data)
         })
     })
 
