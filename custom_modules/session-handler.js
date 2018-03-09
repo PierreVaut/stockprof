@@ -113,11 +113,11 @@ export const session = {
                 data.session = JSON.parse(result);
 
                 // Prevent multiple logins
-                if(data.session.isLogged){
+                /*if(data.session.isLogged){
                     data.error = 'You are already logged in, please disconnect first';
                     console.error( '[accountDB-register]' + data.account );
                     res.json(data);
-                } 
+                } */
 
                 // Update existing file               
                 data.session.visitCount++;
@@ -125,6 +125,7 @@ export const session = {
                 data.session.isLogged = true;
                 data.session.role = 1;
                 data.session['_id'] = data.account['_id'];
+                data.error = false;
                 if(!data.session.ip){ data.session.ip = [] }
                 if(req.ip !== data.session['ip'][ (data.session['ip'].length - 1) ]){
                     data.session['ip'].push(req.ip); 
@@ -168,6 +169,7 @@ export const session = {
             else{
                 console.log("[Session-disconnect]");
                 data.session = JSON.parse(result);
+                data.error = false;
                 data.session.isLogged = false;
                 data.session.status = 'Session Disconnected -' + (new Date() ).getTime();
                 data.session.visitLast = (new Date() ).getTime();

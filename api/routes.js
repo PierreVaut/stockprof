@@ -30,10 +30,10 @@ app.use(function(req, res, next) {
     cookie.handle( req, res, data, (data) => {
 
         // First create user in the DB
-        session.register( req, res, data, (data) => {
+        db.register( req, res, data, (data) => {
 
             // Then create/update session File
-            db.register( req, res, data);
+            session.register( req, res, data);
         });
     });
 });
@@ -50,10 +50,10 @@ app.post('/login', (req, res) => {
     cookie.handle( req, res, data, (data) => {
 
         // Get user in the DB
-        session.register( req, res, data, (data) => {
+        db.login( req, res, data, (data) => {
 
             // Then create/update session
-            db.login( req, res, data );
+            session.register( req, res, data );
         });
     });
     
@@ -69,7 +69,7 @@ app.post('/disconnect', (req, res) => {
     // Set or retrieve cookie
     cookie.remove( req, res, data, (data) => {
         session.disconnect( req, res, data, data => {
-            db.disconnect(req, res, data)
+            db.disconnect(req, res,)
         })
     })
 

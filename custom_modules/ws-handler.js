@@ -18,7 +18,7 @@ const cexioWS = function(client){
     const cexWS = new WebSocket('wss://ws.cex.io/ws/', { perMessageDeflate: false });
     console.log('[cexioWS] - starting'); 
     cexWS.on('open', function(){
-        console.log(chalk.green('[cexioWS] - open') ); 
+        //console.log(chalk.green('[cexioWS] - open') ); 
 
         cexWS.on('message', function(el){
             //console.log('[CEX server] message:', el);
@@ -31,19 +31,19 @@ const cexioWS = function(client){
                 console.log(chalk.red('[CEX server] WS client error'))
             )
             if(msg['e'] === 'ping'){
-                console.log('[CEX client] Connection active')
+                //console.log('[CEX client] Connection active')
                 cexWS.send(JSON.stringify({"e":"pong"}));
             }
     
             if(client && msg.data){
                 if(msg.data.symbol1){            
                     if(msg.data.symbol2 === 'USD'){
-                        console.log(chalk.green('[CEX server]', JSON.stringify(msg) ) );
+                        //console.log(chalk.green('[CEX server]', JSON.stringify(msg) ) );
                         // client.emit('btc', msg.data);
                         // priceDB.handle(msg.data)
                          priceDB.handle(msg.data, function(docs){client.emit('btc', docs)} )
                     } else {
-                        console.log('[CEX server] BTC', JSON.stringify(msg.data) );
+                        //console.log('[CEX server] BTC', JSON.stringify(msg.data) );
                     }
                 }
             }
@@ -69,7 +69,7 @@ const getUsers = (client) => {
     db.getUsers(
         (list) => {
             client.emit('userList', list)
-            console.log(chalk.blue('[WS-handler] Emitting...'))
+            //console.log(chalk.blue('[WS-handler] Emitting...'))
             setTimeout(() => {
                 getUsers(client)
             }, 4000);

@@ -29,7 +29,7 @@ export const priceDB = {
                     result.save(
                         this.get(cb)
                     );
-                    console.log("[priceDB] " , result.symbol1, " - price updated:", result.price)
+                    //console.log("[priceDB] " , result.symbol1, " - price updated:", result.price)
 
                 }
                 /*else{
@@ -58,7 +58,7 @@ export const priceDB = {
         const Price = mongoose.model('Price', priceSchema);
         Price.find().lean().exec( function(err, docs){
             if(err){return err}
-            console.log(chalk.green('[priceDB] get: '+ JSON.stringify(docs).substr(0, 30)));
+            //console.log(chalk.green('[priceDB] get: '+ JSON.stringify(docs).substr(0, 30)));
             cb(docs)
         } )
     }
