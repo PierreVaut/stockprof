@@ -91,11 +91,7 @@ export const ioServer = io.on('connection', function(client){
         console.log('[Socket.io] Client is subscribing to timer with interval 4000');
         getUsers(client);
 });
-
-
-    
-
-    //
+    client.on('btc', () => priceDB.get(function(docs){client.emit('btc', docs)} ) )
     cexioWS(client);
 
 });
