@@ -15,6 +15,7 @@ class UserList extends React.Component {
             console.log('[Users] update list', list)}
         )
         this.state = {userList: [{name: 'no data yet...'}]}
+        this.keyCount = 0
     }
     
     subscribeToListUpdates(cb) {
@@ -30,7 +31,9 @@ class UserList extends React.Component {
         return(
             <div>
             {this.state.userList.map(
-                el => <div>{el.name}</div>
+                el => {
+                    this.keyCount++;
+                    return <User {...el} key= {this.keyCount}/>}
             )}
             </div>
         )

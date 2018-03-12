@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const User = (props) => {
+const User = (props) => (
     <div>
     {props.name}
 
@@ -14,6 +14,6 @@ const User = (props) => {
     </div>
 
     </div>
-}
+)
 
 export default User
