@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { toggleVisibility } from '../actions/'
 
 export const Subheader = (props) => {
-    console.log('[Subheader]', props)
+    // console.log('[Subheader]', props)
     if(props.viewReducer.visible.subheader){
         return(
             <div className = 'subHeader'>

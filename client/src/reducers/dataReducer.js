@@ -10,7 +10,16 @@ let initialState = {
         ip:['ip']
     },
     account: { name: 'Guest' },
-    requestBody:{email: '', pwd: '', name: ''}
+    requestBody:{email: '', pwd: '', name: ''},
+    userList: [{name:'no data yet...', isLogged: false, lastLogin: 0}],
+    prices: [
+            {symbol1: 'TEST',
+            symbol2: 'USD',
+            price: 12000,
+            open24: 10000,
+            timestamp: 0}
+        ],
+    priceListInitialized: false 
 }
 
 
@@ -26,6 +35,10 @@ const dataReducer = (state = initialState, action) => {
             console.log('[DataReducer] action:', action);
             return {...state, userList: action.list}
             
+        case actionType.RECEIVE_PRICES:
+            console.log('[DataReducer] action:', action);
+            return {...state, priceListInitialized: true, prices: action.prices}
+
         case actionType.REQUEST_BODY:
             console.log('[DataReducer] action:', action);
             let newRequestBody = state.requestBody;

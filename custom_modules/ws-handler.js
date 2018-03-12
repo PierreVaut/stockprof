@@ -26,7 +26,7 @@ const cexioWS = function(client){
 
             if(client){
                 // Gets all prices from Database
-                priceDB.get(function(docs){client.emit('btc', docs)} )
+                // priceDB.get(function(docs){client.emit('btc', docs)} )
             }
             else(
                 console.log(chalk.red('[CEX server] WS client error'))
@@ -41,7 +41,11 @@ const cexioWS = function(client){
                     // We consider only price in USD            
                     if(msg.data.symbol2 === 'USD'){
                         // Update price in the Database and emit new price via WS
-                        priceDB.handle(msg.data, function(docs){client.emit('btc', docs)} )
+                        priceDB.handle(msg.data, function(docs){
+                            console.log(chalk.green('[WS-handler] Emitting Prices...'))
+                            client.emit('btc', docs)
+                        }
+                        )
                     } else {
                         // Prices updates in other currencies
                         //console.log('[CEX server] BTC', JSON.stringify(msg.data) );
@@ -70,13 +74,15 @@ const getUsers = (client) => {
     db.getUsers(
         (list) => {
             client.emit('userList', list)
-            //console.log(chalk.blue('[WS-handler] Emitting...'))
+            console.log(chalk.blue('[WS-handler] Emitting UserList...'))
             setTimeout(() => {
                 getUsers(client)
             }, 4000);
         }
     )
 }
+
+
 
 export const ioServer = io.on('connection', function(client){
     
@@ -93,11 +99,11 @@ export const ioServer = io.on('connection', function(client){
         getUsers(client);
 });
 
-    client.on('getBTCprices', () =>{
-        priceDB.get(function(docs){client.emit('btc', docs)} )
-    })
 
-    client.on('btc', () => priceDB.get(function(docs){client.emit('btc', docs)} ) )
+    client.on('btc-initial', () =>  {
+        console.log('[btc-initial] says hello...')
+        priceDB.get(function(docs){client.emit('btc', docs)} )
+    } )
 
 
 

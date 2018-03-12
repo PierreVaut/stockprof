@@ -4,6 +4,7 @@ import Header     from './component/header';
 import Play       from './component/play';
 import Menu       from './container/menu';
 import Dashboard  from './component/dashboard';
+import Market     from './component/market';
 import Btc        from './component/btc';
 import Login      from './container/login';
 import Register   from './container/register';
@@ -24,6 +25,7 @@ const App = () => (
                     <Route exact path = "/"           component= { Menu }/>
                     <Route exact path = "/play"       component= { Play }/>
                     <Route exact path = "/dashboard"  component= { Dashboard }/>
+                    <Route exact path = "/market"     component= { Market }/>
                     <Route exact path = "/login"      component= { Login } />
                     <Route exact path = "/register"   component= { Register }     />
                     <Route exact path = "/disconnect" component= { Disconnect }     />                    

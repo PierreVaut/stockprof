@@ -1,5 +1,5 @@
 import React from 'react';
-import Users from '../container/users' 
+import UserList from '../container/userList' 
 import Chat  from '../container/chat'
 
 
@@ -7,10 +7,7 @@ const Play = () =>
 (
   <div>
     <h2>Users</h2>
-    <Users />
-
-    <h2>Chat</h2>
-    <Chat />
+    <UserList />
   </div>
 )
 

@@ -102,6 +102,7 @@ export const db = {
                 else {
                     let newAccount = new Account();
                     newAccount.isLogged = true;
+                    newAccount.lastLogin = Date();
                     newAccount.name = req.body.name;
                     newAccount.email = req.body.email;
                     newAccount.password = req.body.password;
@@ -159,6 +160,7 @@ export const db = {
             if (result) {
                 console.log('[accountDB-login] Result:', result);
                 result.isLogged = true;
+                result.lastLogin = Date();
                 result.save();
                 data.account = result;
                 data.error = false;

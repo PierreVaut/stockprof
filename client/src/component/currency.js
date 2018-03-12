@@ -1,16 +1,18 @@
 import React from 'react';
 
+
+/* Keep this component as a Class */
 class Currency extends React.Component{
     constructor(props){
         super(props);
         // local state only 
-        this.state = {price: 0}
+        this.state = {localPrice: 0}
     }
 
-
+    // this can be updated when component is rendered
     componentDidMount(){
         this.setState({
-            price: this.props.price
+            price: this.props.localPrice
         })
     }
 
@@ -24,7 +26,7 @@ class Currency extends React.Component{
                     <span className = 'currency-open24-diff'
                         style = {(this.props.price >= this.props.open24)?{color: 'green'}:{color:'red'} }
                     >
-                        {(this.props.price >= this.props.open24)?'  +':'  -'}
+                        {(this.props.price >= this.props.open24)?'  +':'  '}
                         {Math.round(100*(this.props.price - this.props.open24) / this.props.open24)}%
                     </span>
                 

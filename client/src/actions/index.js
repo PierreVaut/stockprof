@@ -8,8 +8,6 @@ export const toggleVisibility = (target) => {
 }
 
 
-
-
 // sets input from user (login, pwd, email) into State for further apiPOST request (login or register)
 /*** called by Login and Register components */
 export const requestBody = (field, content) => {
@@ -31,6 +29,10 @@ export const receiveData = (data) => {
 /*** dispatched by users.js component when webSocket is updated ***/
 export const receiveUserList = (list) => {
     return {type: actionType.RECEIVE_USERLIST, list}
+}
+
+export const receivePrices = (prices) => {
+    return {type: actionType.RECEIVE_PRICES, prices}
 }
 
 // Http request to retrieve Session, Account, Cookies
