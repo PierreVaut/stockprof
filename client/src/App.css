@@ -73,3 +73,19 @@ body {
 .menu-entry{
   
 }
+
+
+.currency div:first-child{
+  margin-top: 20px;
+}
+
+.currency{
+  margin-bottom: 20px;
+
+}
+
+.currency-timestamp{
+  font-size: 12px;
+  font-style: italic;
+  color: #595959;
+}

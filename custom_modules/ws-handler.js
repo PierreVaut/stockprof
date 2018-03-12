@@ -32,7 +32,7 @@ const cexioWS = function(client){
                 console.log(chalk.red('[CEX server] WS client error'))
             )
             if(msg['e'] === 'ping'){
-                // console.log('[CEX client] Connection active')
+                //console.log('[CEX client] Connection active')
                 cexWS.send(JSON.stringify({"e":"pong"}));
             }
     
@@ -70,7 +70,7 @@ const getUsers = (client) => {
     db.getUsers(
         (list) => {
             client.emit('userList', list)
-            // console.log(chalk.blue('[WS-handler] Emitting...'))
+            //console.log(chalk.blue('[WS-handler] Emitting...'))
             setTimeout(() => {
                 getUsers(client)
             }, 4000);

@@ -19,11 +19,20 @@ class Currency extends React.Component{
         return(
             <div className = 'currency'>
                 <div className = 'currency-name'>
-                    {this.props.symbol1}
-                </div>
+                    {this.props.symbol1}               
+
+                    <span className = 'currency-open24-diff'
+                        style = {(this.props.price >= this.props.open24)?{color: 'green'}:{color:'red'} }
+                    >
+                        {(this.props.price >= this.props.open24)?'  +':'  -'}
+                        {Math.round(100*(this.props.price - this.props.open24) / this.props.open24)}%
+                    </span>
                 
+                </div>
+
+
                 <div className = 'currency-price'>
-                    {this.props.price}  $
+                    Market price: {this.props.price}  $
                 
                     {(this.props.price >= this.state.price)?
                         (<span className = "currency-diffprice-sign" style={{color: 'green'}}>  &#9650;</span>):
@@ -34,16 +43,11 @@ class Currency extends React.Component{
 
 
                 <div className = 'currency-open24'>
-                    open24: {this.props.open24}$
+                    Last price (24h): {this.props.open24}$
                 </div>
 
 
-                <div className = 'currency-open24-diff'
-                     style = {(this.props.price >= this.props.open24)?{color: 'green'}:{color:'red'} }
-                >
-                    {(this.props.price >= this.props.open24)?'+':'-'}
-                    {Math.round(100*(this.props.price - this.props.open24) / this.props.open24)}%
-                </div>
+
 
                 <div className = 'currency-timestamp' >
                     timestamp: {new Date(this.props.timestamp).toLocaleString()}

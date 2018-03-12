@@ -8,7 +8,7 @@ const socket = openSocket();
 class Users extends React.Component {
     constructor(props) {
         super(props);
-        this.timer;
+
         this.subscribeToListUpdates(list => {
             this.setState({'userList': list});
             console.log('[Users] update list', list)}
