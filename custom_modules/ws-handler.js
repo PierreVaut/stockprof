@@ -3,7 +3,7 @@ import { server }  from '../api/routes.js';
 import { priceDB } from './price-handler';
 import { db }      from './db-handler';
 const chalk = require('chalk');
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, { wsEngine: 'ws' });
 const WebSocket = require('ws');
 
 console.log(chalk.green('[Chalk] Hello world!'));
@@ -18,31 +18,32 @@ const cexioWS = function(client){
     const cexWS = new WebSocket('wss://ws.cex.io/ws/', { perMessageDeflate: false });
     console.log('[cexioWS] - starting'); 
     cexWS.on('open', function(){
-        //console.log(chalk.green('[cexioWS] - open') ); 
+        // console.log(chalk.green('[cexioWS] - open') ); 
 
         cexWS.on('message', function(el){
-            //console.log('[CEX server] message:', el);
+            // console.log('[CEX server] message:', el);
             let msg = JSON.parse(el);
 
             if(client){
+                // Gets all prices from Database
                 priceDB.get(function(docs){client.emit('btc', docs)} )
             }
             else(
                 console.log(chalk.red('[CEX server] WS client error'))
             )
             if(msg['e'] === 'ping'){
-                //console.log('[CEX client] Connection active')
+                // console.log('[CEX client] Connection active')
                 cexWS.send(JSON.stringify({"e":"pong"}));
             }
     
             if(client && msg.data){
-                if(msg.data.symbol1){            
+                if(msg.data.symbol1){
+                    // We consider only price in USD            
                     if(msg.data.symbol2 === 'USD'){
-                        //console.log(chalk.green('[CEX server]', JSON.stringify(msg) ) );
-                        // client.emit('btc', msg.data);
-                        // priceDB.handle(msg.data)
-                         priceDB.handle(msg.data, function(docs){client.emit('btc', docs)} )
+                        // Update price in the Database and emit new price via WS
+                        priceDB.handle(msg.data, function(docs){client.emit('btc', docs)} )
                     } else {
+                        // Prices updates in other currencies
                         //console.log('[CEX server] BTC', JSON.stringify(msg.data) );
                     }
                 }
@@ -69,7 +70,7 @@ const getUsers = (client) => {
     db.getUsers(
         (list) => {
             client.emit('userList', list)
-            //console.log(chalk.blue('[WS-handler] Emitting...'))
+            // console.log(chalk.blue('[WS-handler] Emitting...'))
             setTimeout(() => {
                 getUsers(client)
             }, 4000);

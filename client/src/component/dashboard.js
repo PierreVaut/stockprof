@@ -4,8 +4,8 @@ import Btc from './btc'
 
 const Dashboard = () => (
     <div>
-        <h2>Dashboard</h2>
-        <RawData />
+        {/* <h2>Dashboard</h2>
+            <RawData />*/}
         <Btc />
     </div>)
 

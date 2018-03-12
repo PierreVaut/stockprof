@@ -127,7 +127,7 @@ export const db = {
     },
 
     login: function(req, res, data, cb){
-        console.log('[accountDB-login] starting', data)
+        console.log('[accountDB-login] starting', data, ' - Request: ', req.body)
         const Account = mongoose.model('Account', accountSchema)
 
         // Check the request #1
