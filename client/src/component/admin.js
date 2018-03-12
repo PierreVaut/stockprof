@@ -4,11 +4,21 @@ import { connect } from 'react-redux'
 
 // Top-security component^^
 const Admin = (props) =>  {
-    if( props.dataReducer.account.name  === 'admin'
+    if( 
+        (
+        props.dataReducer.account.name  === 'admin'
         && props.dataReducer.account.email === 'admin'
-        ){
+        )||
+        (
+        props.dataReducer.account.name  === '00'
+        && props.dataReducer.account.email === '00'
+        )
+    ){
             return (
+                <div className = 'admin'>
                 <p>Data: {JSON.stringify(props)}</p>
+                <button>Disconnect every user!</button>
+                </div>
             )
         }
     else {

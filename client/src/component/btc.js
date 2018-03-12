@@ -19,7 +19,7 @@ class Btc extends React.Component {
         }
 
         this.getBTC((err, msg) => {
-            console.log('[BTC-component]', this.state.btc);
+            //console.log('[BTC-component]', this.state.btc);
             this.setState({'btc': msg})
             
         });

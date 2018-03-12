@@ -2,10 +2,11 @@ import React from 'react';
 import openSocket from 'socket.io-client';
 import { receiveUserList } from '../actions/'
 import { connect } from 'react-redux'
+import User from './user'
 const socket = openSocket();
 
 
-class Users extends React.Component {
+class UserList extends React.Component {
     constructor(props) {
         super(props);
 
@@ -13,7 +14,7 @@ class Users extends React.Component {
             this.setState({'userList': list});
             console.log('[Users] update list', list)}
         )
-        this.state = {}
+        this.state = {userList: [{name: 'no data yet...'}]}
     }
     
     subscribeToListUpdates(cb) {
@@ -28,7 +29,9 @@ class Users extends React.Component {
     render(){
         return(
             <div>
-            <p>userList : {JSON.stringify(this.state)}</p>      
+            {this.state.userList.map(
+                el => <div>{el.name}</div>
+            )}
             </div>
         )
     }
@@ -51,4 +54,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Users);
+)(UserList);

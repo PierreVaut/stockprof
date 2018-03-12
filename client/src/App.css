@@ -89,3 +89,11 @@ body {
   font-style: italic;
   color: #595959;
 }
+
+
+.user-connect-light{
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  border: 1px solid white
+}
