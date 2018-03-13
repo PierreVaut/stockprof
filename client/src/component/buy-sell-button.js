@@ -12,20 +12,27 @@ class BuySellButton extends React.Component {
 
     render(){
         let position = this.props.dataReducer.account.position[this.props.symbol]
+        let { cashAvailable } = this.props.dataReducer.account;
         if(this.state.visible){    
             return(
                 <div className='buy-sell-div'>
                     
                     <span onClick = { ()=> { this.setState({visible: false}) } } >
                     Quantity: {'    '} 
-                    </span>{(position)? position : 0} <br/>
+                    </span>{(position)? position : 0}
                     
-                    <button className='buy-sell-btn' >Buy all</button>
-                    <button className='buy-sell-btn' >+500$</button>
-                    <button className='buy-sell-btn' >-500$</button>
-                    <button className='buy-sell-btn' >Sell all</button>
+                    <span className = 'buy-sell-close' style ={{ cursor: 'pointer' }} >   [<span onClick = { ()=> { this.setState({visible: false}) } } >X</span>]</span>
+
+                    <br/>
+                    Cash: { cashAvailable } 
+
+                    <br/>
+                    <button className='buy-sell-btn' >All in !!! 🛒</button>
+                    <button className='buy-sell-btn' >+500$ 👍</button><br/>
+                    <button className='buy-sell-btn' >Sell it all 🔥</button>
+                    <button className='buy-sell-btn' >-500$ 💸</button>
                 <br/>
-                <div style ={{ cursor: 'pointer' }} >[<span onClick = { ()=> { this.setState({visible: false}) } } >X</span>]</div>
+
                 </div>    
             )
         }

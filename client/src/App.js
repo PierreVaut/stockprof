@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Header     from './component/header';
+import Subheader  from './container/subheader';
 import Play       from './component/play';
 import Menu       from './container/menu';
 import Dashboard  from './component/dashboard';
@@ -16,11 +17,12 @@ import NotFound   from './component/404';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 
 const App = () => (
-    <div className="App">
+    <div>
         <HashRouter>
             <div>
-                <Header />             
-
+                <Header />
+                <Subheader />             
+                <div  className="app-body">
                 <Switch>
                     <Route exact path = "/"           component= { Menu }/>
                     <Route exact path = "/play"       component= { Play }/>
@@ -36,6 +38,7 @@ const App = () => (
                     <Route path= "/*"                 component= { NotFound }     />}
 
                 </Switch>
+                </div>
             </div>
         </HashRouter>
     </div>

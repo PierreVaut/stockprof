@@ -33,7 +33,6 @@ class Currency extends React.Component{
                 
                 </div>
 
-
                 <div className = 'currency-price'>
                     Market price: {this.props.price}  $
                 
@@ -44,13 +43,9 @@ class Currency extends React.Component{
 
                 </div>
 
-
                 <div className = 'currency-open24'>
                     Last price (24h): {this.props.open24}$
                 </div>
-
-
-
 
                 <div className = 'currency-timestamp' >
                     timestamp: {new Date(this.props.timestamp).toLocaleString()}

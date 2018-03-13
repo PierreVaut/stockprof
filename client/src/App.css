@@ -17,7 +17,8 @@ body {
   background: #104f55;
   color: white;
   height: 80px;
-
+  width: 100%;
+  position: fixed;
 }
 
 #title{
@@ -58,6 +59,9 @@ body {
   background: #d8d4d5;
   font-size: 12px;
   color: #595959;
+  margin-top: 80px;
+  width:100%;
+  position: fixed;
 }
 
 .subHeader-close{
@@ -71,8 +75,8 @@ body {
   font-weight: bold;
 }
 
-.menu-entry{
-  
+.app-body{
+  padding-top: 120px;
 }
 
 
@@ -127,4 +131,14 @@ body {
 .buy-sell-div{
   margin-top: 10px;
   font-size: 15px;
+  position: relative
+}
+
+.buy-sell-btn{
+  width: 90px;
+  padding: 2px;
+  margin : 1px;
+}
+.buy-sell-close:hover{
+  font-weight: bold;
 }
