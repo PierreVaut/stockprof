@@ -5,13 +5,13 @@ import Play       from './component/play';
 import Menu       from './container/menu';
 import Dashboard  from './component/dashboard';
 import Market     from './component/market';
-import Btc        from './component/btc';
 import Login      from './container/login';
 import Register   from './container/register';
 import Disconnect from './container/disconnect';
 import Contact    from './component/contact';
 import About      from './component/about';
 import Admin      from './component/admin';
+import RawData    from './container/rawData';
 import NotFound   from './component/404';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 
@@ -28,10 +28,11 @@ const App = () => (
                     <Route exact path = "/market"     component= { Market }/>
                     <Route exact path = "/login"      component= { Login } />
                     <Route exact path = "/register"   component= { Register }     />
-                    <Route exact path = "/disconnect" component= { Disconnect }     />                    
+                    <Route exact path = "/disconnect" component= { Disconnect }     />       
                     <Route exact path = "/contact"    component= { Contact }     />
                     <Route exact path = "/about"      component= { About }     />
                     <Route exact path = "/admin"      component= { Admin }     />
+                    <Route exact path = "/raw"        component= { RawData }     />  
                     <Route path= "/*"                 component= { NotFound }     />}
 
                 </Switch>

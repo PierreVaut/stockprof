@@ -9,7 +9,7 @@ let initialState = {
         lastVisit: Date.now(),
         ip:['ip']
     },
-    account: { name: 'Guest' },
+    account: { name: 'Guest', position: [] },
     requestBody:{email: '', pwd: '', name: ''},
     userList: [{name:'no data yet...', isLogged: false, lastLogin: 0}],
     prices: [

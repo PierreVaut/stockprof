@@ -1,12 +1,20 @@
 import React   from 'react'
-import RawData from '../container/rawData';
-import Btc from './btc'
+import { connect }  from 'react-redux';
 
-const Dashboard = () => (
-    <div>
-        {/* <h2>Dashboard</h2>
-            <RawData />*/}
-        <Btc />
-    </div>)
 
-export default Dashboard
+
+const Dashboard = (props) => {
+    let {cashAvailable, name, position } = props.account
+    return (<div className= 'dashboard'>
+        <h2>Dashboard</h2>
+        <div>Name: {name}</div>
+        <div>Cash: {cashAvailable}</div>
+        <div>Position: {position}</div>
+        <div>Profit: </div>
+    </div>)}
+
+
+const mapStateToProps = state => state.dataReducer
+const mapDispatchToProps = dispatch => { null }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

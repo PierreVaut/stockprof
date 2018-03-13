@@ -1,4 +1,5 @@
 import React from 'react';
+import BuySellButton from './buy-sell-button'
 
 
 /* Keep this component as a Class */
@@ -54,7 +55,8 @@ class Currency extends React.Component{
                 <div className = 'currency-timestamp' >
                     timestamp: {new Date(this.props.timestamp).toLocaleString()}
                 </div>
-
+                
+                <BuySellButton symbol = {this.props.symbol1} />
 
 
             </div>

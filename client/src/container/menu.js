@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import RawData from '../container/rawData';
 import { ErrorHandler } from '../component/error'
 import openSocket from 'socket.io-client';
 import { receiveUserList } from '../actions/'
@@ -48,7 +47,7 @@ class Menu extends React.Component {
     render(){
         return(
         <div className = 'menu' >
-            <RawData />
+            <h2>Menu</h2>
             <div className = 'menu-entry'><NavLink to="/play">Start !</NavLink></div>
             <div className = 'menu-entry'><NavLink to="/dashboard">Dashboard</NavLink></div>
             <div className = 'menu-entry'><NavLink to="/market">Market</NavLink></div>

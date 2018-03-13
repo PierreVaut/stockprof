@@ -14,7 +14,9 @@ const Header = (props) => (
                     <img src = {homeIcon} alt ="Home" style = {{width: 40}}/>
                 </NavLink>
             </div>
-            <div className = 'title'>Stocks</div>
+            <NavLink to="/" style={{ textDecoration: 'none' }}>
+            <div id = 'title' style={{ textDecoration: 'none', color: 'white' }}>Stocks</div>
+            </NavLink>
             <div className = 'notification-link'>
                 <img src = {notifIcon} alt ="Home" style = {{width: 35, marginTop: 4}}/>
             </div>
