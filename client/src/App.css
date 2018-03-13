@@ -81,7 +81,7 @@ body {
 
 
 .currency div:first-child{
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .currency{
@@ -127,11 +127,26 @@ body {
   text-align: left
 }
 
+.buy-sell-link{
+  font-size: 16px;
+}
+
+.buy-sell-link:hover{
+  text-decoration: underline
+}
 
 .buy-sell-div{
   margin-top: 10px;
   font-size: 15px;
-  position: relative
+  position: relative;
+  min-width: 280;
+  width: 50%;
+  margin-left: 25%;
+  padding: 10px;
+}
+
+.buy-sell-text{
+  padding: 15px 0;
 }
 
 .buy-sell-btn{
@@ -139,6 +154,15 @@ body {
   padding: 2px;
   margin : 1px;
 }
+
+.buy-sell-close{
+  font-size: 20px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
 .buy-sell-close:hover{
   font-weight: bold;
 }
