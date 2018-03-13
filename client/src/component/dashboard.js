@@ -9,12 +9,12 @@ const Dashboard = (props) => {
         <h2>Dashboard</h2>
         <div>Name: {name}</div>
         <div>Cash: {cashAvailable}</div>
-        <div>Position: {position}</div>
+        <div>Position: {JSON.stringify(position)}</div>
         <div>Profit: </div>
     </div>)}
 
 
 const mapStateToProps = state => state.dataReducer
-const mapDispatchToProps = dispatch => { null }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+
+export default connect(mapStateToProps)(Dashboard);

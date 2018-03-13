@@ -317,12 +317,10 @@ export const db = {
                             data.error = data.account;
                             console.error( data.account );
                         
-                            if(cb){
-                                cb(data);
-                            }
-                            else{
-                                res.json(data);
-                            }            }
+
+                            res.json(data);
+                        }
+
                     })
 
                 }

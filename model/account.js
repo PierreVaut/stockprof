@@ -12,8 +12,8 @@ const accountSchema = mongoose.Schema({
     cashAvailable: { type: Number, default: 5000 },
     position: [
         {   
-            stockCode: String,
-            detainedQty: Number,
+            symbol: String,
+            qty: Number,
             buyPrice: Number,
             buyDate: Date
         }

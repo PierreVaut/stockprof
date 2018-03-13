@@ -14,7 +14,15 @@ class BuySellButton extends React.Component {
 
 
     render(){
-        let position = this.props.dataReducer.account.position[this.props.symbol]
+        
+        let position = 0;
+        if(this.props.dataReducer.account.position){
+            this.props.dataReducer.account.position.forEach( el => { 
+                if(el.symbol === this.props.symbol){
+                    position = el.qty
+                }
+            });
+        }
         let { cashAvailable } = this.props.dataReducer.account;
         let userId = this.props.dataReducer.account['_id'];
 
