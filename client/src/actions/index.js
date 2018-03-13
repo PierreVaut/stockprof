@@ -68,3 +68,20 @@ export const apiPost = (body, url) => {
     }
 }
 
+export const marketOperation = (id, position, cash) => {
+    let body = {id: id, position: position, cash: cash};
+    let url = '/market-operation';
+    return dispatch => {
+        return fetch(url, params.post(body))
+        .then(response => {
+            console.log('[API Market operation] success:', response);
+            response.json().then(
+                json => {
+                    console.log('[API Market operation] json:', json);
+                    dispatch(receiveData(json))
+                }
+            )
+        })
+    }
+}
+

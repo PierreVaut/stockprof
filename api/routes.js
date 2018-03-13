@@ -30,6 +30,7 @@ app.use(function(req, res, next) {
     cookie.handle( req, res, data, (data) => {
 
         // First create user in the DB
+        /* TODO : We should check if the user is not currently connected to prevent multiple logins... */
         db.register( req, res, data, (data) => {
 
             // Then create/update session File
@@ -50,6 +51,7 @@ app.post('/login', (req, res) => {
     cookie.handle( req, res, data, (data) => {
 
         // Get user in the DB
+        /* TODO : We should check if the user is not currently connected to prevent multiple logins... */
         db.login( req, res, data, (data) => {
 
             // Then create/update session
@@ -75,6 +77,28 @@ app.post('/disconnect', (req, res) => {
 
     
 });
+
+app.post('/market-operation', (req, res) => {
+    console.log('[API] Login', req.body)
+    let data =  {
+        'cookie': '',
+        'session': {},
+        'account': {}
+    }
+
+    // Set or retrieve cookie
+    cookie.handle( req, res, data, (data) => {
+
+        // Update cashAvailable and position
+        db.marketOperation( req, res, data, (data) => {
+
+            // Update session
+            session.register( req, res, data );
+        });
+    });
+    
+});
+
 
 app.get('/api/', (req, res) => {
     

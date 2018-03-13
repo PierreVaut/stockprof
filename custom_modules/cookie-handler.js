@@ -13,6 +13,7 @@ export const cookie = {
         // Cookie already exists.
         if(cookies.get(domain) && (cookies.get(domain) !== '') ){
             data.cookie = cookies.get(domain);
+            data.error = false;
             console.log('[Cookie-handler] New visit:', data.cookie);
             console.log('[Cookie-handler] CB:', data);
             cb(data)
@@ -26,6 +27,7 @@ export const cookie = {
                 if(cookie){
                     // Cookie creation.
                     data.cookie = cookies.get(domain);
+                    data.error = false;
                     console.log('[Cookie-handler] Cookie created:', data.cookie);
                     console.log('[Cookie-handler] CB:', data);
                     cb(data);
@@ -45,7 +47,8 @@ export const cookie = {
     remove: function(req, res, data, cb){
         let cookies = new Cookies(req.headers.cookie);
         data.cookie = cookies.get(domain);
-        cookies.remove(domain);
+        data.error = false;
+        cookies.remove(domain); // No error handling :(
         cb(data);
     }
 }

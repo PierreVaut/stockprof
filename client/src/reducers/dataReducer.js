@@ -11,7 +11,7 @@ let initialState = {
     },
     account: { name: 'Guest', position: {'TEST': 15} },
     requestBody:{email: '', pwd: '', name: ''},
-    userList: [{name:'no data yet...', isLogged: false, lastLogin: 0}],
+    userList: [{name:'no data yet...', isLogged: false, lastLogin: 0, '_id': false}],
     prices: [
             {symbol1: 'TEST',
             symbol2: 'USD',

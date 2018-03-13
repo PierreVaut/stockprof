@@ -1,18 +1,23 @@
 import React from 'react';
 import { connect }  from 'react-redux';
+import { marketOperation } from '../actions/'
+
+
 
 class BuySellButton extends React.Component {
 
     constructor(props){
         super(props);
         // local state only 
-        this.state = {visible: false};
+        this.state = {visible: false, msg: 'test'};
     }
 
 
     render(){
         let position = this.props.dataReducer.account.position[this.props.symbol]
         let { cashAvailable } = this.props.dataReducer.account;
+        let userId = this.props.dataReducer.account['_id'];
+
         if(this.state.visible){    
             return(
                 <div className='buy-sell-div' style = {{border: '3px solid #104f55', borderRadius: 5}} >
@@ -36,6 +41,8 @@ class BuySellButton extends React.Component {
                     <button className='buy-sell-btn' >-500$ 💸</button>
                 <br/>
 
+                {(this.state.msg)?<div className='buy-sell-msg'>{this.state.msg}</div>:null}
+
                 </div>    
             )
         }
@@ -52,4 +59,10 @@ class BuySellButton extends React.Component {
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps)(BuySellButton)
+const mapDispatchToProps = dispatch => {
+    return {
+        onSubmit: (id, operation, value, symbol) => dispatch( marketOperation(id, operation, value, symbol) )
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuySellButton)

@@ -26,13 +26,22 @@ export const session = {
                 fs.writeFile(path, JSON.stringify(data.session), (err) =>{
                     if(err){
                         data.session = '[Session-handler] Write File error'+ err;
+                        data.error = data.session;
                         console.error( data.session );
                         res.json(data)
                     }
-                    if(cb){
-                        console.log("[Session-handler] Passing CB on:", data);
-                        cb(data);
+                    else {
+                        if(cb){
+                            console.log("[Session-handler] Passing CB on:", data);
+                            data.error = false;
+                            cb(data);
+                        }
+                        else{
+                            res.json(data);                     
+                        }
+
                     }
+
                 });
             }
 
@@ -54,10 +63,16 @@ export const session = {
                         console.error( data.error );
                         res.json(data)
                     }
-                    if(cb){
-                        console.log("[Session-handler] Passing CB on:", data);
-                        cb( data );
+                    else{
+                        if(cb){
+                            data.error = false;
+                            console.log("[Session-handler] Passing CB on:", data);
+                            cb( data );
+                        } else{
+                            res.json(data);
+                        }
                     }
+
                 });
             } 
         })
@@ -97,6 +112,7 @@ export const session = {
                         res.json(data);
                     }
                     else{
+                        data.error = false;
                         if(cb){
                             console.log("[Session-handler] Passing CB on:", data);
                             cb(data);
@@ -140,13 +156,18 @@ export const session = {
                         console.error( data.session );
                         res.json(data);
                     }
-                    if(cb){
-                        console.log("[Session-handler] Passing CB on:", data);
-                        cb(data);
-                    } else {
-                        console.log("[Session-handler] Response:", data);
-                        res.json(data);
+                    else{
+                        if(cb){
+                            data.error = false;
+                            console.log("[Session-handler] Passing CB on:", data);
+                            cb(data);
+                        } else {
+                            data.error = false;
+                            console.log("[Session-handler] Response:", data);
+                            res.json(data);
+                        }
                     }
+
                 });
             } 
         })
@@ -169,7 +190,6 @@ export const session = {
             else{
                 console.log("[Session-disconnect]");
                 data.session = JSON.parse(result);
-                data.error = false;
                 data.session.isLogged = false;
                 data.session.status = 'Session Disconnected -' + (new Date() ).getTime();
                 data.session.visitLast = (new Date() ).getTime();
@@ -185,13 +205,18 @@ export const session = {
                         console.error( data.error );
                         res.json(data)
                     }
-                    if(cb){
-                        console.log("[Session-disconnect] Passing CB on:", data);
-                        cb( data );
-                    } 
                     else{
-                        res.json(data)
+                        data.error = false;
+                        if(cb){
+                            console.log("[Session-disconnect] Passing CB on:", data);
+                            cb( data );
+                        } 
+                        else{
+                            res.json(data)
+                        }
+
                     }
+
                 });
             }
         });

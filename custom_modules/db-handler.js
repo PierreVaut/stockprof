@@ -1,5 +1,6 @@
 import { uri } from '../config/connect';
 import { accountSchema } from '../model/account';
+import { code } from '../config/currency';
 import Cookies from 'universal-cookie';
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
@@ -133,58 +134,58 @@ export const db = {
 
         // Check the request #1
         if(!req || req === ''){
-            data.account = '[accountDB-login] Error: request is undefined'
+            data.account = 'Error: request is undefined'
             data.error =  data.account;
-            console.error( data.account );
+            console.error( '[accountDB-login]' , data.account );
             res.json(data);
         }
 
         // Check the request #2
-        if( req.body.name === '' || typeof(req.body.email) === '' || req.body.password === ''
+        else if( req.body.name === '' || typeof(req.body.email) === '' || req.body.password === ''
             ) {
-                data.account = '[accountDB-login] Error : Please fill in all fields'
+                data.account = 'Error : Please fill in all fields'
                 data.error = data.account;
-                console.error( data.account );
+                console.error( "[accountDB-login]" , data.account );
                 res.json(data);  
         }
 
-        Account.findOne({email: req.body.email, password: req.body.password }, (error, result) => {
-            console.log('[accountDB-login] Checking DB')
-            if (error){
-                data.account ='[accountDB-login] Error fetching DB: '+ error;
-                data.error = data.account;
-                console.error( data.account );
-                res.json(data); 
-            }
 
-            if (result) {
-                console.log('[accountDB-login] Result:', result);
-                result.isLogged = true;
-                result.lastLogin = Date();
-                result.save();
-                data.account = result;
-                data.error = false;
-                data.status = '';
-                if(cb){
-                    console.log("[accountDB-login] Passing CB on: ", data);
-                    cb( data );
-                } else {
-                    res.json(data);
-                }      
-            }
 
-            else {
-                data.account ='[accountDB-login] Invalid login/pwd... ';
-                data.error = data.account;
-                console.error( data.account );
-            
-                if(cb){
-                    cb(data);
+        else{
+            Account.findOne({email: req.body.email, password: req.body.password }, (error, result) => {
+                console.log('[accountDB-login] Checking DB')
+                if (error){
+                    data.account ='Error fetching DB: '+ error;
+                    data.error = data.account;
+                    console.error( "[accountDB-login] " , data.account );
+                    res.json(data); 
                 }
-                else{
+    
+                if (result) {
+                    console.log('[accountDB-login] Result:', result);
+                    result.isLogged = true;
+                    result.lastLogin = Date();
+                    result.save();
+                    data.account = result;
+                    data.error = false;
+                    data.status = '';
+                    if(cb){
+                        console.log("[accountDB-login] Passing CB on: ", data);
+                        cb( data );
+                    } else {
+                        res.json(data);
+                    }      
+                }
+    
+                else {
+                    data.account = 'Invalid login/pwd... ';
+                    data.error = data.account;
+                    console.error( '[accountDB-login] ' , data.account );
                     res.json(data);
-                }            }
-        })
+                }
+            })
+        }
+
 
     },
 
@@ -196,32 +197,36 @@ export const db = {
                 console.log( data.account );
                 res.json( data );
             }
-            
-            if(result !== null){
-                result.isLogged = false;
-                result.save();
-                data.account = result;
-                data.error = false;
-                data.status = '';
-                console.log('[accountDB-disconnect] OK', data);
-            
-            
-                if(cb){
-                    cb(data);
-                }
-                else{
-                    res.json(data);
-                }
-            }
 
             else{
-                if(cb){
-                    cb(data);
+                if(result !== null){
+                    result.isLogged = false;
+                    result.save();
+                    data.account = result;
+                    data.error = false;
+                    data.status = '';
+                    console.log('[accountDB-disconnect] OK', data);
+                
+                
+                    if(cb){
+                        cb(data);
+                    }
+                    else{
+                        res.json(data);
+                    }
                 }
+    
                 else{
-                    res.json(data);
+                    if(cb){
+                        cb(data);
+                    }
+                    else{
+                        res.json(data);
+                    }
                 }
             }
+            
+
         })
     },
 
@@ -233,6 +238,96 @@ export const db = {
             console.log(chalk.blue('[accountDB] get: '+ JSON.stringify(list).substr(0, 30)));
             cb(list)
         } )
+    },
 
+    marketOperation(req, res, data, cb){
+        console.log('[accountDB-marketOperation] starting', data, ' - Request: ', req.body)
+                // Check the request #1
+                if(!req || req === ''){
+                    data.error =  'Error: request is undefined'
+                    console.error( '[accountDB-marketOperation] ', data.error );
+                    res.json(data);
+                }
+
+                /*
+
+                13/03/2018 19h  :  We'll put app logic Front-end
+                Back-end will only store information in the DB...
+
+                // Check the request #2
+                else if(!code[req.body.symbol]){
+                    data.error =  'Error: unknown or unsupported Currency'
+                    console.error( '[DB-marketOperation] ', data.error );
+                    res.json(data);
+                }
+
+                // Check the request #3
+                else if(!req.body.id){
+                    data.error =  'Error: unknown User, please login'
+                    console.error( '[DB-marketOperation] ', data.error );
+                    res.json(data);
+                }
+
+                // Check the request #4
+                else if( !(req.body.operation === 'SELL' || req.operation === 'BUY')){
+                    data.error =  'Error: unknown or unsupported Market operation'
+                    console.error( '[DB-marketOperation] ', data.error );
+                    res.json(data);
+                }
+                */
+
+                // Check the request #1
+                else if( req.body.cash < -5000){
+                    data.error =  'Error: trade limit exceeded, please get a premium subscription'
+                    console.error( '[DB-marketOperation] ', data.error );
+                    res.json(data);
+                }
+
+                else{
+                    data.error = false;
+                    console.log('[DB-marketOperation] Checking DB - Request: ', req.body)
+
+                    const Account = mongoose.model('Account', accountSchema)
+                    Account.findOne({'_id': req.id}, (error, result) => {
+                        
+                        if (error){
+                            data.error ='Error fetching DB, try again later...';
+                            console.error( '[DB-marketOperation]', data.error );
+                            res.json(data); 
+                        }
+            
+                        if (result) {
+                            console.log('[DB-marketOperation] Result:', result);
+                            result.isLogged = true;
+                            result.lastLogin = Date();
+                            result.save();
+                            data.account = result;
+                            data.error = false;
+                            data.status = '';
+                            if(cb){
+                                console.log("[DB-marketOperation] Passing CB on: ", data);
+                                cb( data );
+                            } else {
+                                res.json(data);
+                            }      
+                        }
+            
+                        else {
+                            data.account ='[DB-marketOperation] Invalid login/pwd... ';
+                            data.error = data.account;
+                            console.error( data.account );
+                        
+                            if(cb){
+                                cb(data);
+                            }
+                            else{
+                                res.json(data);
+                            }            }
+                    })
+
+                }
+
+
+    
     }
 }

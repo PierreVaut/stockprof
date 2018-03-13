@@ -7,13 +7,13 @@ import Loader from './loader'
 const Market = props => {
     
     return (
-        <div>
-            <h2>Realtime Market Value (via CEX.io)</h2>
+        <div className = 'market'>
+            <h2>Market</h2>
             
             {props.prices.map( 
                el => { 
                    if(el.symbol1 === 'TEST'){
-                       return <Loader />
+                       return <Loader key={el.symbol1} />
                    } else {
                        return <Currency {...el} key={el.symbol1} /> 
                    }
@@ -23,7 +23,6 @@ const Market = props => {
 }
 
 const mapStateToProps = state => state.dataReducer
-    
 
 export default connect(
     mapStateToProps
