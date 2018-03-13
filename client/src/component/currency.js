@@ -22,7 +22,7 @@ class Currency extends React.Component{
         return(
             <div className = 'currency'>
                 <div className = 'currency-name'>
-                    {this.props.symbol1}               
+                    <b>{this.props.symbol1}</b>               
 
                     <span className = 'currency-open24-diff'
                         style = {(this.props.price >= this.props.open24)?{color: 'green'}:{color:'red'} }
@@ -56,7 +56,9 @@ class Currency extends React.Component{
                     timestamp: {new Date(this.props.timestamp).toLocaleString()}
                 </div>
                 
-                <BuySellButton symbol = {this.props.symbol1} />
+                <BuySellButton 
+                    symbol = {this.props.symbol1} 
+                />
 
 
             </div>

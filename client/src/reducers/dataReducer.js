@@ -9,14 +9,14 @@ let initialState = {
         lastVisit: Date.now(),
         ip:['ip']
     },
-    account: { name: 'Guest', position: [] },
+    account: { name: 'Guest', position: {'TEST': 15} },
     requestBody:{email: '', pwd: '', name: ''},
     userList: [{name:'no data yet...', isLogged: false, lastLogin: 0}],
     prices: [
             {symbol1: 'TEST',
             symbol2: 'USD',
-            price: 12000,
-            open24: 10000,
+            price: 120,
+            open24: 100,
             timestamp: 0}
         ],
     priceListInitialized: false 
