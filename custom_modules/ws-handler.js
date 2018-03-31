@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const io = require('socket.io')(server, { wsEngine: 'ws' });
 const WebSocket = require('ws');
 
-console.log(chalk.green('[Chalk] Hello world!'));
+ //console.log(chalk.green('[Chalk] Hello world!'));
 
 let arrayMsg = [];
 let data = 'data incoming...'
@@ -16,12 +16,12 @@ const cexioWS = function(client){
     
     // Connect to CEX.io ws-APi
     const cexWS = new WebSocket('wss://ws.cex.io/ws/', { perMessageDeflate: false });
-    console.log('[cexioWS] - starting'); 
+     console.log('[cexioWS] - starting'); 
     cexWS.on('open', function(){
-        // console.log(chalk.green('[cexioWS] - open') ); 
+        console.log(chalk.green('[cexioWS] - open') ); 
 
         cexWS.on('message', function(el){
-            // console.log('[CEX server] message:', el);
+            //  //console.log('[CEX server] message:', el);
             let msg = JSON.parse(el);
 
             if(client){
@@ -29,10 +29,10 @@ const cexioWS = function(client){
                 // priceDB.get(function(docs){client.emit('btc', docs)} )
             }
             else(
-                console.log(chalk.red('[CEX server] WS client error'))
+                 console.log(chalk.red('[CEX server] WS client error'))
             )
             if(msg['e'] === 'ping'){
-                //console.log('[CEX client] Connection active')
+                // //console.log('[CEX client] Connection active')
                 cexWS.send(JSON.stringify({"e":"pong"}));
             }
     
@@ -42,13 +42,13 @@ const cexioWS = function(client){
                     if(msg.data.symbol2 === 'USD'){
                         // Update price in the Database and emit new price via WS
                         priceDB.handle(msg.data, function(docs){
-                            console.log(chalk.green('[WS-handler] Emitting Prices...'))
+                             //console.log(chalk.green('[WS-handler] Emitting Prices...'))
                             client.emit('btc', docs)
                         }
                         )
                     } else {
                         // Prices updates in other currencies
-                        //console.log('[CEX server] BTC', JSON.stringify(msg.data) );
+                        // //console.log('[CEX server] BTC', JSON.stringify(msg.data) );
                     }
                 }
             }
@@ -74,7 +74,7 @@ const getUsers = (client) => {
     db.getUsers(
         (list) => {
             client.emit('userList', list)
-            console.log(chalk.blue('[WS-handler] Emitting UserList...'))
+            // console.log(chalk.blue('[WS-handler] Emitting UserList...'))
             setTimeout(() => {
                 getUsers(client)
             }, 4000);
@@ -86,10 +86,10 @@ const getUsers = (client) => {
 
 export const ioServer = io.on('connection', function(client){
     
-    console.log(chalk.blue('[Socket.io] Connected'));
+     //console.log(chalk.blue('[Socket.io] Connected'));
 
     client.on('chatMessage', (msg) => {
-        console.log('[Socket.io] receiving Msg: ', msg);
+         //console.log('[Socket.io] receiving Msg: ', msg);
         arrayMsg.push(msg);
         client.emit('arrayMessage', arrayMsg)
     });

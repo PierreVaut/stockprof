@@ -10,14 +10,7 @@ const accountSchema = mongoose.Schema({
     friends: [{ type: mongoose.Schema.Types.ObjectId, default: mongoose.Types.ObjectId('5a857519c4bb2a0e3043ef3a') }],
     created: { type: Date, default: Date.now },
     cashAvailable: { type: Number, default: 5000 },
-    position: [
-        {   
-            symbol: String,
-            qty: Number,
-            buyPrice: Number,
-            buyDate: Date
-        }
-    ],
+    position: mongoose.Schema.Types.Mixed,
     log: String,
     source: String
 });

@@ -86,16 +86,8 @@ app.post('/market-operation', (req, res) => {
         'account': {}
     }
 
-    // Set or retrieve cookie
-    cookie.handle( req, res, data, (data) => {
-
-        // Update cashAvailable and position
-        db.marketOperation( req, res, data, (data) => {
-
-            // Update session
-            session.register( req, res, data );
-        });
-    });
+    // Update cashAvailable and position
+    db.marketOperation( req, res );
     
 });
 

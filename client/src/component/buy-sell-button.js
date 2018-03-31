@@ -15,16 +15,15 @@ class BuySellButton extends React.Component {
 
     render(){
         
-        let position = 0;
-        if(this.props.dataReducer.account.position){
-            this.props.dataReducer.account.position.forEach( el => { 
-                if(el.symbol === this.props.symbol){
-                    position = el.qty
-                }
-            });
+        let detainedQty = 0;
+        const { position } = this.props.dataReducer.account;
+        for(let el in position){ 
+            if(el === this.props.symbol){
+                detainedQty = position.el
+            }
         }
-        let { cashAvailable } = this.props.dataReducer.account;
-        let userId = this.props.dataReducer.account['_id'];
+        let { cashAvailable, _id } = this.props.dataReducer.account;
+        let price = this.props.price;
 
         if(this.state.visible){    
             return(
@@ -39,14 +38,79 @@ class BuySellButton extends React.Component {
                     </div>           
                     
                     <div className='buy-sell-text'>
-                        Quantity: {(position)? position : 0}<br/>
+                        Quantity: {(detainedQty)? detainedQty : 0}<br/>
                         Cash: {cashAvailable } 
                     </div>
 
-                    <button className='buy-sell-btn' >All in !!! 🛒</button>
-                    <button className='buy-sell-btn' >+500$ 👍</button><br/>
-                    <button className='buy-sell-btn' >Sell it all 🔥</button>
-                    <button className='buy-sell-btn' >-500$ 💸</button>
+                        <button
+                            disabled={cashAvailable < 1}
+                            className='buy-sell-btn' 
+                            onClick={() => {
+                                let options = {
+                                    _id,
+                                    operation: 'buy',
+                                    amount: -cashAvailable,
+                                    qty: parseFloat((cashAvailable/price).toFixed(8)),
+                                    symbol: this.props.symbol
+                                };
+                                console.log("[market] :", options)
+                                this.props.onClick(options)}
+                            }
+                        >
+                        All in !!! 🛒
+                        </button>
+                        <button 
+                            disabled={cashAvailable < 500}
+                            className='buy-sell-btn' 
+                            onClick={() => {
+                                let options = {
+                                    _id,
+                                    operation: 'buy',
+                                    amount: -500,
+                                    qty: parseFloat((500/price).toFixed(8)),
+                                    symbol: this.props.symbol
+                                };
+                                console.log("[market] :", options)
+                                this.props.onClick(options)}
+                            }
+                        >
+                        Buy 500$ 👍
+                        </button><br/>
+                        <button 
+                            disabled={detainedQty <= 0}
+                            className='buy-sell-btn' 
+                            onClick={()=>{
+                                let options = {
+                                    _id,
+                                    operation: 'sell',
+                                    amount: parseFloat((detainedQty*price).toFixed(8)),
+                                    qty: detainedQty,
+                                    symbol: this.props.symbol
+                                };
+                                console.log("[market] :", options)
+                                this.props.onClick(options)}
+                            }
+                        >
+                        Sell it all 🔥
+                        </button>
+                        <button 
+                            disabled={detainedQty * price < 500}
+                            className='buy-sell-btn' 
+                            onClick={()=>{
+                                let options = {
+                                    _id,
+                                    operation: 'sell',
+                                    amount: 500,
+                                    qty: parseFloat((500/price).toFixed(8)),
+                                    symbol: this.props.symbol
+                                };
+                                console.log("[market] :", options)
+                                this.props.onClick(options)}
+                            }
+                        >
+                        Sell 500$ 💸
+                        </button>
+
                 <br/>
 
                 {(this.state.msg)?<div className='buy-sell-msg'>{this.state.msg}</div>:null}
@@ -69,7 +133,7 @@ const mapStateToProps = state => state
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSubmit: (id, operation, value, symbol) => dispatch( marketOperation(id, operation, value, symbol) )
+        onClick: (options) => dispatch( marketOperation(options) )
     }
 }
 

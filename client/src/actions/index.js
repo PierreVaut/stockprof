@@ -68,8 +68,7 @@ export const apiPost = (body, url) => {
     }
 }
 
-export const marketOperation = (id, position, cash) => {
-    let body = {id: id, position: position, cash: cash};
+export const marketOperation = body => {
     let url = '/market-operation';
     return dispatch => {
         return fetch(url, params.post(body))

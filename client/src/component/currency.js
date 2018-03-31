@@ -52,7 +52,8 @@ class Currency extends React.Component{
                 </div>
                 
                 <BuySellButton 
-                    symbol = {this.props.symbol1} 
+                    symbol = {this.props.symbol1}
+                    price = {this.props.price}
                 />
 
 

@@ -235,90 +235,61 @@ export const db = {
         const Account = mongoose.model('Account', accountSchema);
         Account.find().lean().exec( function(err, list){
             if(err){return err}
-            console.log(chalk.blue('[accountDB] get: '+ JSON.stringify(list).substr(0, 30)));
+            // console.log(chalk.blue('[accountDB] get: '+ JSON.stringify(list).substr(0, 30)));
             cb(list)
         } )
     },
 
-    marketOperation(req, res, data, cb){
-        console.log('[accountDB-marketOperation] starting', data, ' - Request: ', req.body)
+    marketOperation(req, res){
+        let response = {};
+        console.log('[accountDB-marketOperation] Request: ', req.body)
                 // Check the request #1
                 if(!req || req === ''){
-                    data.error =  'Error: request is undefined'
-                    console.error( '[accountDB-marketOperation] ', data.error );
-                    res.json(data);
+                    response.error = 'Error: request is undefined';
+                    console.error( '[accountDB-marketOperation] ', response.error );
+                    res.json(response);
                 }
 
-                /*
-
-                13/03/2018 19h  :  We'll put app logic Front-end
-                Back-end will only store information in the DB...
-
-                // Check the request #2
-                else if(!code[req.body.symbol]){
-                    data.error =  'Error: unknown or unsupported Currency'
-                    console.error( '[DB-marketOperation] ', data.error );
-                    res.json(data);
-                }
-
-                // Check the request #3
-                else if(!req.body.id){
-                    data.error =  'Error: unknown User, please login'
-                    console.error( '[DB-marketOperation] ', data.error );
-                    res.json(data);
-                }
-
-                // Check the request #4
-                else if( !(req.body.operation === 'SELL' || req.operation === 'BUY')){
-                    data.error =  'Error: unknown or unsupported Market operation'
-                    console.error( '[DB-marketOperation] ', data.error );
-                    res.json(data);
-                }
-                */
-
-                // Check the request #1
-                else if( req.body.cash < -5000){
-                    data.error =  'Error: trade limit exceeded, please get a premium subscription'
-                    console.error( '[DB-marketOperation] ', data.error );
-                    res.json(data);
+                if(req.body.operation !== 'buy' && req.body.operation !== 'sell'){
+                    response.error = 'Error: invalid operation';
+                    console.error( '[accountDB-marketOperation] ', response.error );
+                    res.json(response);
                 }
 
                 else{
-                    data.error = false;
-                    console.log('[DB-marketOperation] Checking DB - Request: ', req.body)
-
+                    response.error = false;
                     const Account = mongoose.model('Account', accountSchema)
-                    Account.findOne({'_id': req.id}, (error, result) => {
+                    Account.findOne({'_id': req.body._id}, (error, result) => {
                         
                         if (error){
-                            data.error ='Error fetching DB, try again later...';
-                            console.error( '[DB-marketOperation]', data.error );
-                            res.json(data); 
+                            response.error ='Error fetching DB, try again later...';
+                            console.error( '[DB-marketOperation]', response.error );
+                            res.json(response); 
                         }
             
                         if (result) {
-                            console.log('[DB-marketOperation] Result:', result);
-                            result.isLogged = true;
-                            result.lastLogin = Date();
-                            result.save();
-                            data.account = result;
-                            data.error = false;
-                            data.status = '';
-                            if(cb){
-                                console.log("[DB-marketOperation] Passing CB on: ", data);
-                                cb( data );
+                            // Do stuff
+                            if(result.position === undefined){
+                                result.position = {};
+                                result.position[req.body.symbol] = 0;
+                                console.log('[DB-marketOperation] Resetting position:', result.position);
+                            }
+                            if(req.body.operation === 'buy'){
+                                console.log('[accountDB-marketOperation] Request: ', typeof req.body.qty, typeof result.position[req.body.symbol])
+                                result.position[req.body.symbol] = result.position[req.body.symbol] + req.body.qty;
                             } else {
-                                res.json(data);
-                            }      
+                                result.position[req.body.symbol] = result.position[req.body.symbol] - req.body.qty;
+                            }
+                            result.cashAvailable += req.body.amount;
+                            console.log('[DB-marketOperation] Account after operation:', result);
+                            result.save();
+                            res.json(result);                             
                         }
             
                         else {
-                            data.account ='[DB-marketOperation] Invalid login/pwd... ';
-                            data.error = data.account;
-                            console.error( data.account );
-                        
-
-                            res.json(data);
+                            response.error ='[DB-marketOperation] Invalid user... ';
+                            console.error( response.error );
+                            res.json(response);
                         }
 
                     })
