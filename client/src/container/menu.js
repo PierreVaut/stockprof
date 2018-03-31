@@ -48,17 +48,33 @@ class Menu extends React.Component {
         return(
         <div className = 'menu' >
             <h2>Menu</h2>
-            <div className = 'menu-entry'><NavLink to="/play">Start !</NavLink></div>
-            <div className = 'menu-entry'><NavLink to="/dashboard">Dashboard</NavLink></div>
-            <div className = 'menu-entry'><NavLink to="/market">Market</NavLink></div>
-            <div className = 'menu-entry'><NavLink to="/login">Login </NavLink></div>
-            <div className = 'menu-entry'>
-                {this.props.dataReducer.session.isLogged?
-                    <NavLink to="/disconnect">Disconnect</NavLink>:
-                    <NavLink to="/register">Register</NavLink>}
-            </div>
+            {this.props.dataReducer.session.isLogged?
+            (<div>
+            <p>Acheter et vendre des Monnaies virtuelles</p>
+            <div className = 'menu-entry'>🏦 <NavLink to="/market">Market</NavLink></div>
+            <br/>
+            <p>Voir les autres utilisateurs</p>
+            <div className = 'menu-entry'>🏆<NavLink to="/play"> Scores </NavLink></div>
+            <br/>
+            <p>Votre compte</p>
+            <div className = 'menu-entry'>💹 <NavLink to="/dashboard"> Dashboard</NavLink></div>
+            <br/>
+            </div>)
+
+            :
+            (<div><p>Connectez-vous</p>
+            <div className = 'menu-entry'>🛂 <NavLink to="/login">Login </NavLink></div><br/>
+            <p>Créez un compte</p>
+            <div className = 'menu-entry'>😀 <NavLink to="/register">Register</NavLink></div><br/>
+            </div>)
+            }
+            <br/>
+
             <div className = 'menu-entry'><NavLink to="/about">About</NavLink></div>
             <div className = 'menu-entry'><NavLink to="/contact">Contact</NavLink></div>
+            {this.props.dataReducer.session.isLogged?
+                <div className = 'menu-entry'><NavLink to="/disconnect">Disconnect</NavLink></div>:
+                    ""}
             {
                 (this.props.dataReducer.error)?
                     <ErrorHandler errorMsg = {this.props.dataReducer.error} />:''

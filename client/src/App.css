@@ -13,6 +13,11 @@ body {
   text-align: center
 }
 
+
+h2{
+  margin: 20px 0;
+}
+
 .header{
   background: #104f55;
   color: white;
@@ -128,8 +133,9 @@ body {
 }
 
 
-.market h2{
-  margin: 20px 0;
+
+.currency{
+  text-align: center;
 }
 
 .buy-sell-link{
@@ -143,11 +149,8 @@ body {
 .buy-sell-div{
   margin-top: 10px;
   font-size: 15px;
-  position: relative;
-  min-width: 280;
-  width: 50%;
-  margin-left: 25%;
   padding: 10px;
+  margin: 10px 20%;
 }
 
 .buy-sell-text{
@@ -161,10 +164,8 @@ body {
 }
 
 .buy-sell-close{
+  float: right;
   font-size: 20px;
-  position: absolute;
-  right: 10px;
-  top: 10px;
   cursor: pointer;
 }
 
