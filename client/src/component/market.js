@@ -5,7 +5,6 @@ import Loader from './loader'
 
 
 const Market = props => {
-    
     return (
         <div className = 'market'>
             <h2>Market</h2>
@@ -15,7 +14,7 @@ const Market = props => {
                    if(el.symbol1 === 'TEST'){
                        return <Loader key={el.symbol1} />
                    } else {
-                       return <Currency {...el} key={el.symbol1} /> 
+                       return <Currency {...el} account={props.account} key={el.symbol1} /> 
                    }
             })}
         </div>

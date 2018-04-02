@@ -242,7 +242,7 @@ export const db = {
 
     marketOperation(req, res){
         let response = {};
-        console.log('[accountDB-marketOperation] Request: ', req.body)
+        console.log('[accountDB-marketOperation] Request: ', req.body, req.body.symbol, typeof req.body.symbol)
                 // Check the request #1
                 if(!req || req === ''){
                     response.error = 'Error: request is undefined';
@@ -260,7 +260,6 @@ export const db = {
                     response.error = false;
                     const Account = mongoose.model('Account', accountSchema)
                     Account.findOne({'_id': req.body._id}, (error, result) => {
-                        
                         if (error){
                             response.error ='Error fetching DB, try again later...';
                             console.error( '[DB-marketOperation]', response.error );
@@ -268,22 +267,29 @@ export const db = {
                         }
             
                         if (result) {
-                            // Do stuff
+                            console.log('[DB-marketOperation] Account before operation:', result);
                             if(result.position === undefined){
                                 result.position = {};
-                                result.position[req.body.symbol] = 0;
                                 console.log('[DB-marketOperation] Resetting position:', result.position);
                             }
+                            if(result.position[req.body.symbol] === undefined){
+                                result.position[req.body.symbol] = 0;
+                                console.log('[DB-marketOperation] Resetting position for symbol',req.body.symbol, ':', result.position);
+                            }
                             if(req.body.operation === 'buy'){
-                                console.log('[accountDB-marketOperation] Request: ', typeof req.body.qty, typeof result.position[req.body.symbol])
+                                console.log('[accountDB-marketOperation] Result.position: ', result.position, result.position[req.body.symbol])
                                 result.position[req.body.symbol] = result.position[req.body.symbol] + req.body.qty;
                             } else {
                                 result.position[req.body.symbol] = result.position[req.body.symbol] - req.body.qty;
                             }
-                            result.cashAvailable += req.body.amount;
+                            result.cashAvailable = Math.round(result.cashAvailable + req.body.amount);
                             console.log('[DB-marketOperation] Account after operation:', result);
+                            result.markModified('position');
                             result.save();
-                            res.json(result);                             
+                            let response = {};
+                            response.error = false;
+                            response.account = result
+                            res.json(response);                             
                         }
             
                         else {

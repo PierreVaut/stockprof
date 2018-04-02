@@ -9,7 +9,11 @@ import { unregister }      from './registerServiceWorker';
 import IndexWithCookies    from './indexWithCookies';
 import { apiFetch }        from './actions/'
 import { createStore, applyMiddleware } from 'redux';
-const store = createStore(reducer, applyMiddleware(thunk) )
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+const composeEnhancers = composeWithDevTools({});
+
+const store = createStore(reducer, composeEnhancers( applyMiddleware(thunk) ) );
 
 store.dispatch( apiFetch() );
 

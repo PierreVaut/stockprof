@@ -66,12 +66,12 @@ function mapDispatchToProps(dispatch) {
     return { 
 
         updatePrice: (prices) => { 
-            console.log('[Users] Dispatch updated price', prices)
+            // console.log('[Users] Dispatch updated price', prices)
             dispatch( receivePrices(prices) )
         },
 
         updateUserList: (list) => { 
-            console.log('[Users] Dispatch updated list')
+            // console.log('[Users] Dispatch updated list')
             dispatch( receiveUserList(list) ) },
     }
 }

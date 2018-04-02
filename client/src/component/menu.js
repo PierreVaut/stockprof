@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { ErrorHandler } from '../component/error'
+import { ErrorHandler } from './error'
 import openSocket from 'socket.io-client';
 import { receiveUserList } from '../actions/'
 import { receivePrices } from '../actions/'
+import Balance from './balance';
 const socket = openSocket();
 
 
@@ -45,11 +46,17 @@ class Menu extends React.Component {
 
 
     render(){
+        const{name, cashAvailable} = this.props.dataReducer.account;
         return(
         <div className = 'menu' >
-            <h2>Menu</h2>
+            <h2>Bienvenue {name} !</h2>
+            
             {this.props.dataReducer.session.isLogged?
             (<div>
+            <div>Cash disponible: {cashAvailable} $</div>
+            <div>Plus/moins-values: <Balance account={this.props.dataReducer.account}/></div>
+            <br/>
+            <br/>
             <p>Acheter et vendre des Monnaies virtuelles</p>
             <div className = 'menu-entry'>🏦 <NavLink to="/market">Market</NavLink></div>
             <br/>

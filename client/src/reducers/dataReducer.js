@@ -29,24 +29,35 @@ const dataReducer = (state = initialState, action) => {
 
         case actionType.RECEIVE_DATA:
             console.log('[DataReducer] action:', action);
-            return Object.assign({}, state, action.data )
+            return {
+                ...state, 
+
+                    ...action.data
+
+            }
 
         case actionType.RECEIVE_USERLIST:
-            console.log('[DataReducer] action:', action);
+            // console.log('[DataReducer] action:', action);
             return {...state, userList: action.list}
             
         case actionType.RECEIVE_PRICES:
-            console.log('[DataReducer] action:', action);
+            // console.log('[DataReducer] action:', action);
             return {...state, priceListInitialized: true, prices: action.prices}
 
         case actionType.REQUEST_BODY:
-            console.log('[DataReducer] action:', action);
-            let newRequestBody = state.requestBody;
-            newRequestBody[action.field] = action.content;
-            return Object.assign({}, state, {requestBody: newRequestBody} )
+            // console.log('[DataReducer] action:', action);
+            let newState = {
+                ...state,
+                    requestBody: {
+                       ...state.requestBody,
+                       [action.field]: action.content
+                    }
+            }
+            console.log(state === newState)
+            return newState
 
         case actionType.RESET_REQUEST_BODY:
-            console.log('[DataReducer] action:', action);
+            // console.log('[DataReducer] action:', action);
             return {...state, requestBody: {} }
 
 

@@ -42,7 +42,7 @@ const Login = props => {
                     }
                 >
                 Login
-                </NavLink> 
+                </NavLink>
         </div>
     )   
 }

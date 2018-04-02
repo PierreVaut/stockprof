@@ -1,18 +1,18 @@
 import React from 'react';
 import './App.css';
 import Header     from './component/header';
-import Subheader  from './container/subheader';
+import Subheader  from './component/subheader';
 import Play       from './component/play';
-import Menu       from './container/menu';
+import Menu       from './component/menu';
 import Dashboard  from './component/dashboard';
 import Market     from './component/market';
-import Login      from './container/login';
-import Register   from './container/register';
-import Disconnect from './container/disconnect';
+import Login      from './component/login';
+import Register   from './component/register';
+import Disconnect from './component/disconnect';
 import Contact    from './component/contact';
 import About      from './component/about';
 import Admin      from './component/admin';
-import RawData    from './container/rawData';
+import RawData    from './component/rawData';
 import NotFound   from './component/404';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 

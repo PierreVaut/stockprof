@@ -1,6 +1,6 @@
 import React from 'react';
-import UserList from '../container/userList' 
-import Chat  from '../container/chat'
+import UserList from './userList' 
+import Chat  from './chat'
 
 
 const Play = () =>

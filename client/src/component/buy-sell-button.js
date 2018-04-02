@@ -14,15 +14,17 @@ class BuySellButton extends React.Component {
 
 
     render(){
-        
         let detainedQty = 0;
-        const { position } = this.props.dataReducer.account;
+        const { position, cashAvailable, _id } = this.props;
+        console.log(this.props);
+        
         for(let el in position){ 
+            // console.log("Position: ", el, this.props.symbol);
             if(el === this.props.symbol){
-                detainedQty = position.el
+                // console.log(el, position, position[el])
+                detainedQty = position[el]
             }
         }
-        let { cashAvailable, _id } = this.props.dataReducer.account;
         let price = this.props.price;
 
         if(this.state.visible){    
@@ -39,7 +41,7 @@ class BuySellButton extends React.Component {
                     
                     <div className='buy-sell-text'>
                         Quantity: {(detainedQty)? detainedQty : 0}<br/>
-                        Cash: {cashAvailable } 
+                        Cash: {Math.round(cashAvailable) } 
                     </div>
 
                         <button
@@ -71,7 +73,7 @@ class BuySellButton extends React.Component {
                                     symbol: this.props.symbol
                                 };
                                 console.log("[market] :", options)
-                                this.props.onClick(options)}
+                                this.props.onClick(options);}
                             }
                         >
                         Buy 500$ 👍
@@ -129,11 +131,19 @@ class BuySellButton extends React.Component {
     }
 }
 
-const mapStateToProps = state => state
+
 
 const mapDispatchToProps = dispatch => {
     return {
         onClick: (options) => dispatch( marketOperation(options) )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        position: state.dataReducer.account.position,
+        cashAvailable: state.dataReducer.account.cashAvailable,
+        _id: state.dataReducer.account._id
     }
 }
 
