@@ -18,7 +18,7 @@ const Register = props => {
                     </input><br/>
                 </label><br/>
 
-                <label>Name<br/>
+                <label>Nom<br/>
                     <input
                         name= 'name'
                         value= {props.dataReducer.requestBody.name}
@@ -27,7 +27,7 @@ const Register = props => {
                     </input><br/>
                 </label><br/>
 
-                <label>Password<br/>
+                <label>Mot de passe<br/>
                     <input
                         name= 'password'
                         value= {props.dataReducer.requestBody.pwd}

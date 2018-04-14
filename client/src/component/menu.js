@@ -81,10 +81,10 @@ class Menu extends React.Component {
             }
             <br/>
 
-            <div className = 'menu-entry'><NavLink to="/about">About</NavLink></div>
+            <div className = 'menu-entry'><NavLink to="/about">A propos</NavLink></div>
             <div className = 'menu-entry'><NavLink to="/contact">Contact</NavLink></div>
             {this.props.dataReducer.session.isLogged?
-                <div className = 'menu-entry'><NavLink to="/disconnect">Disconnect</NavLink></div>:
+                <div className = 'menu-entry'><NavLink to="/disconnect">Déconnexion</NavLink></div>:
                     ""}
             {
                 (this.props.dataReducer.error)?

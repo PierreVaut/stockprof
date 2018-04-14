@@ -13,7 +13,7 @@ const mapDispatchToProps = dispatch => {
 const Disconnect = connect(null, mapDispatchToProps)(
     props => (
         <div>
-            <h2>Are you sure to Disconnect ?</h2>
+            <h2>Êtes-vous sûr de vous déconnectier</h2>
             <NavLink
                 to = '/'
                 onClick = {
@@ -24,7 +24,7 @@ const Disconnect = connect(null, mapDispatchToProps)(
                     }
                 }
             >
-            yes, disconnect
+            Oui, déconnexion
             </NavLink> 
         </div>
     )

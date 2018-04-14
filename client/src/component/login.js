@@ -18,7 +18,7 @@ const Login = props => {
                     >
                     </input><br/>
                 </label><br/>
-                <label>Password<br/>
+                <label>Mot de passe<br/>
                     <input
                         name= 'password'
                         value= {props.data.dataReducer.requestBody.pwd}
