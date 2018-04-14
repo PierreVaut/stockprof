@@ -1,7 +1,7 @@
 import React from 'react'
 import { colors } from '../config/color'
 import Balance from './balance';
-
+import { NavLink } from 'react-router-dom';
 
 const User = (props) => {
 
@@ -24,8 +24,10 @@ const User = (props) => {
         >
         </div>
         
-        <div className = 'user-name'>{props.name}
-            <div>Balance: <Balance account={props} /></div>
+        <div className = 'user-name'>{props.name} :{"   "}
+        <Balance account={props} /><br/>
+        <NavLink className="userSocialLink" to="/" >Ajouter ami</NavLink>{" "}
+        <NavLink className="userSocialLink" to="/" >&#9993;MP</NavLink>
         </div>
     </div>
 )}

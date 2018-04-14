@@ -8,16 +8,10 @@ let keyCount = 0;
 const UserList = props => 
     (<div>
         <div>
-        Sort by:
-        <select>
-            <option>Highest Profit</option>
-            <option>Activity</option>
-            <option>Lowest Profit</option>
-        </select>
         </div>
         
-        <input type= 'checkbox'></input>   Friends only
-        
+        <input type= 'checkbox'></input>Afficher uniquement les amis
+        <br/><br/>
         {props.userList.map(
             el => {
                 keyCount++;

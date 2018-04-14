@@ -37,13 +37,7 @@ class BuySellButton extends React.Component {
                         className = 'buy-sell-close'
                     >
                         X
-                    </div>           
-                    
-                    <div className='buy-sell-text'>
-                        Quantity: {(detainedQty)? detainedQty : 0}<br/>
-                        Cash: {Math.round(cashAvailable) } 
-                    </div>
-
+                    </div>                
                         <button
                             disabled={cashAvailable < 1}
                             className='buy-sell-btn' 
@@ -113,10 +107,6 @@ class BuySellButton extends React.Component {
                         Sell 500$ 💸
                         </button>
 
-                <br/>
-
-                {(this.state.msg)?<div className='buy-sell-msg'>{this.state.msg}</div>:null}
-
                 </div>    
             )
         }
@@ -126,7 +116,7 @@ class BuySellButton extends React.Component {
             className='buy-sell-link'
             onClick = { ()=> { this.setState({visible: true}) }}
             style = {{ cursor: 'pointer' }}
-            >buy/sell</div>
+            >transaction</div>
         }
     }
 }

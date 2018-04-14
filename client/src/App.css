@@ -105,14 +105,15 @@ h2{
 
 .user{
   position: relative;
+  width: 240px;
   height: 60px;
-  margin: 5px 20px;
+  margin: 10px auto;
 }
 
 .user-avatar{
   position: absolute;
   border: 1px solid white;
-  top: 5px; left: 5px;
+  top: 0px; left: 5px;
   height: 40px; width: 40px;
   text-align: center; line-height: 40px;
   font-size: 24px;
@@ -129,12 +130,19 @@ h2{
 }
 
 .user-name{
-  border: 1px solid white;
   margin-left: 60px;
   text-align: left
 }
 
+.userSocialLink{
+  text-decoration: none;
+  font-size: 15px;
+  color: rgb(29, 51, 175);
+}
 
+.userSocialLink:hover{
+  text-decoration: underline;
+}
 
 .currency{
   text-align: center;
@@ -166,9 +174,9 @@ h2{
 }
 
 .buy-sell-close{
-  float: right;
   font-size: 20px;
   cursor: pointer;
+  position: absolute;
 }
 
 .buy-sell-close:hover{

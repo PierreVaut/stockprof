@@ -1,6 +1,6 @@
 import React from 'react';
 import BuySellButton from './buy-sell-button'
-
+import { connect } from 'react-redux';
 
 /* Keep this component as a Class */
 class Currency extends React.Component{
@@ -19,7 +19,13 @@ class Currency extends React.Component{
 
 
     render(){
-        
+        const { position } = this.props.account;
+        let detainedQty = 0;
+        for(let el in position){ 
+            if(el === this.props.symbol1){
+                detainedQty = position[el]
+            }
+        }
         return(
             <div className = 'currency'>
                 <div className = 'currency-name'>
@@ -35,17 +41,18 @@ class Currency extends React.Component{
                 </div>
 
                 <div className = 'currency-price'>
-                    Market price: {this.props.price}  $
+                    <p>Quantité : {detainedQty } </p>
+                    <p>Prix de marché: {this.props.price}  $
                 
                     {(this.props.price >= this.state.price)?
                         (<span className = "currency-diffprice-sign" style={{color: 'green'}}>  &#9650;</span>):
                         (<span className = "currency-diffprice-sign" style={{color: 'red'}}>  &#9660;</span>)
-                    }
+                    }</p>
 
                 </div>
 
                 <div className = 'currency-open24'>
-                    Last price (24h): {this.props.open24}$
+                    Dernier prix (24h): {this.props.open24}$
                 </div>
 
                 <div className = 'currency-timestamp' >
@@ -55,6 +62,7 @@ class Currency extends React.Component{
                 <BuySellButton 
                     symbol = {this.props.symbol1}
                     price = {this.props.price}
+                    detainedQty= {detainedQty}
                 />
 
 
@@ -63,4 +71,8 @@ class Currency extends React.Component{
     }
 }
 
-export default Currency
+const mapStateToProps = state => state.dataReducer
+
+export default connect(
+    mapStateToProps
+)(Currency)

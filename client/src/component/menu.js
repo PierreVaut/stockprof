@@ -69,7 +69,11 @@ class Menu extends React.Component {
             </div>)
 
             :
-            (<div><p>Connectez-vous</p>
+            (<div>
+            <p>Ce jeu vous permet d'acheter et de vendre des monaies virtuelles en temps réel<br/> et de comparer votre score à celui des autres utilisateurs</p>
+            <p>💵💹💁</p>
+            <br/><br/><br/>
+            <p>Connectez-vous</p>
             <div className = 'menu-entry'>🛂 <NavLink to="/login">Login </NavLink></div><br/>
             <p>Créez un compte</p>
             <div className = 'menu-entry'>😀 <NavLink to="/register">Register</NavLink></div><br/>
