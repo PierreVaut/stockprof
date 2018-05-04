@@ -44,7 +44,7 @@ class Currency extends React.Component{
                     <p>Quantité : {detainedQty } </p>
                     <p>Prix de marché: {this.props.price}  $
                 
-                    {(this.props.price >= this.state.price)?
+                    {(this.props.price - this.props.open24 > 0)?
                         (<span className = "currency-diffprice-sign" style={{color: 'green'}}>  &#9650;</span>):
                         (<span className = "currency-diffprice-sign" style={{color: 'red'}}>  &#9660;</span>)
                     }</p>
