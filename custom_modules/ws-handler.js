@@ -78,9 +78,7 @@ const getUsers = client => {
 };
 
 
-export const ioServer = io.on('connection', (client) => {
-  // console.log(chalk.blue('[Socket.io] Connected'));
-
+io.on('connection', (client) => {
   client.on('chatMessage', (msg) => {
     console.log('[Socket.io] receiving Msg: ', msg);
     arrayMsg.push(msg);
@@ -100,4 +98,11 @@ export const ioServer = io.on('connection', (client) => {
 
 
   cexioWS(client);
+});
+
+io.on('connection', (client) => {
+  console.log(chalk.blue('[Socket.io] Timeline Connected'));
+  client.on('timeline', () => {
+    client.emit('timeline', 'salut');
+  });
 });

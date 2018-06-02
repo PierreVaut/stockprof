@@ -9,12 +9,14 @@ class Chat extends React.Component {
     this.state = {
       msg: '',
       msgArray: [],
+      timestamp: 'no timestamp yet',
     };
 
     this.getArray((err, array) => this.setState({ msgArray: array }));
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
 
   getArray(cb) {
     socket.on('arrayMessage', array => cb(null, array));
@@ -26,7 +28,6 @@ class Chat extends React.Component {
 
   handleSubmit(event) {
     socket.emit('chatMessage', this.state.msg);
-    this.setState({ msg: '' });
     event.preventDefault();
   }
 
@@ -34,6 +35,8 @@ class Chat extends React.Component {
   render() {
     return (
       <div>
+            This is the timer value: {this.state.timestamp}
+
         <form onSubmit={this.handleSubmit}>
           <input
             name="msg"

@@ -24,9 +24,8 @@ const App = () => (
             <Route exact path="/admin" component={Admin} />
             <Route exact path="/raw" component={RawData} />
             <Route exact path="/chat" component={Chat} />
-            <Route exact path="/social" component={Timeline} />
-            <Route path="/*" component={NotFound} />}
-
+            <Route exact path="/timeline" component={Timeline} />
+            <Route path="/*" component={NotFound} />
           </Switch>
         </div>
       </div>

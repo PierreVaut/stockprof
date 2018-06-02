@@ -10,6 +10,8 @@ module.exports = {
         "react/jsx-filename-extension": 0,
         "class-methods-use-this": 0,
         "react/prop-types": 0,
-        "max-len": [2, 120, 4]
+        "max-len": [2, 120, 4],
+        "no-param-reassign": 0,
+        "no-unused-vars": 1
     }
 }
