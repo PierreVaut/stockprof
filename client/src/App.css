@@ -186,3 +186,25 @@ h2{
 .buy-sell-msg{
   margin-top: 10px;
 }
+
+.timeline-item{  position: relative;
+  width: 400px;
+  height: 90px;
+  margin: 10px auto;
+}
+.timeline-content{
+  margin-left: 60px;
+  text-align: left;
+}
+.timeline-votes{
+  text-align: left;
+  margin-left: 60px;
+}
+
+.timeline-timestamp{
+  text-align: left;
+  font-size: 12px;
+  font-style: italic;
+  color: #595959;
+  margin-left: 60px;
+}

@@ -1,114 +1,102 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-
 import { cookie } from '../custom_modules/cookie-handler';
 import { db } from '../custom_modules/db-handler';
 import { session } from '../custom_modules/session-handler';
+
+const express = require('express');
+
+const app = express();
+const bodyParser = require('body-parser');
 
 export const port = process.env.PORT || 5000;
 export const server = app.listen(port);
 
 app.use(express.static('client/build'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
-  app.post('/register', (req, res) => {
+app.post('/register', (req, res) => {
+  const data = {
+    cookie: '',
+    session: {},
+    account: {},
+  };
 
-    let data =  {
-        'cookie': '',
-        'session': {},
-        'account': {}
-    }
-    
-    // Set or retrieve cookie
-    cookie.handle( req, res, data, (data) => {
-
-        // First create user in the DB
-        /* TODO : We should check if the user is not currently connected to prevent multiple logins... */
-        db.register( req, res, data, (data) => {
-
-            // Then create/update session File
-            session.register( req, res, data);
-        });
+  // Set or retrieve cookie
+  cookie.handle(req, res, data, (data) => {
+    // First create user in the DB
+    /* TODO : We should check if the user is not currently connected to prevent multiple logins... */
+    db.register(req, res, data, (data) => {
+      // Then create/update session File
+      session.register(req, res, data);
     });
+  });
 });
 
 app.post('/login', (req, res) => {
-    console.log('[API] Login', req.body)
-    let data =  {
-        'cookie': '',
-        'session': {},
-        'account': {}
-    }
+  console.log('[API] Login', req.body);
+  const data = {
+    cookie: '',
+    session: {},
+    account: {},
+  };
 
-    // Set or retrieve cookie
-    cookie.handle( req, res, data, (data) => {
-
-        // Get user in the DB
-        /* TODO : We should check if the user is not currently connected to prevent multiple logins... */
-        db.login( req, res, data, (data) => {
-
-            // Then create/update session
-            session.register( req, res, data );
-        });
+  // Set or retrieve cookie
+  cookie.handle(req, res, data, (data) => {
+    // Get user in the DB
+    /* TODO : We should check if the user is not currently connected to prevent multiple logins... */
+    db.login(req, res, data, (data) => {
+      // Then create/update session
+      session.register(req, res, data);
     });
-    
+  });
 });
 
 app.post('/disconnect', (req, res) => {
-    let data =  {
-        'cookie': '',
-        'session': {},
-        'account': {}
-    }
+  const data = {
+    cookie: '',
+    session: {},
+    account: {},
+  };
 
-    // Set or retrieve cookie
-    cookie.remove( req, res, data, (data) => {
-        session.disconnect( req, res, data, cb => {
-            db.disconnect(req, res, data)
-        })
-    })
-
-    
+  // Set or retrieve cookie
+  cookie.remove(req, res, data, (data) => {
+    session.disconnect(req, res, data, cb => {
+      db.disconnect(req, res, data);
+    });
+  });
 });
 
 app.post('/market-operation', (req, res) => {
-    console.log('[API] Login', req.body)
-    let data =  {
-        'cookie': '',
-        'session': {},
-        'account': {}
-    }
+  console.log('[API] Login', req.body);
+  const data = {
+    cookie: '',
+    session: {},
+    account: {},
+  };
 
-    // Update cashAvailable and position
-    db.marketOperation( req, res );
-    
+  // Update cashAvailable and position
+  db.marketOperation(req, res);
 });
 
 
 app.get('/api/', (req, res) => {
-    
-    let data =  {
-        'cookie': '',
-        'session': {},
-        'account': {}
-    }
-        
-    // Set or retrieve cookie
-    cookie.handle( req, res, data, function(data){
+  const data = {
+    cookie: '',
+    session: {},
+    account: {},
+  };
 
-        // Set or retrieve session info
-        session.handle( req, res, data, function(data){
-
-            // Pass session info to DB to get user info
-            db.handle( req, res, data );
-        });
-    })
-    
+  // Set or retrieve cookie
+  cookie.handle(req, res, data, (data) => {
+    // Set or retrieve session info
+    session.handle(req, res, data, (data) => {
+      // Pass session info to DB to get user info
+      db.handle(req, res, data);
+    });
+  });
 });
