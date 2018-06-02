@@ -1,5 +1,5 @@
 import { uri } from '../config/connect';
-import { accountSchema } from '../model/account';
+import { accountSchema, timelineSchema } from '../model';
 import { server } from '../api/routes';
 
 const mongoose = require('mongoose');
@@ -206,6 +206,25 @@ export const db = {
     });
   },
 
+  insertTimeline(item) {
+    const Timeline = mongoose.model('Timeline', timelineSchema);
+    const newItem = new Timeline(item);
+    newItem.save(err => {
+      if (err) { console.log('[Timeline error]', err); } else {
+        console.log('[Timeline] insert: ', newItem);
+      }
+    });
+  },
+
+  getTimeline(cb) {
+    const Timeline = mongoose.model('Timeline', timelineSchema);
+    Timeline.find().lean().exec((err, result) => {
+      if (err) { return err; }
+      console.log({ result });
+      cb(result);
+    });
+  },
+
   marketOperation(req, res) {
     const response = {};
     if (!req || req === '') {
@@ -221,6 +240,8 @@ export const db = {
     } else {
       response.error = false;
       const Account = mongoose.model('Account', accountSchema);
+      const Timeline = mongoose.model('Timeline', timelineSchema);
+
       Account.findOne({ _id: req.body._id }, (error, result) => {
         if (error) {
           response.error = 'Error fetching DB, try again later...';
@@ -245,7 +266,14 @@ export const db = {
           result.markModified('position');
           result.save();
 
-          // Generate message
+          console.log({ result });
+          const timelineItem = {
+            content: `New market operation ${req.body.operation} on ${req.body.symbol}: ${req.body.amount}  (${req.body.qty})`,
+            author: result.name,
+            authorEmail: result.email,
+            authorId: result._id,
+          };
+          this.insertTimeline(timelineItem);
 
 
           response.error = false;

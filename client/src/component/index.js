@@ -12,7 +12,7 @@ import About from './about';
 import Admin from './admin';
 import RawData from './rawData';
 import Chat from './chat';
-import Timeline from './timeline';
+import Timeline from './timeline/timeline';
 import NotFound from './404';
 
 export { Header, Subheader, Play, Dashboard, Menu, Market, Login, Register, Disconnect, Contact, About, Admin, RawData, Chat, Timeline, NotFound,

@@ -70,7 +70,7 @@ const cexioWS = client => {
 const getUsers = client => {
   db.getUsers((list) => {
     client.emit('userList', list);
-    // console.log(chalk.blue('[WS-handler] Emitting UserList...'))
+    // console.log(chalk.blue('[WS-handler] Emitting UserList...'));
     setTimeout(() => {
       getUsers(client);
     }, 4000);
@@ -78,18 +78,22 @@ const getUsers = client => {
 };
 
 
-io.on('connection', (client) => {
+export const ioServer = io.on('connection', (client) => {
   client.on('chatMessage', (msg) => {
     console.log('[Socket.io] receiving Msg: ', msg);
     arrayMsg.push(msg);
     client.emit('arrayMessage', arrayMsg);
   });
 
+  client.on('timeline', (msg) => {
+    console.log(chalk.blue('[Socket.io] Timeline starting !', msg));
+    db.getTimeline(result => client.emit('timeline', result));
+  });
+
   client.on('subscribeToListUpdates', () => {
     console.log('[Socket.io] Client is subscribing to timer with interval 4000');
     getUsers(client);
   });
-
 
   client.on('btc-initial', () => {
     console.log('[btc-initial] says hello...');
@@ -100,9 +104,3 @@ io.on('connection', (client) => {
   cexioWS(client);
 });
 
-io.on('connection', (client) => {
-  console.log(chalk.blue('[Socket.io] Timeline Connected'));
-  client.on('timeline', () => {
-    client.emit('timeline', 'salut');
-  });
-});

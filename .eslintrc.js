@@ -12,6 +12,7 @@ module.exports = {
         "react/prop-types": 0,
         "max-len": [2, 120, 4],
         "no-param-reassign": 0,
-        "no-unused-vars": 1
+        "no-unused-vars": 1,
+        "no-plusplus": 0
     }
 }
