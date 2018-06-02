@@ -15,7 +15,10 @@ class Timeline extends React.Component {
   }
 
   componentDidMount() {
-    socket.on('timeline', stuff => this.setState({ response: stuff }));
+    socket.on('timeline', stuff => {
+      console.log({ stuff });
+      this.setState({ response: stuff });
+    });
     socket.emit('timeline', 'salut!');
   }
 
@@ -25,9 +28,6 @@ class Timeline extends React.Component {
   }
 
   render() {
-    /* const example = {
-      timestamp: Date.now(), content: 'truc-truc-truc-truc-truc', author: "Som'on", authorEmail: 'pipo@mail.fr', upvote: 54, downvote: 0, comment: 'uh, nice',
-    }; */
     return (
       <div className="user">
         { this.state.response.map(el =>

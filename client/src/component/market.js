@@ -1,9 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import Currency from './currency';
 import Balance from './balance';
-import { connect } from 'react-redux';
 import Loader from './loader';
-import { NavLink } from 'react-router-dom';
 
 const Market = props => {
   const { isLogged } = props.session;

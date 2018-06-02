@@ -7,8 +7,6 @@ const chalk = require('chalk');
 const io = require('socket.io')(server, { wsEngine: 'ws' });
 const WebSocket = require('ws');
 
-// console.log(chalk.green('[Chalk] Hello world!'));
-
 const arrayMsg = [];
 
 

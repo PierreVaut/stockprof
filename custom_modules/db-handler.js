@@ -1,6 +1,7 @@
 import { uri } from '../config/connect';
 import { accountSchema, timelineSchema } from '../model';
 import { server } from '../api/routes';
+import { updateTimeline } from './update-tl';
 
 const mongoose = require('mongoose');
 
@@ -201,7 +202,6 @@ export const db = {
     const Account = mongoose.model('Account', accountSchema);
     Account.find().lean().exec((err, list) => {
       if (err) { return err; }
-      // console.log(chalk.blue('[accountDB] get: '+ JSON.stringify(list).substr(0, 30)));
       cb(list);
     });
   },
@@ -210,10 +210,9 @@ export const db = {
     const Timeline = mongoose.model('Timeline', timelineSchema);
     const newItem = new Timeline(item);
     newItem.save(err => {
-      if (err) { console.log('[Timeline error]', err); } else {
-        console.log('[Timeline] insert: ', newItem);
-      }
+      if (err) { console.log('[Timeline error]', err); }
     });
+    updateTimeline();
   },
 
   getTimeline(cb) {

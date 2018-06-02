@@ -1,74 +1,68 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { requestBody, resetRequestBody, apiPost } from '../actions/'
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { requestBody, resetRequestBody, apiPost } from '../actions/';
 
-const Register = props => {
+const Register = props => (
+  <div className="login">
+    <h2>Register</h2>
+    <form>
+      <label>Email<br />
+        <input
+          name="email"
+          value={props.dataReducer.requestBody.email}
+          onChange={e => { props.onChange('email', e.target.value); }}
+        /><br />
+      </label><br />
 
-    return(
-        <div className = 'login'>
-        <h2>Register</h2>
-            <form>
-                <label>Email<br/>
-                    <input
-                        name= 'email'
-                        value= {props.dataReducer.requestBody.email}
-                        onChange={e => { props.onChange('email', e.target.value) }}
-                    >
-                    </input><br/>
-                </label><br/>
+      <label>Nom<br />
+        <input
+          name="name"
+          value={props.dataReducer.requestBody.name}
+          onChange={e => { props.onChange('name', e.target.value); }}
+        /><br />
+      </label><br />
 
-                <label>Nom<br/>
-                    <input
-                        name= 'name'
-                        value= {props.dataReducer.requestBody.name}
-                        onChange={e => { props.onChange('name', e.target.value) }}
-                    >
-                    </input><br/>
-                </label><br/>
+      <label>Mot de passe<br />
+        <input
+          name="password"
+          value={props.dataReducer.requestBody.pwd}
+          onChange={e => { props.onChange('pwd', e.target.value); }}
+        /><br />
+      </label><br />
+    </form>
 
-                <label>Mot de passe<br/>
-                    <input
-                        name= 'password'
-                        value= {props.dataReducer.requestBody.pwd}
-                        onChange={e => { props.onChange('pwd', e.target.value) }}
-                    >
-                    </input><br/>
-                </label><br/>
-                </form>
-
-                <NavLink
-                    to = '/'
-                    onClick = {
-                        function(){
-                            let body = {
+    <NavLink
+      to="/"
+      onClick={
+                        function () {
+                            const body = {
                                 email: props.dataReducer.requestBody.email,
                                 password: props.dataReducer.requestBody.pwd,
-                                name: props.dataReducer.requestBody.name
-                            }
+                                name: props.dataReducer.requestBody.name,
+                            };
                             props.onSubmit(body, '/register');
                             props.reset();
                             console.log('[Register]', body);
                         }
                     }
-                >
+    >
                 Register
-                </NavLink> 
-        </div>
-    )   
-}
+    </NavLink>
+  </div>
+);
 
-const mapStateToProps = (state) => state
+const mapStateToProps = (state) => state;
 
 function mapDispatchToProps(dispatch) {
-    return { 
-        onChange: (field, content) => { dispatch( requestBody(field, content) ) },
-        onSubmit: (body, url) => { dispatch( apiPost(body, url) ) },
-        reset: () => { dispatch( resetRequestBody() ) }
-    }
+  return {
+    onChange: (field, content) => { dispatch(requestBody(field, content)); },
+    onSubmit: (body, url) => { dispatch(apiPost(body, url)); },
+    reset: () => { dispatch(resetRequestBody()); },
+  };
 }
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps,
 )(Register);
 
