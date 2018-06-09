@@ -2,6 +2,7 @@ import { args } from '../config/connect';
 import { server } from '../api/routes';
 import { priceDB } from './price-handler';
 import { db } from './db-handler';
+import { setTimeout } from 'timers';
 
 const chalk = require('chalk');
 const io = require('socket.io')(server, { wsEngine: 'ws' });
@@ -66,11 +67,21 @@ const cexioWS = client => {
 
 
 const getUsers = client => {
-  db.getUsers((list) => {
+  db.getUsers(list => {
     client.emit('userList', list);
-    // console.log(chalk.blue('[WS-handler] Emitting UserList...'));
+    console.log(chalk.blue('[WS-handler] Emitting UserList...'));
     setTimeout(() => {
       getUsers(client);
+    }, 4000);
+  });
+};
+
+const emitTimeline = client => {
+  db.getTimeline(result => {
+    client.emit('timeline', result);
+    console.log(chalk.blue('[WS-handler] Emitting Timeline...'));
+    setTimeout(() => {
+      emitTimeline(client);
     }, 4000);
   });
 };
@@ -85,7 +96,7 @@ export const ioServer = io.on('connection', (client) => {
 
   client.on('timeline', (msg) => {
     console.log(chalk.blue('[Socket.io] Timeline starting !', msg));
-    db.getTimeline(result => client.emit('timeline', result));
+    emitTimeline(client);
   });
 
   client.on('subscribeToListUpdates', () => {

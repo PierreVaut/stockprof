@@ -35,17 +35,17 @@ const Register = props => (
     <NavLink
       to="/"
       onClick={
-                        function () {
-                            const body = {
-                                email: props.dataReducer.requestBody.email,
-                                password: props.dataReducer.requestBody.pwd,
-                                name: props.dataReducer.requestBody.name,
-                            };
-                            props.onSubmit(body, '/register');
-                            props.reset();
-                            console.log('[Register]', body);
-                        }
-                    }
+        () => {
+              const body = {
+                  email: props.dataReducer.requestBody.email,
+                  password: props.dataReducer.requestBody.pwd,
+                  name: props.dataReducer.requestBody.name,
+              };
+              props.onSubmit(body, '/register');
+              props.reset();
+              console.log('[Register]', body);
+          }
+     }
     >
                 Register
     </NavLink>

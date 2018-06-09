@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import { colors } from '../../config/color';
 
 export const TimelineItem = ({
@@ -13,12 +14,11 @@ export const TimelineItem = ({
       >
         {initial.toUpperCase()}
       </div>
-      <div className="user-name"> {author}{/* ({authorEmail}) */}</div>
-      <div className="timeline-content"> {content} </div>
+      <div className="user-name"> {author}{' '}{content} </div>
+      <div className="timeline-timestamp"><Moment fromNow>{ timestamp }</Moment></div>
       <div className="timeline-votes"> <span role="img" aria-label="thumb-up"> 👍</span>{ upvote } { }
         <span role="img" aria-label="thumb-down"> 👎</span>{ downvote } { }
       </div>
-      <div className="timeline-timestamp">timestamp: { timestamp }</div><br />
     </div>
   );
 };

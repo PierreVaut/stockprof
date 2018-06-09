@@ -187,9 +187,10 @@ h2{
   margin-top: 10px;
 }
 
-.timeline-item{  position: relative;
-  width: 400px;
-  height: 90px;
+.timeline-item{
+  position: relative;
+  width: 420px;
+  height: 75px;
   margin: 10px auto;
 }
 .timeline-content{

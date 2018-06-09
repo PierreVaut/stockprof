@@ -3,6 +3,7 @@ import { accountSchema, timelineSchema } from '../model';
 import { server } from '../api/routes';
 import { updateTimeline } from './update-tl';
 
+const chalk = require('chalk');
 const mongoose = require('mongoose');
 
 mongoose.connect(uri);
@@ -128,7 +129,7 @@ export const db = {
     }
 
     // Check the request #2
-    else if (req.body.name === '' || typeof (req.body.email) === '' || req.body.password === ''
+    else if (req.body.name === '' || req.body.email === '' || req.body.password === ''
     ) {
       data.account = 'Error : Please fill in all fields';
       data.error = data.account;
@@ -202,7 +203,7 @@ export const db = {
     const Account = mongoose.model('Account', accountSchema);
     Account.find().lean().exec((err, list) => {
       if (err) { return err; }
-      cb(list);
+      return cb(list);
     });
   },
 
@@ -217,10 +218,12 @@ export const db = {
 
   getTimeline(cb) {
     const Timeline = mongoose.model('Timeline', timelineSchema);
-    Timeline.find().lean().exec((err, result) => {
+    Timeline.find().sort({ timestamp: 'desc' }).lean().exec((err, result) => {
       if (err) { return err; }
-      console.log({ result });
-      cb(result);
+      console.log(chalk.blue('[WS-handler] Emitting UserList...'));
+
+      // console.log({ result });
+      return cb(result);
     });
   },
 
@@ -239,7 +242,6 @@ export const db = {
     } else {
       response.error = false;
       const Account = mongoose.model('Account', accountSchema);
-      const Timeline = mongoose.model('Timeline', timelineSchema);
 
       Account.findOne({ _id: req.body._id }, (error, result) => {
         if (error) {
@@ -267,7 +269,9 @@ export const db = {
 
           console.log({ result });
           const timelineItem = {
-            content: `New market operation ${req.body.operation} on ${req.body.symbol}: ${req.body.amount}  (${req.body.qty})`,
+            content: `${req.body.operation === 'buy' ? 'bought' : 'sold'}  ${req.body.qty} ${req.body.symbol} for
+            ${Math.round(Math.abs(req.body.amount))} $
+            `,
             author: result.name,
             authorEmail: result.email,
             authorId: result._id,
