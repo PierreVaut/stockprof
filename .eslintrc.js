@@ -15,6 +15,9 @@ module.exports = {
         "no-unused-vars": 1,
         "no-plusplus": 0,
         "jsx-a11y/label-has-for":0,
-        "no-underscore-dangle": 0
+        "no-underscore-dangle": 0,
+        "no-case-declarations": 0,
+        "jsx-a11y/click-events-have-key-events": 0 ,
+        "jsx-a11y/no-noninteractive-element-interactions": 0
     }
 }

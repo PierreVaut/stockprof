@@ -3,7 +3,7 @@ import Moment from 'react-moment';
 import { colors } from '../../config/color';
 
 export const TimelineItem = ({
-  timestamp, content, author, authorEmail, upvote, downvote, comment,
+  timestamp, content, author, authorEmail, upvote, downvote, comment, handleSubmit, _id,
 }) => {
   const initial = author.substr(0, 1);
   return (
@@ -16,8 +16,25 @@ export const TimelineItem = ({
       </div>
       <div className="user-name"> {author}{' '}{content} </div>
       <div className="timeline-timestamp"><Moment fromNow>{ timestamp }</Moment></div>
-      <div className="timeline-votes"> <span role="img" aria-label="thumb-up"> 👍</span>{ upvote } { }
-        <span role="img" aria-label="thumb-down"> 👎</span>{ downvote } { }
+      <div className="timeline-votes">
+        <span
+          role="img"
+          aria-label="thumb-up"
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            handleSubmit({ upvote: upvote + 1 }, _id);
+        }}
+        > 👍
+        </span>{ upvote } { }
+        <span
+          role="img"
+          aria-label="thumb-down"
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            handleSubmit({ downvote: downvote + 1 }, _id);
+        }}
+        > 👎
+        </span>{ downvote } { }
       </div>
     </div>
   );

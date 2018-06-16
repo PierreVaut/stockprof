@@ -3,6 +3,9 @@ import { NavLink } from 'react-router-dom';
 import openSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import { TimelineItem } from './timelineItem';
+import {
+  receiveTimeline as receiveTimelineAC,
+  editTimelineItem as editTimelineItemAC } from '../../actions/';
 
 
 const socket = openSocket();
@@ -10,32 +13,24 @@ const socket = openSocket();
 class Timeline extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      response: [],
-    };
-
-    this.getArray(stuff => this.setState({ response: stuff }));
   }
 
   componentDidMount() {
-    socket.on('timeline', stuff => {
-      console.log({ stuff });
-      this.setState({ response: stuff });
+    socket.on('timeline', data => {
+      console.log('[RECEIVE TIMELINE]', data);
+      this.props.receiveTimeline(data);
     });
     socket.emit('timeline', 'salut!');
   }
 
-  getArray(cb) {
-    console.log('getArray !');
-    socket.on('timeline', stuff => cb(stuff));
-  }
 
   render() {
+    const { session, handleSubmit, timeline } = this.props;
     return (
       <div className="user">
-        { this.props.session.isLogged ?
-           (this.state.response.map(el =>
-             <TimelineItem {...el} />))
+        { session.isLogged ?
+           (timeline.map(el =>
+             <TimelineItem {...el} handleSubmit={handleSubmit} />))
              :
             (
               <div>
@@ -55,4 +50,9 @@ class Timeline extends React.Component {
 
 const mapStateToProps = state => state.dataReducer;
 
-export default connect(mapStateToProps)(Timeline);
+const mapDispatchToProps = dispatch => ({
+  receiveTimeline: data => dispatch(receiveTimelineAC(data)),
+  handleSubmit: (payload, id) => dispatch(editTimelineItemAC(payload, id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timeline);

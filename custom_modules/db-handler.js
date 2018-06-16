@@ -220,10 +220,30 @@ export const db = {
     const Timeline = mongoose.model('Timeline', timelineSchema);
     Timeline.find().sort({ timestamp: 'desc' }).lean().exec((err, result) => {
       if (err) { return err; }
-      console.log(chalk.blue('[WS-handler] Emitting UserList...'));
+      console.log(chalk.blue('[WS-handler] retrieving Timeline...'));
 
       // console.log({ result });
       return cb(result);
+    });
+  },
+
+  getTimelineItem(id, payload, cb) {
+    const _id = id;
+    const Timeline = mongoose.model('Timeline', timelineSchema);
+    Timeline.findOne({ _id }, (err, item) => {
+      if (err) {
+        console.log(chalk.red('[Error] retrieving TimelineItem ', _id));
+        return err;
+      }
+      const { upvote, downvote } = payload;
+      if (upvote) {
+        item.upvote = upvote;
+      }
+      if (downvote) {
+        item.downvote = downvote;
+      }
+      item.save();
+      return cb(item);
     });
   },
 
@@ -290,4 +310,6 @@ export const db = {
       });
     }
   },
+
+
 };

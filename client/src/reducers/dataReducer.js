@@ -23,6 +23,7 @@ const initialState = {
     },
   ],
   priceListInitialized: false,
+  timeline: [],
 };
 
 
@@ -37,6 +38,26 @@ const dataReducer = (state = initialState, action) => {
 
       };
 
+    case actionType.RECEIVE_TIMELINE:
+      return { ...state, timeline: action.data };
+
+    case actionType.RECEIVE_TIMELINE_ITEM:
+      const { data } = action;
+      data.toto = 'lolilol';
+      const newTimeline = [...state.timeline];
+      newTimeline.map(el => {
+        console.log(el._id === data._id);
+        if (el._id === data._id) {
+          console.log('gagné!', el._id === data._id, el._id, data._id);
+
+          return data;
+        }
+        return el;
+      });
+      const newStateTLI = { ...state, timeline: newTimeline };
+      console.log('RECEIVE_TIMELINE_ITEM', newStateTLI);
+      return newStateTLI;
+
     case actionType.RECEIVE_USERLIST:
       // console.log('[DataReducer] action:', action);
       return { ...state, userList: action.list };
@@ -46,7 +67,6 @@ const dataReducer = (state = initialState, action) => {
       return { ...state, priceListInitialized: true, prices: action.prices };
 
     case actionType.REQUEST_BODY:
-      // console.log('[DataReducer] action:', action);
       const newState = {
         ...state,
         requestBody: {
@@ -58,7 +78,6 @@ const dataReducer = (state = initialState, action) => {
       return newState;
 
     case actionType.RESET_REQUEST_BODY:
-      // console.log('[DataReducer] action:', action);
       return { ...state, requestBody: {} };
 
 

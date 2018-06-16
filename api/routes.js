@@ -83,6 +83,12 @@ app.post('/market-operation', (req, res) => {
   db.marketOperation(req, res);
 });
 
+app.post('/interact/:id', (req, res) => {
+  const { id } = req.params;
+  db.getTimelineItem(id, req.body, data => {
+    res.json(data);
+  });
+});
 
 app.get('/api/', (req, res) => {
   const data = {
