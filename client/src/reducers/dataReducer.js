@@ -44,13 +44,12 @@ const dataReducer = (state = initialState, action) => {
       const { timeline, ...rest } = state;
       const newTimeline = timeline.map(el => {
         if (el._id === action.payload._id) {
-          const newEl = { ...el, ...action.payload, toto: true };
+          const newEl = { ...el, ...action.payload };
           return newEl;
         }
         return el;
       });
-      console.log({ ...rest, timeline: newTimeline, toto: true });
-      return { ...rest, timeline: newTimeline, toto: true };
+      return { ...rest, timeline: newTimeline };
 
     case actionType.RECEIVE_USERLIST:
       // console.log('[DataReducer] action:', action);

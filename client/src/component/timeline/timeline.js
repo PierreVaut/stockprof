@@ -35,7 +35,7 @@ const mapStateToProps = state => state.dataReducer;
 
 const mapDispatchToProps = dispatch => ({
   getTimeline: data => dispatch(getTimelineAC(data)),
-  handleSubmit: (payload, id) => dispatch(updateTimelineItemAC(payload, id)),
+  handleSubmit: (payload) => dispatch(updateTimelineItemAC(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timeline);
