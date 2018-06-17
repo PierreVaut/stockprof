@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { colors } from '../config/color';
-import Balance from './balance';
+import { colors } from '../../config/color';
+import { Balance } from '../market';
 
 const User = (props) => {
   const initial = props.name.substr(0, 1);

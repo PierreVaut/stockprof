@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { requestBody, resetRequestBody, apiPost } from '../actions/';
+import { requestBody, resetRequestBody, apiPost } from '../../actions/';
 
 const Register = props => (
   <div className="login">

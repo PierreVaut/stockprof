@@ -1,8 +1,13 @@
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import React from 'react';
 import './App.css';
-import { Header, Subheader, Play, Dashboard, Menu, Market, Login, Register, Disconnect, Contact, About, Admin, RawData, Chat, Timeline, NotFound,
-} from './component';
+import { Login, Register, Disconnect, Contact, Admin, RawData, Subheader, Header, About, NotFound } from './component/common';
+import { Market, Dashboard } from './component/market/';
+import { UserScores } from './component/scores';
+import { Timeline } from './component/timeline';
+import Chat from './component/chat';
+import Menu from './component/menu';
+
 
 const App = () => (
   <div>
@@ -13,7 +18,7 @@ const App = () => (
         <div className="app-body">
           <Switch>
             <Route exact path="/" component={Menu} />
-            <Route exact path="/play" component={Play} />
+            <Route exact path="/scores" component={UserScores} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/market" component={Market} />
             <Route exact path="/login" component={Login} />

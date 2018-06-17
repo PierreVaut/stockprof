@@ -22,7 +22,7 @@ export const TimelineItem = ({
           aria-label="thumb-up"
           style={{ cursor: 'pointer' }}
           onClick={() => {
-            handleSubmit({ upvote: upvote + 1 }, _id);
+            handleSubmit({ upvote: upvote + 1, _id });
         }}
         > 👍
         </span>{ upvote } { }
@@ -31,7 +31,7 @@ export const TimelineItem = ({
           aria-label="thumb-down"
           style={{ cursor: 'pointer' }}
           onClick={() => {
-            handleSubmit({ downvote: downvote + 1 }, _id);
+            handleSubmit({ downvote: downvote + 1, _id });
         }}
         > 👎
         </span>{ downvote } { }

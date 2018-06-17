@@ -79,13 +79,19 @@ app.post('/market-operation', (req, res) => {
     account: {},
   };
 
-  // Update cashAvailable and position
   db.marketOperation(req, res);
 });
 
 app.post('/interact/:id', (req, res) => {
   const { id } = req.params;
   db.getTimelineItem(id, req.body, data => {
+    res.json(data);
+  });
+});
+
+
+app.get('/timeline', (req, res) => {
+  db.getTimeline(data => {
     res.json(data);
   });
 });

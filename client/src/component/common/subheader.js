@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { toggleVisibility } from '../actions/';
+import { toggleVisibility } from '../../actions/';
 
-export const Subheader = (props) => {
-  // console.log('[Subheader]', props)
+const Subheader = (props) => {
   if (props.viewReducer.visible.subheader) {
     return (
       <div className="subHeader">

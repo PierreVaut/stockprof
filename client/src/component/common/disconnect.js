@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { apiPost, resetRequestBody } from '../actions/';
+import { apiPost, resetRequestBody } from '../../actions/';
 
 const mapDispatchToProps = dispatch => ({
   disconnect: () => { dispatch(apiPost({}, '/disconnect')); },

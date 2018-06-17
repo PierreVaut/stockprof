@@ -220,9 +220,6 @@ export const db = {
     const Timeline = mongoose.model('Timeline', timelineSchema);
     Timeline.find().sort({ timestamp: 'desc' }).lean().exec((err, result) => {
       if (err) { return err; }
-      console.log(chalk.blue('[WS-handler] retrieving Timeline...'));
-
-      // console.log({ result });
       return cb(result);
     });
   },
@@ -232,7 +229,7 @@ export const db = {
     const Timeline = mongoose.model('Timeline', timelineSchema);
     Timeline.findOne({ _id }, (err, item) => {
       if (err) {
-        console.log(chalk.red('[Error] retrieving TimelineItem ', _id));
+        console.log(chalk.red('[Error] 58v6ing TimelineItem ', _id));
         return err;
       }
       const { upvote, downvote } = payload;

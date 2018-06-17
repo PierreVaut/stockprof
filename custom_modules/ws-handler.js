@@ -1,8 +1,8 @@
+import { setTimeout } from 'timers';
 import { args } from '../config/connect';
 import { server } from '../api/routes';
 import { priceDB } from './price-handler';
 import { db } from './db-handler';
-import { setTimeout } from 'timers';
 
 const chalk = require('chalk');
 const io = require('socket.io')(server, { wsEngine: 'ws' });
@@ -76,27 +76,12 @@ const getUsers = client => {
   });
 };
 
-const emitTimeline = client => {
-  db.getTimeline(result => {
-    client.emit('timeline', result);
-    console.log(chalk.blue('[WS-handler] Emitting Timeline...'));
-    setTimeout(() => {
-      emitTimeline(client);
-    }, 4000);
-  });
-};
-
 
 export const ioServer = io.on('connection', (client) => {
   client.on('chatMessage', (msg) => {
     console.log('[Socket.io] receiving Msg: ', msg);
     arrayMsg.push(msg);
     client.emit('arrayMessage', arrayMsg);
-  });
-
-  client.on('timeline', (msg) => {
-    console.log(chalk.blue('[Socket.io] Timeline starting !', msg));
-    emitTimeline(client);
   });
 
   client.on('subscribeToListUpdates', () => {

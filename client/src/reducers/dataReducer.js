@@ -30,7 +30,6 @@ const initialState = {
 const dataReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.RECEIVE_DATA:
-      console.log('[DataReducer] action:', action);
       return {
         ...state,
 
@@ -41,22 +40,17 @@ const dataReducer = (state = initialState, action) => {
     case actionType.RECEIVE_TIMELINE:
       return { ...state, timeline: action.data };
 
-    case actionType.RECEIVE_TIMELINE_ITEM:
-      const { data } = action;
-      data.toto = 'lolilol';
-      const newTimeline = [...state.timeline];
-      newTimeline.map(el => {
-        console.log(el._id === data._id);
-        if (el._id === data._id) {
-          console.log('gagné!', el._id === data._id, el._id, data._id);
-
-          return data;
+    case actionType.SYNC_UPDATE_TIMELINE_ITEM:
+      const { timeline, ...rest } = state;
+      const newTimeline = timeline.map(el => {
+        if (el._id === action.payload._id) {
+          const newEl = { ...el, ...action.payload, toto: true };
+          return newEl;
         }
         return el;
       });
-      const newStateTLI = { ...state, timeline: newTimeline };
-      console.log('RECEIVE_TIMELINE_ITEM', newStateTLI);
-      return newStateTLI;
+      console.log({ ...rest, timeline: newTimeline, toto: true });
+      return { ...rest, timeline: newTimeline, toto: true };
 
     case actionType.RECEIVE_USERLIST:
       // console.log('[DataReducer] action:', action);

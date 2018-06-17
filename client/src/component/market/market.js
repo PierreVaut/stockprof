@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import Currency from './currency';
 import Balance from './balance';
-import Loader from './loader';
+import { GuestMenu, Loader } from '../common';
 
 const Market = props => {
   const { isLogged } = props.session;
@@ -22,13 +21,7 @@ const Market = props => {
             })}
     </div>
   ) :
-    (<div>
-      <h2>Vous devez être connecté pour accéder à cette page</h2>
-      <p>Connectez-vous</p>
-      <div className="menu-entry">🛂 <NavLink to="/login">Login </NavLink></div><br />
-      <p>Créez un compte</p>
-      <div className="menu-entry">😀 <NavLink to="/register">Register</NavLink></div><br />
-    </div>);
+    (<GuestMenu />);
 };
 
 const mapStateToProps = state => state.dataReducer;

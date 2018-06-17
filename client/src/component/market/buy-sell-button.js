@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { marketOperation } from '../actions/';
+import { marketOperation } from '../../actions/';
 
 
 class BuySellButton extends React.Component {

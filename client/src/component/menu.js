@@ -2,9 +2,9 @@ import React from 'react';
 import openSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { ErrorHandler } from './error';
+import { ErrorHandler, GuestMenu } from './common';
 import { receiveUserList, receivePrices } from '../actions/';
-import Balance from './balance';
+import { Balance } from './market';
 
 const socket = openSocket();
 
@@ -15,12 +15,10 @@ class Menu extends React.Component {
 
     this.subscribeToListUpdates(list => {
       this.props.updateUserList(list);
-      console.log('[Users] update list', list);
     });
 
     this.subscribeToPriceUpdates(price => {
       this.props.updatePrice(price);
-      console.log('[Users] update price', price);
     });
   }
 
@@ -62,7 +60,7 @@ class Menu extends React.Component {
                 <div className="menu-entry"><span role="img" aria-label="timeline">🕗 </span><NavLink to="/timeline">Timeline</NavLink></div>
                 <br />
                 <p>Voir les autres utilisateurs</p>
-                <div className="menu-entry"><span role="img" aria-label="scores">🏆</span><NavLink to="/play"> Scores </NavLink></div>
+                <div className="menu-entry"><span role="img" aria-label="scores">🏆</span><NavLink to="/scores"> Scores </NavLink></div>
                 <br />
                 <p>Votre compte</p>
                 <div className="menu-entry"><span role="img" aria-label="dashboard">💹 </span><NavLink to="/dashboard"> Dashboard</NavLink></div>
@@ -70,16 +68,7 @@ class Menu extends React.Component {
               </div>)
 
             :
-            (
-              <div>
-                <p>Ce jeu vous permet d&#8217;acheter et de vendre des monaies virtuelles en temps réel<br /> et de comparer votre score à celui des autres utilisateurs</p>
-                <p><span role="img" aria-label="diverse">💵💹💁</span></p>
-                <br /><br /><br />
-                <p>Connectez-vous</p>
-                <div className="menu-entry"><span role="img" aria-label="connection">🛂</span><NavLink to="/login">Login </NavLink></div><br />
-                <p>Créez un compte</p>
-                <div className="menu-entry"><span role="img" aria-label="register">😀</span><NavLink to="/register">Register</NavLink></div><br />
-              </div>)
+            (<GuestMenu />)
             }
         <br />
 
@@ -103,12 +92,10 @@ function mapDispatchToProps(dispatch) {
   return {
 
     updatePrice: (prices) => {
-      console.log('[Users] Dispatch updated price', prices);
       dispatch(receivePrices(prices));
     },
 
     updateUserList: (list) => {
-      console.log('[Users] Dispatch updated list');
       dispatch(receiveUserList(list));
     },
   };

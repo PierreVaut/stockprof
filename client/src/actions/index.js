@@ -20,14 +20,12 @@ export const receiveData = (data) => ({ type: actionType.RECEIVE_DATA, data });
 export const receiveUserList = (list) => ({ type: actionType.RECEIVE_USERLIST, list });
 export const receivePrices = (prices) => ({ type: actionType.RECEIVE_PRICES, prices });
 export const receiveTimeline = (data) => ({ type: actionType.RECEIVE_TIMELINE, data });
-export const receiveTimelineItem = (data) => ({ type: actionType.RECEIVE_TIMELINE_ITEM, data });
+
 
 // Http request to retrieve Session, Account, Cookies
 export const apiFetch = () => dispatch => fetch('/api', params.get)
   .then(response => {
-    console.log('[API Fetch] success:', response);
     response.json().then(json => {
-      console.log('[API Json] success:', json);
       dispatch(receiveData(json));
     });
   });
@@ -36,9 +34,7 @@ export const apiFetch = () => dispatch => fetch('/api', params.get)
 /** * called by Login and Register components */
 export const apiPost = (body, url) => dispatch => fetch(url, params.post(body))
   .then(response => {
-    console.log('[API Fetch] success:', response);
     response.json().then(json => {
-      console.log('[API Json] success:', json);
       dispatch(receiveData(json));
     });
   });
@@ -47,21 +43,18 @@ export const marketOperation = body => {
   const url = '/market-operation';
   return dispatch => fetch(url, params.post(body))
     .then(response => {
-      console.log('[API Market operation] success:', response);
       response.json().then(json => {
-        console.log('[API Market operation] json:', json);
+        console.log('[API Market operation] success:', json);
         dispatch(receiveData(json));
       });
     });
 };
 
 export const getTimeline = () => dispatch => {
-  console.log('getting Timeline.....');
   fetch('/timeline', params.get)
     .then(response => {
-      console.log('[Timeline Fetch] success:', response);
       response.json().then(json => {
-        console.log('[API Json] success:', json);
+        console.log('[Timeline Fetch] success:', json);
         dispatch(receiveTimeline(json));
       });
     })
@@ -69,16 +62,9 @@ export const getTimeline = () => dispatch => {
 };
 
 
-export const editTimelineItem = (payload, id) => dispatch => {
-  dispatch(receiveTimelineItem(payload));
-  fetch(`/interact/${id}`, params.post(payload))
-    .then(response => {
-      console.log('[Timeline interact] :', response);
-      response.json()
-        .then(json => {
-          console.log('[Timeline interact] success:', json);
-          dispatch(receiveTimelineItem(json));
-        })
-        .catch(error => console.log('[Timeline interact] error: ', error));
-    });
+export const updateTimelineItem = (payload) => {
+  console.log({ payload });
+  fetch(`/interact/${payload._id}`, params.post(payload));
+  return { type: actionType.SYNC_UPDATE_TIMELINE_ITEM, payload };
 };
+
