@@ -62,9 +62,20 @@ export const getTimeline = () => dispatch => {
 };
 
 
-export const updateTimelineItem = (payload) => {
+export const updateTimelineItem = payload => {
   console.log({ payload });
-  fetch(`/interact/${payload._id}`, params.post(payload));
+  fetch(`/vote/${payload._id}`, params.post(payload));
   return { type: actionType.SYNC_UPDATE_TIMELINE_ITEM, payload };
 };
 
+export const followUser = payload => {
+  console.log({ payload });
+  fetch('/follow/', params.post(payload));
+  return { type: actionType.SYNC_FOLLOW_USER, id: payload.targetId };
+};
+
+export const unfollowUser = payload => {
+  console.log({ payload });
+  fetch('/unfollow/', params.post(payload));
+  return { type: actionType.SYNC_UNFOLLOW_USER, id: payload.targetId };
+};

@@ -82,11 +82,19 @@ app.post('/market-operation', (req, res) => {
   db.marketOperation(req, res);
 });
 
-app.post('/interact/:id', (req, res) => {
+app.post('/vote/:id', (req, res) => {
   const { id } = req.params;
-  db.getTimelineItem(id, req.body, data => {
+  db.updateTimelineItem(id, req.body, data => {
     res.json(data);
   });
+});
+
+app.post('/follow', (req, res) => {
+  db.followUser(req.body, data => res.json(data));
+});
+
+app.post('/unfollow', (req, res) => {
+  db.unfollowUser(req.body, data => res.json(data));
 });
 
 

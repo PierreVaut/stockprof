@@ -224,12 +224,12 @@ export const db = {
     });
   },
 
-  getTimelineItem(id, payload, cb) {
+  updateTimelineItem(id, payload, cb) {
     const _id = id;
     const Timeline = mongoose.model('Timeline', timelineSchema);
     Timeline.findOne({ _id }, (err, item) => {
       if (err) {
-        console.log(chalk.red('[Error] 58v6ing TimelineItem ', _id));
+        console.log(chalk.red('[Error] Saving TimelineItem ', _id));
         return err;
       }
       const { upvote, downvote } = payload;
@@ -243,6 +243,58 @@ export const db = {
       return cb(item);
     });
   },
+
+  followUser(payload, cb) {
+    const { userId: _id, targetId } = payload;
+    const Account = mongoose.model('Account', accountSchema);
+    Account.findOne({ _id }, (err, account) => {
+      if (err) {
+        console.log(chalk.red('[Error] Cannot retrieve user ', _id));
+        return err;
+      }
+      if (account && account.friends && !account.friends.includes(targetId)) {
+        account.friends.push(targetId);
+        account.save();
+        console.log(chalk.green('[Update] Friend added ', targetId));
+        console.log(chalk.green('[Update] New friend list ', account.friends));
+        return cb(account);
+      }
+      console.log(chalk.red('[Error] Target already in the friend list ', targetId));
+      if (account && account.friends) {
+        console.log(chalk.red('[Error] Friend list not updated', account.friends));
+      } else {
+        console.log({ account });
+      }
+      return cb(account);
+    });
+  },
+
+  unfollowUser(payload, cb) {
+    const { userId: _id, targetId } = payload;
+    const Account = mongoose.model('Account', accountSchema);
+    Account.findOne({ _id }, (err, account) => {
+      if (err) {
+        console.log(chalk.red('[Error] Cannot retrieve user ', _id));
+        return err;
+      }
+      if (account && account.friends && account.friends.includes(targetId)) {
+        const newFriends = account.friends.filter(friend => friend !== targetId);
+        account.friends = newFriends;
+        account.save();
+        console.log(chalk.blue('[Update] Friend removed ', targetId));
+        console.log(chalk.blue('[Update] New friend list ', account.friends));
+        return cb(account);
+      }
+      console.log(chalk.red('[Error] Target already in the friend list ', targetId));
+      if (account && account.friends) {
+        console.log(chalk.red('[Error] Friend list not updated', account.friends));
+      } else {
+        console.log({ account });
+      }
+      return cb(account);
+    });
+  },
+
 
   marketOperation(req, res) {
     const response = {};

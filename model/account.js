@@ -7,7 +7,7 @@ const accountSchema = mongoose.Schema({
   password: String,
   isLogged: Boolean,
   lastLogin: Date,
-  friends: [{ type: mongoose.Schema.Types.ObjectId, default: mongoose.Types.ObjectId('5a857519c4bb2a0e3043ef3a') }],
+  friends: [{ type: String }],
   created: { type: Date, default: Date.now },
   cashAvailable: { type: Number, default: 5000 },
   position: mongoose.Schema.Types.Mixed,

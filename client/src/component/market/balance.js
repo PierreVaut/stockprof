@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const Balance = props => {
-  console.log(props);
   const { cashAvailable, position } = props.account;
   const { prices } = props;
   let profit = Math.round(cashAvailable - 5000);

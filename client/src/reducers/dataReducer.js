@@ -73,6 +73,15 @@ const dataReducer = (state = initialState, action) => {
     case actionType.RESET_REQUEST_BODY:
       return { ...state, requestBody: {} };
 
+    case actionType.SYNC_FOLLOW_USER:
+      console.log(action.id);
+      return { ...state, account: { ...state.account, friends: [...state.account.friends, action.id] } };
+
+    case actionType.SYNC_UNFOLLOW_USER:
+      const newFriends = state.account.friends.filter(friend => friend !== action.id);
+      console.log(newFriends);
+      return { ...state, account: { ...state.account, friends: [...newFriends] } };
+
 
     default:
       return state;

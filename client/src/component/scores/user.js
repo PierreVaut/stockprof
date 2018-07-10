@@ -4,10 +4,11 @@ import { colors } from '../../config/color';
 import { Balance } from '../market';
 
 const User = (props) => {
+  const {
+    userId, targetId, handleFollow, handleUnfollow, isFriend,
+  } = props;
   const initial = props.name.substr(0, 1);
-  // Has been Logged in the past 3 hours.
-  const hasbeenLoggedRecently = props.isLogged && (new Date() - new Date(props.lastLogin)) < (1000 * 60 * 180);
-
+  const hasbeenLoggedRecently = props.isLogged && (new Date() - new Date(props.lastLogin)) < (1000 * 60 * 180); // Last 3 hours
   return (
     <div className="user">
       <div
@@ -25,8 +26,11 @@ const User = (props) => {
 
       <div className="user-name">{props.name} :{'   '}
         <Balance account={props} /><br />
-        <NavLink className="userSocialLink" to="/" >Ajouter ami</NavLink>{' '}
-        <NavLink className="userSocialLink" to="/" >&#9993;MP</NavLink>
+        {isFriend ?
+          <div className="userSocialLink" onClick={() => { handleUnfollow({ userId, targetId }); }} >&#10173; Ne plus suivre</div> :
+          <div className="userSocialLink" onClick={() => { handleFollow({ userId, targetId }); }} >&#10173; Suivre</div>
+        }
+        <NavLink className="userSocialLink" to="/" >&#9993; Message</NavLink>
       </div>
     </div>
   );
