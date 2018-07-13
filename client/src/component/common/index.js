@@ -12,7 +12,8 @@ import GuestMenu from './guestMenu';
 import ErrorHandler from './error';
 import Loader from './loader';
 import ResetPassword from './resetpassword';
+import DoSomething from './doSomething';
 
-export { Header, Subheader, Login, Register, Disconnect, Contact, About, Admin, RawData, NotFound, GuestMenu, ErrorHandler, Loader, ResetPassword,
+export { Header, Subheader, Login, Register, Disconnect, Contact, About, Admin, RawData, NotFound, GuestMenu, ErrorHandler, Loader, ResetPassword, DoSomething,
 };
 

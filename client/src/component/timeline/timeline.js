@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { TimelineItem } from './timelineItem';
-import { GuestMenu, Loader } from '../common';
+import { GuestMenu, Loader, DoSomething } from '../common';
 import {
   getTimeline as getTimelineAC,
   createTimelineItem as createTimelineItemAC,
@@ -76,7 +76,9 @@ class Timeline extends React.Component {
                 </button>
               </div>
 
-              {timeline.filter(timelineItem => {
+              {friends.length > 0 ?
+
+              timeline.filter(timelineItem => {
                 if (viewFriendsOnly) {
                   return timelineItem.authorId === _id ||
                   (timelineItem.author.toLowerCase().includes(search.toLowerCase())
@@ -89,7 +91,13 @@ class Timeline extends React.Component {
                   {...el}
                   handleSubmit={handleSubmit}
                   key={index}
-                />))}
+                />))
+
+                :
+
+              <DoSomething />
+
+                }
             </div>
           : <Loader />)
         : <GuestMenu />}

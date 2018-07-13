@@ -70,7 +70,9 @@ class UserList extends React.Component {
           >Filtrer / trier
            </button>)
         }
-        {userList.filter(user => {
+        {userList
+
+        .filter(user => {
           if (!viewFriendsOnly) {
             return user._id === account._id || user.name.toLowerCase().includes(search.toLowerCase());
           }
@@ -79,26 +81,25 @@ class UserList extends React.Component {
             && friends.includes(user._id)
           );
           })
-          .filter(user => {
+
+        .filter(user => {
               if (viewFollowersOnly) {
                 return user._id === account._id || isFollowingYou.includes(user._id);
               }
               return user;
           })
 
- .map(userProps => (<User
-   {...userProps}
-   key={userProps._id}
-   targetId={userProps._id}
-   userId={account._id}
-   handleFollow={followUser}
-   handleUnfollow={unfollowUser}
-   isFriend={friends.includes(userProps._id)}
-   isYourself={userProps._id === account._id}
-   isFollowingYou={isFollowingYou.includes(userProps._id)}
- />))}
-
-
+        .map(userProps => (<User
+          {...userProps}
+          key={userProps._id}
+          targetId={userProps._id}
+          userId={account._id}
+          handleFollow={followUser}
+          handleUnfollow={unfollowUser}
+          isFriend={friends.includes(userProps._id)}
+          isYourself={userProps._id === account._id}
+          isFollowingYou={isFollowingYou.includes(userProps._id)}
+        />))}
       </div>);
   }
 }
