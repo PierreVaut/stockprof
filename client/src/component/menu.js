@@ -41,16 +41,17 @@ class Menu extends React.Component {
 
 
   render() {
-    const { name, cashAvailable } = this.props.dataReducer.account;
+    const { account, session, error } = this.props;
+    const { name, cashAvailable } = this.props.account;
     return (
       <div className="menu" >
-        <h2>Bienvenue {name} !</h2>
+        <h2>Bienvenue {account && name ? name : 'Guest' } !</h2>
 
-        {this.props.dataReducer.session.isLogged ?
+        {session && session.isLogged ?
             (
               <div>
                 <div>Cash disponible: {cashAvailable} $</div>
-                <div>Plus/moins-values: <Balance account={this.props.dataReducer.account} /></div>
+                <div>Plus/moins-values: <Balance account={account} /></div>
                 <br />
                 <br />
                 <p>Acheter et vendre des Monnaies virtuelles</p>
@@ -68,24 +69,21 @@ class Menu extends React.Component {
               </div>)
 
             :
-            (<GuestMenu />)
+              <GuestMenu />
             }
         <br />
         <div className="menu-entry"><NavLink to="/about">A propos</NavLink></div>
         <div className="menu-entry"><NavLink to="/contact">Contact</NavLink></div>
-        {this.props.dataReducer.session.isLogged ?
+        {session && session.isLogged ?
           <div className="menu-entry"><NavLink to="/disconnect">Déconnexion</NavLink></div> :
                     ''}
-        {
-                (this.props.dataReducer.error) ?
-                  <ErrorHandler errorMsg={this.props.dataReducer.error} /> : ''
-            }
+        {error ? <ErrorHandler errorMsg={error} /> : ''}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.dataReducer;
 
 function mapDispatchToProps(dispatch) {
   return {

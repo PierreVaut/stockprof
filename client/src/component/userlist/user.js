@@ -5,10 +5,10 @@ import { Balance } from '../market';
 
 const User = (props) => {
   const {
-    userId, targetId, handleFollow, handleUnfollow, isFriend, isYourself, name, isFollowingYou,
+    userId, targetId, handleFollow, handleUnfollow, isFriend, isYourself, name, isFollowingYou, lastLogin, isLogged,
   } = props;
   const initial = props.name.substr(0, 1);
-  const hasbeenLoggedRecently = props.isLogged && (new Date() - new Date(props.lastLogin)) < (1000 * 60 * 180); // Last 3 hours
+  const hasbeenLoggedRecently = (new Date() - new Date(lastLogin)) < (1000 * 60 * 180); // Last 3 hours
   return (
     <div className="list-item">
       <div
@@ -25,7 +25,7 @@ const User = (props) => {
       </div>
 
       <div className="user-name">{name} {isYourself ? '(Vous)' : null} {'   '}{isFollowingYou ? <i>(Follower)</i> : null}
-        <br /><Balance account={props} /><br />
+        {'   '}<Balance account={props} /><br />
         { isYourself ?
           null :
           (

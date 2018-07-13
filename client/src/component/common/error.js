@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ErrorHandler = (props) => (
+const ErrorHandler = (props) => (
   <div className="errorHandler">
     <h2>Erreur...</h2>
     <p>Nous n'avons pas pu vous connecter pour la raison suivante :</p>
@@ -8,3 +8,6 @@ export const ErrorHandler = (props) => (
     <p>Merci de réessayer</p>
   </div>
 );
+
+export default ErrorHandler;
+
