@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { toggleVisibility } from '../../actions/';
 
 const Subheader = (props) => {
-  if (props.viewReducer.visible.subheader) {
+  if (props.dataReducer.account.isLogged && props.viewReducer.visible.subheader) {
     return (
       <div className="subHeader">
         <span className="subHeader-close" onClick={() => props.onClick()}> X </span>
@@ -23,7 +23,6 @@ const Subheader = (props) => {
 
 const mapDispatchToProps = dispatch => ({
   onClick: () => {
-    console.log('[Subheader Cont] click');
     dispatch(toggleVisibility('subheader'));
   },
 });

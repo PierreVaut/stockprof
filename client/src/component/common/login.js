@@ -6,7 +6,7 @@ import { requestBody, resetRequestBody, apiPost } from '../../actions/';
 
 const Login = props => (
   <div className="login">
-    <h2>Login</h2>
+    <h2>Connexion</h2>
     <form>
       <label>Email<br />
         <input
