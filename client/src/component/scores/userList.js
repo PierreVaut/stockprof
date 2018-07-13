@@ -12,6 +12,8 @@ class UserList extends React.Component {
     this.state = {
       search: '',
       viewFriendsOnly: false,
+      viewFollowersOnly: false,
+      showSearchAndFilters: false,
     };
   }
 
@@ -24,24 +26,50 @@ class UserList extends React.Component {
       userList, followUser, unfollowUser, account,
     } = this.props;
     const { friends, isFollowingYou } = account;
-    const { search, viewFriendsOnly } = this.state;
+    const {
+      showSearchAndFilters, search, viewFriendsOnly, viewFollowersOnly,
+    } = this.state;
     return (
       <div>
-        <input
-          className="input-text"
-          type="text"
-          placeholder="Rechercher..."
-          onChange={e => { this.updateSearchField(e.target.value); }}
-          value={search}
-        /><br />
-        <input
-          className="input-checkbox"
-          type="checkbox"
-          checked={viewFriendsOnly}
-          onClick={() => { this.setState({ viewFriendsOnly: !viewFriendsOnly }); }}
-        />
-        <span className="input-checkbox-text"> Afficher uniquement les amis</span> <br /><br />
+        {showSearchAndFilters ? (
+          <div>
+            <button
+              className="userlist-button-disable"
+              onClick={() => this.setState({ showSearchAndFilters: false })}
+            >
+            Masquer
+            </button><br />
+            <input
+              className="input-text"
+              type="text"
+              placeholder="Rechercher..."
+              onChange={e => { this.updateSearchField(e.target.value); }}
+              value={search}
+            /><br />
+            <input
+              className="input-checkbox"
+              type="checkbox"
+              checked={viewFriendsOnly}
+              onClick={() => { this.setState({ viewFriendsOnly: !viewFriendsOnly }); }}
+            />
+            <span className="input-checkbox-text"> Afficher uniquement les amis</span> <br />
 
+            <input
+              className="input-checkbox-2"
+              type="checkbox"
+              checked={viewFollowersOnly}
+              onClick={() => { this.setState({ viewFollowersOnly: !viewFollowersOnly }); }}
+            />
+            <span className="input-checkbox-text"> Afficher uniquement les Followers</span> <br /><br />
+
+          </div>
+        ) :
+          (<button
+            className="userlist-button"
+            onClick={() => this.setState({ showSearchAndFilters: true })}
+          >Filtrer / trier
+           </button>)
+        }
         {userList.filter(user => {
           if (!viewFriendsOnly) {
             return user._id === account._id || user.name.toLowerCase().includes(search.toLowerCase());
@@ -50,7 +78,15 @@ class UserList extends React.Component {
             user.name.toLowerCase().includes(search.toLowerCase())
             && friends.includes(user._id)
           );
- }).map(userProps => (<User
+          })
+          .filter(user => {
+              if (viewFollowersOnly) {
+                return user._id === account._id || isFollowingYou.includes(user._id);
+              }
+              return user;
+          })
+
+ .map(userProps => (<User
    {...userProps}
    key={userProps._id}
    targetId={userProps._id}

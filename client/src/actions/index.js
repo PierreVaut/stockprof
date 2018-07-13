@@ -61,6 +61,11 @@ export const getTimeline = () => dispatch => {
     .catch(error => console.log('[Timeline Fetch] error: ', error));
 };
 
+export const createTimelineItem = payload => {
+  console.log({ payload });
+  fetch('/timeline/insert', params.post(payload));
+  return { type: actionType.SYNC_CREATE_TIMELINE_ITEM, payload };
+};
 
 export const updateTimelineItem = payload => {
   console.log({ payload });

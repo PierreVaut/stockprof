@@ -3,7 +3,7 @@ import Moment from 'react-moment';
 import { colors } from '../../config/color';
 
 export const TimelineItem = ({
-  timestamp, content, author, authorEmail, upvote, downvote, comment, handleSubmit, _id,
+  timestamp, content, author, upvote, downvote, comment, handleSubmit, _id,
 }) => {
   const initial = author.substr(0, 1);
   return (
@@ -14,7 +14,7 @@ export const TimelineItem = ({
       >
         {initial.toUpperCase()}
       </div>
-      <div className="user-name"> {author}{' '}{content} </div>
+      <div className="user-name"> {author}{' - '}{content} </div>
       <div className="timeline-timestamp"><Moment fromNow>{ timestamp }</Moment></div>
       <div className="timeline-votes">
         <span
@@ -35,6 +35,7 @@ export const TimelineItem = ({
         }}
         > 👎
         </span>{ downvote } { }
+
       </div>
     </div>
   );

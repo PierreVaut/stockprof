@@ -207,13 +207,14 @@ export const db = {
     });
   },
 
-  insertTimeline(item) {
+  insertTimeline(item, cb) {
     const Timeline = mongoose.model('Timeline', timelineSchema);
     const newItem = new Timeline(item);
     newItem.save(err => {
       if (err) { console.log('[Timeline error]', err); }
     });
-    updateTimeline();
+    updateTimeline(); // WS !....
+    cb(newItem);
   },
 
   getTimeline(cb) {

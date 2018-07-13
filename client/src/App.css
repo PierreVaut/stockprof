@@ -212,14 +212,69 @@ h2{
 }
 
 .input-text {
-  border-radius: 10%;
+  border: 0px;
+  border-radius: 5px;;
   width: 280px;
+  height: 30px;  
+  padding: 5px;
+}
+
+.input-text-timeline {
+  border-radius: 10%;
+  width: 420px;
+  padding: 5px;
+}
+
+.input-text-big {
+  border-radius: 5px;
+  width: 420px;
+  height: 30px;
+  padding: 5px;
+  border: 0px;
+  
+}
+
+.input-text-big-button {
+  background-color: blue;
+  border-radius: 5px;
+  color: white;
+  border: 0px;
+  margin: 5px 0 5px -205px;
+  width: 70px;
+  height: 25px;
 }
 
 .input-checkbox{
-  margin-left: -105px;
+  margin-top: 4px;
+  margin-left: -76px;
 }
 
 .input-checkbox-text{
   font-size: 12px;
+}
+
+.input-checkbox-2{
+  margin-left: -50px;
+}
+
+.userlist-button{
+  background-color: blue;
+  border-radius: 5px;
+  border: 0px;
+  width: 90px;
+  height: 25px;
+  color: white;
+  margin: 5px 0 15px -190px;
+  
+}
+
+.userlist-button-disable{
+  background-color: grey;
+  border-radius: 5px;
+  border: 0px;
+  width: 90px;
+  height: 25px;
+  color: white;
+  margin: 5px 0 15px -190px;
+  
 }

@@ -8,7 +8,7 @@ const Play = props => {
   const { isLogged } = props.session;
   return isLogged ? (
     <div>
-      <h2>Users</h2>
+      <h2>Liste des utilisateurs</h2>
       <UserList />
     </div>
   ) : <GuestMenu />;

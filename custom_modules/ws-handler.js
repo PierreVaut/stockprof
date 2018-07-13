@@ -69,7 +69,7 @@ const cexioWS = client => {
 const getUsers = client => {
   db.getUsers(list => {
     client.emit('userList', list);
-    console.log(chalk.blue('[WS-handler] Emitting UserList...'));
+    // console.log(chalk.blue('[WS-handler] Emitting UserList...'));
     setTimeout(() => {
       getUsers(client);
     }, 4000);

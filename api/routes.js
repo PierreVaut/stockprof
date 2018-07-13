@@ -82,6 +82,11 @@ app.post('/market-operation', (req, res) => {
   db.marketOperation(req, res);
 });
 
+app.post('/timeline/insert', (req, res) => {
+  console.log(req.body);
+  db.insertTimeline(req.body, data => res.json(data));
+});
+
 app.post('/vote/:id', (req, res) => {
   const { id } = req.params;
   db.updateTimelineItem(id, req.body, data => {

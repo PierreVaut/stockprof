@@ -4,6 +4,7 @@ import { TimelineItem } from './timelineItem';
 import { GuestMenu, Loader } from '../common';
 import {
   getTimeline as getTimelineAC,
+  createTimelineItem as createTimelineItemAC,
   updateTimelineItem as updateTimelineItemAC } from '../../actions/';
 
 class Timeline extends React.Component {
@@ -11,7 +12,8 @@ class Timeline extends React.Component {
     super(props);
     this.state = {
       search: '',
-      viewFriendsOnly: false,
+      viewFriendsOnly: true,
+      newPost: '',
     };
   }
 
@@ -21,10 +23,12 @@ class Timeline extends React.Component {
 
   render() {
     const {
-      session, handleSubmit, timeline, account,
+      session, handleSubmit, timeline, account, createTimelineItem,
     } = this.props;
-    const { friends } = account;
-    const { search, viewFriendsOnly } = this.state;
+    const {
+      friends, _id, email, name,
+    } = account;
+    const { search, viewFriendsOnly, newPost } = this.state;
 
     return (
       <div className="user">
@@ -32,8 +36,8 @@ class Timeline extends React.Component {
 
           (timeline ?
             <div>
-              <input
-                className="input-text"
+              {/* <input
+                className="input-text-timeline"
                 type="text"
                 placeholder="Rechercher..."
                 onChange={e => { this.setState({ search: e.target.value }); }}
@@ -45,15 +49,39 @@ class Timeline extends React.Component {
                 checked={viewFriendsOnly}
                 onClick={() => { this.setState({ viewFriendsOnly: !viewFriendsOnly }); }}
               />
-              <span className="input-checkbox-text"> Afficher uniquement les amis</span> <br /><br />
+              <span className="input-checkbox-text"> Afficher uniquement les amis</span> <br /><br /> */}
+              <input
+                className="input-text-big"
+                type="text"
+                placeholder="Partager une info..."
+                onChange={e => { this.setState({ newPost: e.target.value }); }}
+                value={newPost}
+              /><br />
+
+              <button
+                className="input-text-big-button"
+                onClick={() => {
+                  const newTimelineItem = {
+                    content: newPost,
+                    author: name,
+                    authorId: _id,
+                    authorEmail: email,
+                  };
+                  console.log({ newTimelineItem });
+                  createTimelineItem(newTimelineItem);
+}}
+              >
+              Envoyer
+              </button>
+
               {timeline.filter(timelineItem => {
-                if (!viewFriendsOnly) {
-                  return timelineItem.author.toLowerCase().includes(search.toLowerCase());
+                if (viewFriendsOnly) {
+                  return timelineItem.authorId === _id ||
+                  (timelineItem.author.toLowerCase().includes(search.toLowerCase())
+                  && friends.includes(timelineItem.authorId));
                 }
-                return (
-                  timelineItem.author.toLowerCase().includes(search.toLowerCase())
-                  && friends.includes(timelineItem.authorId)
-                );
+                return timelineItem.authorId === _id ||
+                timelineItem.author.toLowerCase().includes(search.toLowerCase());
               }).map((el, index) =>
                 (<TimelineItem
                   {...el}
@@ -73,6 +101,7 @@ const mapStateToProps = state => state.dataReducer;
 const mapDispatchToProps = dispatch => ({
   getTimeline: data => dispatch(getTimelineAC(data)),
   handleSubmit: (payload) => dispatch(updateTimelineItemAC(payload)),
+  createTimelineItem: item => dispatch(createTimelineItemAC(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timeline);
