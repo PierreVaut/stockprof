@@ -105,7 +105,7 @@ h2{
 
 .user{
   position: relative;
-  width: 240px;
+  width: 280px;
   height: 60px;
   margin: 10px auto;
 }
@@ -209,4 +209,17 @@ h2{
   font-style: italic;
   color: #595959;
   margin-left: 60px;
+}
+
+.input-text {
+  border-radius: 10%;
+  width: 280px;
+}
+
+.input-checkbox{
+  margin-left: -63px;
+}
+
+.input-checkbox-text{
+  font-size: 12px;
 }

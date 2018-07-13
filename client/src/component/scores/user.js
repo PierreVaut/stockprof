@@ -5,7 +5,7 @@ import { Balance } from '../market';
 
 const User = (props) => {
   const {
-    userId, targetId, handleFollow, handleUnfollow, isFriend,
+    userId, targetId, handleFollow, handleUnfollow, isFriend, isYourself, name,
   } = props;
   const initial = props.name.substr(0, 1);
   const hasbeenLoggedRecently = props.isLogged && (new Date() - new Date(props.lastLogin)) < (1000 * 60 * 180); // Last 3 hours
@@ -24,13 +24,22 @@ const User = (props) => {
         }
       />
 
-      <div className="user-name">{props.name} :{'   '}
+      <div className="user-name">{name} {isYourself ? '(Vous)' : null} {'   '}
         <Balance account={props} /><br />
-        {isFriend ?
-          <div className="userSocialLink" onClick={() => { handleUnfollow({ userId, targetId }); }} >&#10173; Ne plus suivre</div> :
-          <div className="userSocialLink" onClick={() => { handleFollow({ userId, targetId }); }} >&#10173; Suivre</div>
+        { isYourself ?
+          null :
+          (isFriend ?
+            <div>
+              <div className="userSocialLink" onClick={() => { handleUnfollow({ userId, targetId }); }} >&#10173; Ne plus suivre</div>
+              <NavLink className="userSocialLink" to="/" >&#9993; Message</NavLink>
+            </div>
+            :
+            <div>
+              <div className="userSocialLink" onClick={() => { handleFollow({ userId, targetId }); }} >&#10173; Suivre</div>
+              <NavLink className="userSocialLink" to="/" >&#9993; Message</NavLink>
+            </div>
+          )
         }
-        <NavLink className="userSocialLink" to="/" >&#9993; Message</NavLink>
       </div>
     </div>
   );
