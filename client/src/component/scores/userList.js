@@ -23,7 +23,7 @@ class UserList extends React.Component {
     const {
       userList, followUser, unfollowUser, account,
     } = this.props;
-    const { friends } = account;
+    const { friends, isFollowingYou } = account;
     const { search, viewFriendsOnly } = this.state;
     return (
       <div>
@@ -59,6 +59,7 @@ class UserList extends React.Component {
    handleUnfollow={unfollowUser}
    isFriend={friends.includes(userProps._id)}
    isYourself={userProps._id === account._id}
+   isFollowingYou={isFollowingYou.includes(userProps._id)}
  />))}
 
 

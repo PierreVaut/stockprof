@@ -247,31 +247,63 @@ export const db = {
   followUser(payload, cb) {
     const { userId: _id, targetId } = payload;
     const Account = mongoose.model('Account', accountSchema);
-    Account.findOne({ _id }, (err, account) => {
-      if (err) {
+
+    // Target account update
+    Account.findOne({ _id: targetId }, (err, accountTarget) => {
+      if (err || !accountTarget) {
         console.log(chalk.red('[Error] Cannot retrieve user ', _id));
         return err;
       }
-      if (account && account.friends && !account.friends.includes(targetId)) {
-        account.friends.push(targetId);
-        account.save();
+      if (accountTarget && accountTarget.isFollowingYou && !accountTarget.isFollowingYou.includes(_id)) {
+        accountTarget.isFollowingYou.push(_id);
+        accountTarget.save();
+        console.log(chalk.green('[Update] ', targetId, 'is followed by ', _id));
+      }
+    });
+
+    // User account update
+    Account.findOne({ _id }, (err, accountUser) => {
+      if (err || !accountUser) {
+        console.log(chalk.red('[Error] Cannot retrieve user ', _id));
+        return err;
+      }
+      if (accountUser && accountUser.friends && !accountUser.friends.includes(targetId)) {
+        accountUser.friends.push(targetId);
+        accountUser.save();
         console.log(chalk.green('[Update] Friend added ', targetId));
-        console.log(chalk.green('[Update] New friend list ', account.friends));
-        return cb(account);
+        console.log(chalk.green('[Update] New friend list ', accountUser.friends));
+        return cb(accountUser);
       }
       console.log(chalk.red('[Error] Target already in the friend list ', targetId));
-      if (account && account.friends) {
-        console.log(chalk.red('[Error] Friend list not updated', account.friends));
+      if (accountUser && accountUser.friends) {
+        console.log(chalk.red('[Error] Friend list not updated', accountUser.friends));
       } else {
-        console.log({ account });
+        console.log({ accountUser });
       }
-      return cb(account);
+      return cb(accountUser);
     });
   },
 
+  // User account update
   unfollowUser(payload, cb) {
     const { userId: _id, targetId } = payload;
     const Account = mongoose.model('Account', accountSchema);
+
+    // Target account update
+    Account.findOne({ _id: targetId }, (err, accountTarget) => {
+      if (err || !accountTarget) {
+        console.log(chalk.red('[Error] Cannot retrieve user ', _id));
+        return err;
+      }
+      if (accountTarget && accountTarget.isFollowingYou && !accountTarget.isFollowingYou.includes(_id)) {
+        const newList = accountTarget.isFollowingYou.filter(id => id !== _id);
+        accountTarget.isFollowingYou = newList;
+        accountTarget.save();
+        console.log(chalk.green('[Update] ', targetId, 'is no more followed by ', _id));
+      }
+    });
+
+
     Account.findOne({ _id }, (err, account) => {
       if (err) {
         console.log(chalk.red('[Error] Cannot retrieve user ', _id));

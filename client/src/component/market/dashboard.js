@@ -4,12 +4,10 @@ import Balance from './balance';
 import { GuestMenu } from '../common';
 
 const Dashboard = props => {
-  console.log('DB', props);
   const { isLogged } = props.session;
   const {
-    cashAvailable, name, position, _id,
+    cashAvailable, name, position, _id, friends, isFollowingYou,
   } = props.account;
-
   return isLogged ?
     (
       <div className="dashboard">
@@ -18,6 +16,8 @@ const Dashboard = props => {
         <div>Cash disponible: {cashAvailable} $</div>
         <div>Portefeuille: {JSON.stringify(position)}</div>
         <div>Plus/moins-values: <Balance account={props.account} /></div>
+        <div>Vous suivez: {JSON.stringify(friends)}</div>
+        <div>Vous êtes suivis par : {JSON.stringify(isFollowingYou)}</div>
       </div>
     ) :
     (<GuestMenu />);

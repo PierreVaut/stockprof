@@ -8,6 +8,7 @@ const accountSchema = mongoose.Schema({
   isLogged: Boolean,
   lastLogin: Date,
   friends: [{ type: String }],
+  isFollowingYou: [{ type: String }],
   created: { type: Date, default: Date.now },
   cashAvailable: { type: Number, default: 5000 },
   position: mongoose.Schema.Types.Mixed,
