@@ -11,7 +11,8 @@ import NotFound from './404';
 import GuestMenu from './guestMenu';
 import ErrorHandler from './error';
 import Loader from './loader';
+import ResetPassword from './resetpassword';
 
-export { Header, Subheader, Login, Register, Disconnect, Contact, About, Admin, RawData, NotFound, GuestMenu, ErrorHandler, Loader,
+export { Header, Subheader, Login, Register, Disconnect, Contact, About, Admin, RawData, NotFound, GuestMenu, ErrorHandler, Loader, ResetPassword,
 };
 

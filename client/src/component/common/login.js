@@ -38,7 +38,9 @@ const Login = props => (
 }
     >
     Login
-    </NavLink>
+    </NavLink><br /><br />
+    <NavLink to="/reset">Mot de passe oublié ?</NavLink>
+
   </div>
 );
 

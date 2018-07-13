@@ -71,7 +71,6 @@ class Menu extends React.Component {
             (<GuestMenu />)
             }
         <br />
-
         <div className="menu-entry"><NavLink to="/about">A propos</NavLink></div>
         <div className="menu-entry"><NavLink to="/contact">Contact</NavLink></div>
         {this.props.dataReducer.session.isLogged ?

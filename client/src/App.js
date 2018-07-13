@@ -1,7 +1,7 @@
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import React from 'react';
 import './App.css';
-import { Login, Register, Disconnect, Contact, Admin, RawData, Subheader, Header, About, NotFound } from './component/common';
+import { Login, Register, Disconnect, Contact, Admin, RawData, Subheader, Header, About, NotFound, ResetPassword } from './component/common';
 import { Market, Dashboard } from './component/market/';
 import { UserScores } from './component/scores';
 import { Timeline } from './component/timeline';
@@ -30,6 +30,7 @@ const App = () => (
             <Route exact path="/raw" component={RawData} />
             <Route exact path="/chat" component={Chat} />
             <Route exact path="/timeline" component={Timeline} />
+            <Route exact path="/reset" component={ResetPassword} />
             <Route path="/*" component={NotFound} />
           </Switch>
         </div>
