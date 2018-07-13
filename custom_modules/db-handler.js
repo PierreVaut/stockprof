@@ -295,9 +295,9 @@ export const db = {
         console.log(chalk.red('[Error] Cannot retrieve user ', _id));
         return err;
       }
-      if (accountTarget && accountTarget.isFollowingYou && !accountTarget.isFollowingYou.includes(_id)) {
-        const newList = accountTarget.isFollowingYou.filter(id => id !== _id);
-        accountTarget.isFollowingYou = newList;
+      if (accountTarget && accountTarget.isFollowingYou && accountTarget.isFollowingYou.includes(_id)) {
+        const unfollowList = accountTarget.isFollowingYou.filter(id => id !== _id);
+        accountTarget.isFollowingYou = unfollowList;
         accountTarget.save();
         console.log(chalk.green('[Update] ', targetId, 'is no more followed by ', _id));
       }
