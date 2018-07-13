@@ -86,14 +86,12 @@ h2{
   padding-top: 120px;
 }
 
-
 .currency div:first-child{
   margin-top: 0px;
 }
 
 .currency{
   margin-bottom: 20px;
-
 }
 
 .currency-timestamp{
@@ -106,9 +104,15 @@ h2{
   width: 420px;
   margin: 10px auto;
   text-align: left;
+  word-break: break-all;
 }
 
-
+.list-item-center{
+  width: 420px;
+  margin: 10px auto;
+  text-align: center;
+  word-break: break-all;
+}
 
 .user-avatar{
   height: 40px;

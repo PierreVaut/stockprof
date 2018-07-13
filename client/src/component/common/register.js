@@ -5,7 +5,7 @@ import { requestBody, resetRequestBody, apiPost } from '../../actions/';
 
 const Register = props => (
   <div className="login">
-    <h2>Enregistrement</h2>
+    <h2>Création de compte</h2>
     <form>
       <label>Email<br />
         <input

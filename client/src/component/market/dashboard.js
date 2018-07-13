@@ -10,14 +10,14 @@ const Dashboard = props => {
   } = props.account;
   return isLogged ?
     (
-      <div className="dashboard">
+      <div className="list-item-center">
         <div>Votre nom: {name}</div>
         <div>Votre Id: {_id}</div>
-        <div>Cash disponible: {cashAvailable} $</div>
-        <div>Portefeuille: {JSON.stringify(position)}</div>
-        <div>Plus/moins-values: <Balance account={props.account} /></div>
-        <div>Vous suivez: {JSON.stringify(friends)}</div>
-        <div>Vous êtes suivis par : {JSON.stringify(isFollowingYou)}</div>
+        <div>Cash disponible: {cashAvailable} $</div><br />
+        <div>Plus/moins-values: <Balance account={props.account} /></div><br />
+        <div>Portefeuille: {JSON.stringify(position)}</div><br />
+        <div>Vous suivez: {JSON.stringify(friends)}</div><br />
+        <div>Vous êtes suivis par : {JSON.stringify(isFollowingYou)}</div><br />
       </div>
     ) :
     (<GuestMenu />);

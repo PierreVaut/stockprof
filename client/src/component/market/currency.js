@@ -1,22 +1,15 @@
 import React from 'react';
-import BuySellButton from './buy-sell-button';
 import { connect } from 'react-redux';
+import BuySellButton from './buy-sell-button';
 
 /* Keep this component as a Class */
 class Currency extends React.Component {
-  constructor(props) {
-    super(props);
-    // local state only
-    this.state = { localPrice: 0 };
-  }
-
   // this can be updated when component is rendered
   componentDidMount() {
     this.setState({
       price: this.props.localPrice,
     });
   }
-
 
   render() {
     const { position } = this.props.account;

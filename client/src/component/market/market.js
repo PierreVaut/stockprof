@@ -8,7 +8,7 @@ const Market = props => {
   const { isLogged } = props.session;
   const { cashAvailable } = props.account;
   return isLogged ? (
-    <div className="market">
+    <div className="list-item-center">
       <h2>Market</h2>
       <p>Cash disponible: {Math.round(cashAvailable) }$ </p>
       <p>Plus/moins-values: <Balance account={props.account} /></p><br />
