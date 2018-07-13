@@ -82,6 +82,8 @@ const dataReducer = (state = initialState, action) => {
       console.log(newFriends);
       return { ...state, account: { ...state.account, friends: [...newFriends] } };
 
+    case actionType.SYNC_CREATE_TIMELINE_ITEM:
+      return { ...state, timeline: [action.payload, ...state.timeline] };
 
     default:
       return state;

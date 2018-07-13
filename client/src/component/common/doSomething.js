@@ -8,7 +8,7 @@ const DoSomething = () =>
         <span role="img" aria-label="sad-emoji">😢</span><br />
       la Timeline est vide car vous ne suivez personne pour le moment...<br />
         <NavLink to="/userlist">Suivez d'autres utilisateurs</NavLink>
-        <span role="img" aria-label="happy-emoji">😁</span>
+        <span role="img" aria-label="happy-emoji">Ne soyez pas timide ! 😁😁😁</span>
       </div>
 
     </div>

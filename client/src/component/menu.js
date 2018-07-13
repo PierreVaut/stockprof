@@ -28,7 +28,6 @@ class Menu extends React.Component {
     socket.emit('subscribeToListUpdates', 'hello');
   }
 
-
   subscribeToPriceUpdates(cb) {
     socket.on('btc', data => {
       if (!this.props.priceListInitialized) {
@@ -38,7 +37,6 @@ class Menu extends React.Component {
     });
     socket.emit('btc-initial', 'hello');
   }
-
 
   render() {
     const { account, session, error } = this.props;

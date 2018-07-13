@@ -63,6 +63,7 @@ class Timeline extends React.Component {
                 <button
                   className="middle-button"
                   onClick={() => {
+                    this.setState({ newPost: '' });
                   const newTimelineItem = {
                     content: newPost,
                     author: name,
@@ -70,7 +71,7 @@ class Timeline extends React.Component {
                     authorEmail: email,
                   };
                   createTimelineItem(newTimelineItem);
-}}
+                  }}
                 >
               Envoyer
                 </button>
@@ -78,7 +79,8 @@ class Timeline extends React.Component {
 
               {friends.length > 0 ?
 
-              timeline.filter(timelineItem => {
+              timeline
+              .filter(timelineItem => {
                 if (viewFriendsOnly) {
                   return timelineItem.authorId === _id ||
                   (timelineItem.author.toLowerCase().includes(search.toLowerCase())
@@ -92,9 +94,7 @@ class Timeline extends React.Component {
                   handleSubmit={handleSubmit}
                   key={index}
                 />))
-
                 :
-
               <DoSomething />
 
                 }
