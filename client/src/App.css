@@ -102,36 +102,42 @@ h2{
   color: #595959;
 }
 
-
-.user{
-  position: relative;
-  width: 280px;
-  height: 90px;
+.list-item{
+  width: 420px;
   margin: 10px auto;
+  text-align: left;
 }
 
+
+
 .user-avatar{
-  position: absolute;
+  height: 40px;
+  width: 40px;
   border: 1px solid white;
-  top: 0px; left: 5px;
-  height: 40px; width: 40px;
-  text-align: center; line-height: 40px;
+  text-align: center;
+  line-height: 40px;
   font-size: 24px;
   font-weight: bold;
   box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
-  border-radius: 50%}
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: top;
+}
 
 .user-connect-light{
   border-radius: 50%;
   border: 1px solid white;
-  position: absolute;
-  top:33px; left: 33px;
   height: 10px; width: 10px;
+  margin-top: -10px;
+  margin-left: 28px;
 }
 
 .user-name{
-  margin-left: 60px;
-  text-align: left
+  text-align: left;
+  display: inline-block;  
+  margin-left: 20px;
+  max-width: 350px;
+  word-break: break-all;
 }
 
 .userSocialLink{
@@ -188,19 +194,11 @@ h2{
   margin-top: 10px;
 }
 
-.timeline-item{
-  position: relative;
-  width: 420px;
-  height: 75px;
-  margin: 10px auto;
-}
 .timeline-content{
-  margin-left: 60px;
   text-align: left;
 }
 .timeline-votes{
   text-align: left;
-  margin-left: 60px;
 }
 
 .timeline-timestamp{
@@ -208,73 +206,53 @@ h2{
   font-size: 12px;
   font-style: italic;
   color: #595959;
-  margin-left: 60px;
 }
 
 .input-text {
-  border: 0px;
-  border-radius: 5px;;
-  width: 280px;
-  height: 30px;  
-  padding: 5px;
-}
-
-.input-text-timeline {
-  border-radius: 10%;
-  width: 420px;
-  padding: 5px;
-}
-
-.input-text-big {
   border-radius: 5px;
   width: 420px;
   height: 30px;
   padding: 5px;
   border: 0px;
-  
 }
 
-.input-text-big-button {
+.middle-button {
   background-color: blue;
   border-radius: 5px;
   color: white;
   border: 0px;
-  margin: 5px 0 5px -205px;
-  width: 70px;
+  margin: 5px 0;
+  width: 80px;
   height: 25px;
-}
-
-.input-checkbox{
-  margin-top: 4px;
-  margin-left: -76px;
 }
 
 .input-checkbox-text{
   font-size: 12px;
 }
 
-.input-checkbox-2{
-  margin-left: -50px;
-}
-
-.userlist-button{
-  background-color: blue;
-  border-radius: 5px;
-  border: 0px;
-  width: 90px;
-  height: 25px;
-  color: white;
-  margin: 5px 0 15px -190px;
-  
-}
-
-.userlist-button-disable{
+.middle-button-disable{
   background-color: grey;
   border-radius: 5px;
   border: 0px;
   width: 90px;
   height: 25px;
   color: white;
-  margin: 5px 0 15px -190px;
-  
+  margin-bottom: 5px;
+}
+
+.comment-input-text{
+  border-radius: 5px;
+  border: 0px;
+  padding: 3px;
+  margin-left: 5px;
+  margin-top: 4px
+}
+
+.comment-input-button{
+  border-radius: 5px;
+  color: white;
+  background-color: green;
+  border: 0px;
+  padding: 3px;
+  margin-left: 5px;
 }

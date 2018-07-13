@@ -4,16 +4,11 @@ import UserList from './userList';
 import { GuestMenu } from '../common';
 
 
-const Play = props => {
+const UserTable = props => {
   const { isLogged } = props.session;
-  return isLogged ? (
-    <div>
-      <h2>Liste des utilisateurs</h2>
-      <UserList />
-    </div>
-  ) : <GuestMenu />;
+  return isLogged ? <UserList /> : <GuestMenu />;
 };
 
 const mapStateToProps = state => state.dataReducer;
 
-export default connect(mapStateToProps)(Play);
+export default connect(mapStateToProps)(UserTable);

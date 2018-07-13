@@ -3,7 +3,7 @@ import React from 'react';
 import './App.css';
 import { Login, Register, Disconnect, Contact, Admin, RawData, Subheader, Header, About, NotFound, ResetPassword } from './component/common';
 import { Market, Dashboard } from './component/market/';
-import { UserScores } from './component/scores';
+import { UserTable } from './component/userlist';
 import { Timeline } from './component/timeline';
 import Chat from './component/chat';
 import Menu from './component/menu';
@@ -18,7 +18,7 @@ const App = () => (
         <div className="app-body">
           <Switch>
             <Route exact path="/" component={Menu} />
-            <Route exact path="/scores" component={UserScores} />
+            <Route exact path="/userlist" component={UserTable} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/market" component={Market} />
             <Route exact path="/login" component={Login} />

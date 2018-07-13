@@ -30,11 +30,11 @@ class UserList extends React.Component {
       showSearchAndFilters, search, viewFriendsOnly, viewFollowersOnly,
     } = this.state;
     return (
-      <div>
+      <div className="list-item">
         {showSearchAndFilters ? (
           <div>
             <button
-              className="userlist-button-disable"
+              className="middle-button-disable"
               onClick={() => this.setState({ showSearchAndFilters: false })}
             >
             Masquer
@@ -47,7 +47,7 @@ class UserList extends React.Component {
               value={search}
             /><br />
             <input
-              className="input-checkbox"
+              className=""
               type="checkbox"
               checked={viewFriendsOnly}
               onClick={() => { this.setState({ viewFriendsOnly: !viewFriendsOnly }); }}
@@ -55,7 +55,7 @@ class UserList extends React.Component {
             <span className="input-checkbox-text"> Afficher uniquement les amis</span> <br />
 
             <input
-              className="input-checkbox-2"
+              className=""
               type="checkbox"
               checked={viewFollowersOnly}
               onClick={() => { this.setState({ viewFollowersOnly: !viewFollowersOnly }); }}
@@ -65,7 +65,7 @@ class UserList extends React.Component {
           </div>
         ) :
           (<button
-            className="userlist-button"
+            className="middle-button"
             onClick={() => this.setState({ showSearchAndFilters: true })}
           >Filtrer / trier
            </button>)

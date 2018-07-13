@@ -8,6 +8,10 @@ export const timelineSchema = mongoose.Schema({
   authorEmail: String,
   upvote: { type: Number, default: 0 },
   downvote: { type: Number, default: 0 },
-  comment: {},
+  comments: [{
+    author: String,
+    authorId: mongoose.Schema.Types.ObjectId,
+    content: String,
+  }],
 });
 

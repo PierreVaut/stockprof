@@ -10,19 +10,19 @@ const User = (props) => {
   const initial = props.name.substr(0, 1);
   const hasbeenLoggedRecently = props.isLogged && (new Date() - new Date(props.lastLogin)) < (1000 * 60 * 180); // Last 3 hours
   return (
-    <div className="user">
+    <div className="list-item">
       <div
         className="user-avatar"
         style={{ backgroundColor: colors[(initial.charCodeAt(0)) % colors.length] }}
       >
         {initial.toUpperCase()}
-      </div>
-      <div
-        className="user-connect-light"
-        style={hasbeenLoggedRecently ?
+        <div
+          className="user-connect-light"
+          style={hasbeenLoggedRecently ?
             { backgroundColor: 'green' } : { backgroundColor: 'gray' }
         }
-      />
+        />
+      </div>
 
       <div className="user-name">{name} {isYourself ? '(Vous)' : null} {'   '}{isFollowingYou ? <i>(Follower)</i> : null}
         <br /><Balance account={props} /><br />

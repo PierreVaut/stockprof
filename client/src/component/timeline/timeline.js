@@ -31,13 +31,13 @@ class Timeline extends React.Component {
     const { search, viewFriendsOnly, newPost } = this.state;
 
     return (
-      <div className="user">
+      <div>
         { session.isLogged ?
 
           (timeline ?
-            <div>
+            <div >
               {/* <input
-                className="input-text-timeline"
+                className="input-text"
                 type="text"
                 placeholder="Rechercher..."
                 onChange={e => { this.setState({ search: e.target.value }); }}
@@ -50,29 +50,31 @@ class Timeline extends React.Component {
                 onClick={() => { this.setState({ viewFriendsOnly: !viewFriendsOnly }); }}
               />
               <span className="input-checkbox-text"> Afficher uniquement les amis</span> <br /><br /> */}
-              <input
-                className="input-text-big"
-                type="text"
-                placeholder="Partager une info..."
-                onChange={e => { this.setState({ newPost: e.target.value }); }}
-                value={newPost}
-              /><br />
+              <div className="list-item">
 
-              <button
-                className="input-text-big-button"
-                onClick={() => {
+                <input
+                  className="input-text"
+                  type="text"
+                  placeholder="Partager une info..."
+                  onChange={e => { this.setState({ newPost: e.target.value }); }}
+                  value={newPost}
+                /><br />
+
+                <button
+                  className="middle-button"
+                  onClick={() => {
                   const newTimelineItem = {
                     content: newPost,
                     author: name,
                     authorId: _id,
                     authorEmail: email,
                   };
-                  console.log({ newTimelineItem });
                   createTimelineItem(newTimelineItem);
 }}
-              >
+                >
               Envoyer
-              </button>
+                </button>
+              </div>
 
               {timeline.filter(timelineItem => {
                 if (viewFriendsOnly) {
