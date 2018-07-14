@@ -1,7 +1,3 @@
-import Cookies from 'universal-cookie';
-import { domain } from '../config/domain';
-
-const bodyParser = require('body-parser');
 const fs = require('fs');
 
 export const session = {
@@ -29,7 +25,6 @@ export const session = {
             console.error(data.session);
             res.json(data);
           } else if (cb) {
-            console.log('[Session-handler] Passing CB on:', data);
             data.error = false;
             cb(data);
           } else {
@@ -46,8 +41,6 @@ export const session = {
           data.session.ip.push(req.ip);
         }
 
-        console.log('[Session] Update file.');
-
         fs.writeFile(path, JSON.stringify(data.session), (err) => {
           if (err) {
             data.error = `[Session-handler] Write File error${error}`;
@@ -55,7 +48,6 @@ export const session = {
             res.json(data);
           } else if (cb) {
             data.error = false;
-            console.log('[Session-handler] Passing CB on:', data);
             cb(data);
           } else {
             res.json(data);
@@ -86,8 +78,6 @@ export const session = {
           data.session._id = 'No ID...';
         }
 
-        console.log('[Session] New file.');
-
         fs.writeFile(path, JSON.stringify(data.session), (err) => {
           if (err) {
             data.session = `[Session-handler] Write File error${error}`;
@@ -97,10 +87,10 @@ export const session = {
           } else {
             data.error = false;
             if (cb) {
-              console.log('[Session-handler] Passing CB on:', data);
+              // console.log('[Session-handler] Passing CB on:', data);
               cb(data);
             } else {
-              console.log('[Session-handler] Response:', data);
+              // console.log('[Session-handler] Response:', data);
               res.json(data);
             }
           }
@@ -130,7 +120,6 @@ export const session = {
           data.session.ip.push(req.ip);
         }
 
-        console.log('[Session-handler] Update file.');
 
         fs.writeFile(path, JSON.stringify(data.session), (err) => {
           if (err) {
@@ -140,11 +129,9 @@ export const session = {
             res.json(data);
           } else if (cb) {
             data.error = false;
-            console.log('[Session-handler] Passing CB on:', data);
             cb(data);
           } else {
             data.error = false;
-            console.log('[Session-handler] Response:', data);
             res.json(data);
           }
         });

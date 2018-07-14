@@ -29,17 +29,13 @@ export const db = {
       Account.findOne({ _id: data.session._id }, (err, result) => {
         if (err) {
           data.account = `[accountDB-handler] DB error${err}`;
-          console.log(data.account);
           res.json(data);
         }
 
 
         if (result !== null) {
           data.account = result;
-          console.log('[accountDB-handler] ok', result);
-          console.log('[accountDB-handler] Return', data);
           if (cb) {
-            console.log('[accountDB-handler] Passing CB on:', data);
             cb(data);
           } else {
             res.json(data);
@@ -48,10 +44,7 @@ export const db = {
       });
     } else {
       data.account = '[accountDB-handler] User not logged or Error';
-      console.log(data.account);
-      console.log('[accountDB-handler] Return', data);
       if (cb) {
-        console.log('[accountDB-handler] Passing CB on:', data);
         cb(data);
       } else {
         res.json(data);
@@ -61,7 +54,6 @@ export const db = {
 
   register(req, res, data, cb) {
     const Account = mongoose.model('Account', accountSchema);
-    console.log('[accountDB-register] Request:', req.body);
 
     // Check the request #1
     if (!req || req === '') {
@@ -117,7 +109,6 @@ export const db = {
   },
 
   login(req, res, data, cb) {
-    console.log('[accountDB-login] starting', data, ' - Request: ', req.body);
     const Account = mongoose.model('Account', accountSchema);
 
     // Check the request #1
@@ -137,7 +128,6 @@ export const db = {
       res.json(data);
     } else {
       Account.findOne({ email: req.body.email, password: req.body.password }, (error, result) => {
-        console.log('[accountDB-login] Checking DB');
         if (error) {
           data.account = `Error fetching DB: ${error}`;
           data.error = data.account;
@@ -146,7 +136,6 @@ export const db = {
         }
 
         if (result) {
-          console.log('[accountDB-login] Result:', result);
           result.isLogged = true;
           result.lastLogin = Date();
           result.save();
@@ -154,7 +143,6 @@ export const db = {
           data.error = false;
           data.status = '';
           if (cb) {
-            console.log('[accountDB-login] Passing CB on: ', data);
             cb(data);
           } else {
             res.json(data);
@@ -174,7 +162,6 @@ export const db = {
     Account.findOne({ _id: data.session._id }, (err, result) => {
       if (err) {
         data.account = `[accountDB-disconnect] DB error${err}`;
-        console.log(data.account);
         res.json(data);
       } else if (result !== null) {
         result.isLogged = false;
@@ -182,8 +169,6 @@ export const db = {
         data.account = result;
         data.error = false;
         data.status = '';
-        console.log('[accountDB-disconnect] OK', data);
-
 
         if (cb) {
           cb(data);
@@ -229,7 +214,6 @@ export const db = {
     const Timeline = mongoose.model('Timeline', timelineSchema);
     Timeline.findOne({ _id }, (err, item) => {
       if (err) {
-        console.log(chalk.red('[Error] Saving TimelineItem ', _id));
         return err;
       }
       const { upvote, downvote } = payload;
@@ -257,7 +241,6 @@ export const db = {
       if (accountTarget && accountTarget.isFollowingYou && !accountTarget.isFollowingYou.includes(_id)) {
         accountTarget.isFollowingYou.push(_id);
         accountTarget.save();
-        console.log(chalk.green('[Update] ', targetId, 'is followed by ', _id));
       }
     });
 
@@ -270,16 +253,10 @@ export const db = {
       if (accountUser && accountUser.friends && !accountUser.friends.includes(targetId)) {
         accountUser.friends.push(targetId);
         accountUser.save();
-        console.log(chalk.green('[Update] Friend added ', targetId));
-        console.log(chalk.green('[Update] New friend list ', accountUser.friends));
         return cb(accountUser);
       }
       console.log(chalk.red('[Error] Target already in the friend list ', targetId));
-      if (accountUser && accountUser.friends) {
-        console.log(chalk.red('[Error] Friend list not updated', accountUser.friends));
-      } else {
-        console.log({ accountUser });
-      }
+
       return cb(accountUser);
     });
   },
@@ -299,7 +276,6 @@ export const db = {
         const unfollowList = accountTarget.isFollowingYou.filter(id => id !== _id);
         accountTarget.isFollowingYou = unfollowList;
         accountTarget.save();
-        console.log(chalk.green('[Update] ', targetId, 'is no more followed by ', _id));
       }
     });
 
@@ -313,16 +289,10 @@ export const db = {
         const newFriends = account.friends.filter(friend => friend !== targetId);
         account.friends = newFriends;
         account.save();
-        console.log(chalk.blue('[Update] Friend removed ', targetId));
-        console.log(chalk.blue('[Update] New friend list ', account.friends));
         return cb(account);
       }
       console.log(chalk.red('[Error] Target already in the friend list ', targetId));
-      if (account && account.friends) {
-        console.log(chalk.red('[Error] Friend list not updated', account.friends));
-      } else {
-        console.log({ account });
-      }
+
       return cb(account);
     });
   },
@@ -368,7 +338,6 @@ export const db = {
           result.markModified('position');
           result.save();
 
-          console.log({ result });
           const timelineItem = {
             content: `${req.body.operation === 'buy' ? 'bought' : 'sold'}  ${req.body.qty} ${req.body.symbol} for
             ${Math.round(Math.abs(req.body.amount))} $

@@ -1,14 +1,11 @@
+import { uri } from '../config/connect';
+
 const mongoose = require('mongoose');
-import { uri }    from '../config/connect';
-import { domain } from '../config/domain';
 
 mongoose.connect(uri);
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', ()=> {
+db.once('open', () => {
   console.log("[Mongoose] we're connected!");
 });
-
-
-
 

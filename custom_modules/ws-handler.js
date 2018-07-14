@@ -94,6 +94,10 @@ export const ioServer = io.on('connection', (client) => {
     priceDB.get((docs) => { client.emit('btc', docs); });
   });
 
+  client.on('notification', id => {
+    console.log(chalk.green('[Notifications] - open', id));
+    client.emit(id, `salut ${id} !`);
+  });
 
   cexioWS(client);
 });

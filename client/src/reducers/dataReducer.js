@@ -52,11 +52,9 @@ const dataReducer = (state = initialState, action) => {
       return { ...rest, timeline: newTimeline };
 
     case actionType.RECEIVE_USERLIST:
-      // console.log('[DataReducer] action:', action);
       return { ...state, userList: action.list };
 
     case actionType.RECEIVE_PRICES:
-      // console.log('[DataReducer] action:', action);
       return { ...state, priceListInitialized: true, prices: action.prices };
 
     case actionType.REQUEST_BODY:
@@ -67,19 +65,16 @@ const dataReducer = (state = initialState, action) => {
           [action.field]: action.content,
         },
       };
-      console.log(state === newState);
       return newState;
 
     case actionType.RESET_REQUEST_BODY:
       return { ...state, requestBody: {} };
 
     case actionType.SYNC_FOLLOW_USER:
-      console.log(action.id);
       return { ...state, account: { ...state.account, friends: [...state.account.friends, action.id] } };
 
     case actionType.SYNC_UNFOLLOW_USER:
       const newFriends = state.account.friends.filter(friend => friend !== action.id);
-      console.log(newFriends);
       return { ...state, account: { ...state.account, friends: [...newFriends] } };
 
     case actionType.SYNC_CREATE_TIMELINE_ITEM:

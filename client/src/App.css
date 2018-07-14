@@ -100,15 +100,10 @@ h2{
   color: #595959;
 }
 
-.list-item{
-  width: 420px;
-  margin: 10px auto;
-  text-align: left;
-  word-break: break-all;
-}
+
 
 .list-item-center{
-  width: 420px;
+  width: 320px;
   margin: 10px auto;
   text-align: center;
   word-break: break-all;
@@ -136,14 +131,71 @@ h2{
   margin-left: 28px;
 }
 
+.list-item{
+  width: 500px;
+  margin: 10px auto;
+  text-align: left;
+  word-break: break-all;
+}
 .user-name{
   text-align: left;
   display: inline-block;  
   margin-left: 20px;
-  max-width: 350px;
+  max-width: 420px;
   word-break: break-all;
 }
+.input-text {
+  border-radius: 5px;
+  width: 420px;
+  height: 30px;
+  padding: 5px;
+  border: 0px;
+}
+.middle-button {
+  background-color: blue;
+  border-radius: 5px;
+  color: white;
+  border: 0px;
+  margin: 5px 0;
+  width: 80px;
+  height: 25px;
+}
 
+@media only screen and (max-width: 500px) {
+  .list-item{
+    width: 320px;
+    margin: 10px auto;
+    text-align: left;
+    word-break: break-all;
+    margin-left: 5px;
+    
+  }
+  .user-name{
+    text-align: left;
+    display: inline-block;  
+    margin-left: 20px;
+    max-width: 250px;
+    word-break: break-all;
+  }
+  .input-text {
+    border-radius: 5px;
+    width: 260px;
+    height: 25px;
+    padding: 5px;
+    border: 0px;;
+    margin-left: 5px;
+  }
+
+  .middle-button {
+    background-color: blue;
+    border-radius: 5px;
+    color: white;
+    border: 0px;
+    margin-left: 5px;
+    width: 80px;
+    height: 25px;
+  }
+}
 .userSocialLink{
   text-decoration: none;
   font-size: 14px;
@@ -212,23 +264,7 @@ h2{
   color: #595959;
 }
 
-.input-text {
-  border-radius: 5px;
-  width: 420px;
-  height: 30px;
-  padding: 5px;
-  border: 0px;
-}
 
-.middle-button {
-  background-color: blue;
-  border-radius: 5px;
-  color: white;
-  border: 0px;
-  margin: 5px 0;
-  width: 80px;
-  height: 25px;
-}
 
 .input-checkbox-text{
   font-size: 12px;
