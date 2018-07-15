@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import openSocket from 'socket.io-client';
 import { TimelineItem } from './timelineItem';
 import { GuestMenu, Loader, DoSomething } from '../common';
 import {
   getTimeline as getTimelineAC,
   createTimelineItem as createTimelineItemAC,
   updateTimelineItem as updateTimelineItemAC } from '../../actions/';
+
+const socket = openSocket();
 
 class Timeline extends React.Component {
   constructor(props) {

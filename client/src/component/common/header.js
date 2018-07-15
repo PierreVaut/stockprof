@@ -12,7 +12,6 @@ const Header = ({ account }) => {
   const { notifications, _id } = account;
   socket.emit('notification', _id);
   socket.on(_id, msg => console.log('glutt', msg));
-  socket.on('stuff', msg => console.log(msg));
 
   const newNotifications = notifications ? notifications.filter(notif => notif.status === 'new') : [];
 

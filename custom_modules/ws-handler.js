@@ -96,8 +96,7 @@ export const ioServer = io.on('connection', (client) => {
 
   client.on('notification', id => {
     console.log(chalk.green('[Notifications] - open', id));
-    client.emit(id, `salut ${id} !`);
-    client.emit('stuff', 'yo !!');
+    client.emit(id, `salut yy ${id} !`);
   });
 
   cexioWS(client);

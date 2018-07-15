@@ -1,6 +1,6 @@
 import React from 'react';
-import openSocket from 'socket.io-client';
 import { connect } from 'react-redux';
+import openSocket from 'socket.io-client';
 import { NavLink } from 'react-router-dom';
 import { ErrorHandler, GuestMenu } from './common';
 import { receiveUserList, receivePrices } from '../actions/';

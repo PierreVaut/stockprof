@@ -12,7 +12,6 @@ const database = mongoose.connection;
 export const db = {
 
   init() {
-    const Account = mongoose.model('Account', accountSchema);
     database.on('error', console.error.bind(console, 'connection error:'));
     database.once('open', () => {
       console.log("[accountDB-init] we're connected !");
@@ -401,9 +400,7 @@ export const db = {
         notif.status = 'read';
         return notif;
       });
-      console.log(account.notifications);
       account.notifications = newNotifList;
-      console.log(newNotifList);
       account.save();
       cb(account);
     });
