@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import NotificationItem from './notificationItem';
+import { Loader } from '../common';
 
-
-const NotificationList = () => {
-  console.log('truc');
+const NotificationList = ({ account }) => {
+  const { notifications } = account;
   return (
     <div className="list-item">
-      <NotificationItem />
+      {notifications ? notifications.map(notif => <NotificationItem {...notif} />) : <Loader />}
     </div>
   );
 };

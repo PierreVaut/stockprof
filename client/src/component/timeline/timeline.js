@@ -93,6 +93,7 @@ class Timeline extends React.Component {
                   {...el}
                   handleSubmit={handleSubmit}
                   key={index}
+                  currentUser={account}
                 />))
                 :
               <DoSomething />

@@ -13,7 +13,7 @@ export class TimelineItem extends React.Component {
 
   render() {
     const {
-      timestamp, content, author, upvote, downvote, comments, handleSubmit, _id,
+      timestamp, content, author, upvote, downvote, comments, handleSubmit, _id, currentUser,
     } = this.props;
     const { showComments, newComment } = this.state;
     const initial = author.substr(0, 1);
@@ -42,7 +42,9 @@ export class TimelineItem extends React.Component {
               aria-label="thumb-up"
               style={{ cursor: 'pointer' }}
               onClick={() => {
-            handleSubmit({ upvote: upvote + 1, _id });
+            handleSubmit({
+ upvote: upvote + 1, _id, producerId: currentUser._id, producerName: currentUser.name,
+});
         }}
             > 👍
             </span>{ upvote } { }
@@ -51,7 +53,9 @@ export class TimelineItem extends React.Component {
               aria-label="thumb-down"
               style={{ cursor: 'pointer' }}
               onClick={() => {
-            handleSubmit({ downvote: downvote + 1, _id });
+            handleSubmit({
+ downvote: downvote + 1, _id, producerId: currentUser._id, producerName: currentUser.name,
+});
         }}
             > 👎
             </span>{ downvote } { }

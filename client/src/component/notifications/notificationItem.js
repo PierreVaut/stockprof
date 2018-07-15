@@ -1,14 +1,15 @@
 import React from 'react';
 
-const NotificationItem = () => {
-  console.log('truc');
+const NotificationItem = ({ authorName, content }) => {
+  const initial = authorName.substr(0, 1).toUpperCase();
+
   return (
     <div>
       <div className="user-avatar">
-        Z
+        {initial}
       </div>
       <div className="user-name">
-        5351
+        {authorName} - {content}
       </div>
     </div>
   );

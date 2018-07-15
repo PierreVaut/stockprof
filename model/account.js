@@ -14,6 +14,12 @@ const accountSchema = mongoose.Schema({
   position: mongoose.Schema.Types.Mixed,
   log: String,
   source: String,
+  notifications: [{
+    status: String,
+    authorId: String,
+    authorName: String,
+    content: String,
+  }],
 });
 
 accountSchema.methods.order = (operation, stockID, qty) => {

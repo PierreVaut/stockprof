@@ -209,14 +209,16 @@ export const db = {
     });
   },
 
-  updateTimelineItem(id, payload, cb) {
-    const _id = id;
+  updateTimelineItem(timelineItemId, payload, cb) {
+    const _id = timelineItemId;
     const Timeline = mongoose.model('Timeline', timelineSchema);
     Timeline.findOne({ _id }, (err, item) => {
       if (err) {
         return err;
       }
-      const { upvote, downvote } = payload;
+      const {
+        upvote, downvote, producerName, producerId,
+      } = payload;
       if (upvote) {
         item.upvote = upvote;
       }
@@ -224,6 +226,17 @@ export const db = {
         item.downvote = downvote;
       }
       item.save();
+      const newNotif = {
+        status: 'new',
+        authorId: producerId,
+        authorName: producerName,
+        content: `a aimé votre activité "${item.content.substr(0, 33)}"...`,
+      };
+      const Account = mongoose.model('Account', accountSchema);
+      Account.findOne({ _id: item.authorId }, (error, account) => {
+        account.notifications.push(newNotif);
+        account.save();
+      });
       return cb(item);
     });
   },
@@ -231,18 +244,7 @@ export const db = {
   followUser(payload, cb) {
     const { userId: _id, targetId } = payload;
     const Account = mongoose.model('Account', accountSchema);
-
-    // Target account update
-    Account.findOne({ _id: targetId }, (err, accountTarget) => {
-      if (err || !accountTarget) {
-        console.log(chalk.red('[Error] Cannot retrieve user ', _id));
-        return err;
-      }
-      if (accountTarget && accountTarget.isFollowingYou && !accountTarget.isFollowingYou.includes(_id)) {
-        accountTarget.isFollowingYou.push(_id);
-        accountTarget.save();
-      }
-    });
+    console.log('Follow start- ', payload);
 
     // User account update
     Account.findOne({ _id }, (err, accountUser) => {
@@ -253,9 +255,30 @@ export const db = {
       if (accountUser && accountUser.friends && !accountUser.friends.includes(targetId)) {
         accountUser.friends.push(targetId);
         accountUser.save();
-        return cb(accountUser);
+        console.log('Follow sounds OK1 - ', accountUser.name);
+      } else {
+        console.log(chalk.red('[Error] Target already in the friend list ', targetId));
       }
-      console.log(chalk.red('[Error] Target already in the friend list ', targetId));
+
+      // Target account update
+      Account.findOne({ _id: targetId }, (error, accountTarget) => {
+        if (error || !accountTarget) {
+          console.log(chalk.red('[Error] Cannot retrieve user ', _id));
+          return error;
+        }
+        if (accountTarget && accountTarget.isFollowingYou && !accountTarget.isFollowingYou.includes(_id)) {
+          accountTarget.isFollowingYou.push(_id);
+          const newNotif = {
+            status: 'new',
+            authorId: _id,
+            authorName: accountUser.name,
+            content: 'vous suit',
+          };
+          accountTarget.notifications.push(newNotif);
+          accountTarget.save();
+          console.log('Follow sounds OK2 - ', accountTarget.name);
+        }
+      });
 
       return cb(accountUser);
     });
@@ -265,6 +288,7 @@ export const db = {
   unfollowUser(payload, cb) {
     const { userId: _id, targetId } = payload;
     const Account = mongoose.model('Account', accountSchema);
+    console.log('unfollow - ', payload);
 
     // Target account update
     Account.findOne({ _id: targetId }, (err, accountTarget) => {
@@ -276,9 +300,9 @@ export const db = {
         const unfollowList = accountTarget.isFollowingYou.filter(id => id !== _id);
         accountTarget.isFollowingYou = unfollowList;
         accountTarget.save();
+        console.log('Unfollow sounds OK1 - ', accountTarget.name);
       }
     });
-
 
     Account.findOne({ _id }, (err, account) => {
       if (err) {
@@ -289,6 +313,8 @@ export const db = {
         const newFriends = account.friends.filter(friend => friend !== targetId);
         account.friends = newFriends;
         account.save();
+        console.log('Unfollow sounds OK2 - ', account.name);
+
         return cb(account);
       }
       console.log(chalk.red('[Error] Target already in the friend list ', targetId));

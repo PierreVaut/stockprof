@@ -23,7 +23,7 @@ const Header = ({ account }) => {
           <img src={notifIcon} alt="notif" style={{ width: 35, marginTop: 4 }} />
         </NavLink>
       </div>
-      {notifications && notifications.length > 0 ? <div className="notif-light">{notifications.length < 10 ? notifications.length : ' 9+'}</div> : <div className="notif-light">9+</div>}
+      {notifications && notifications.length > 0 ? <div className="notif-light">{notifications.length < 10 ? notifications.length : '9+'}</div> : <div className="notif-light">0!</div>}
     </div>
   );
 };
