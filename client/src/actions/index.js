@@ -62,25 +62,31 @@ export const getTimeline = () => dispatch => {
 };
 
 export const createTimelineItem = payload => {
-  console.log({ payload });
   fetch('/timeline/insert', params.post(payload));
   return { type: actionType.SYNC_CREATE_TIMELINE_ITEM, payload };
 };
 
 export const updateTimelineItem = payload => {
-  console.log({ payload });
   fetch(`/vote/${payload._id}`, params.post(payload));
   return { type: actionType.SYNC_UPDATE_TIMELINE_ITEM, payload };
 };
 
 export const followUser = payload => {
-  console.log({ payload });
   fetch('/follow/', params.post(payload));
   return { type: actionType.SYNC_FOLLOW_USER, id: payload.targetId };
 };
 
 export const unfollowUser = payload => {
-  console.log({ payload });
   fetch('/unfollow/', params.post(payload));
   return { type: actionType.SYNC_UNFOLLOW_USER, id: payload.targetId };
+};
+
+export const markAsRead = (id) => {
+  fetch(`/markAsRead/${id}`, params.get);
+  return { type: actionType.MARK_AS_READ };
+};
+
+export const flushNotifs = (id) => {
+  fetch(`/flushNotifs/${id}`, params.get);
+  return { type: actionType.FLUSH_NOTIFS };
 };

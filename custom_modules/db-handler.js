@@ -1,7 +1,6 @@
 import { uri } from '../config/connect';
 import { accountSchema, timelineSchema } from '../model';
-import { server } from '../api/routes';
-import { updateTimeline } from './update-tl';
+import { emitNotification } from './notif-handler';
 
 const chalk = require('chalk');
 const mongoose = require('mongoose');
@@ -198,7 +197,6 @@ export const db = {
     newItem.save(err => {
       if (err) { console.log('[Timeline error]', err); }
     });
-    updateTimeline(); // WS !....
   },
 
   getTimeline(cb) {
@@ -231,10 +229,13 @@ export const db = {
         authorId: producerId,
         authorName: producerName,
         content: `a aimé votre activité "${item.content.substr(0, 33)}"...`,
+        timestamp: Date.now(),
       };
+      emitNotification(item.authorId, newNotif);
+
       const Account = mongoose.model('Account', accountSchema);
       Account.findOne({ _id: item.authorId }, (error, account) => {
-        account.notifications.push(newNotif);
+        account.notifications.unshift(newNotif);
         account.save();
       });
       return cb(item);
@@ -273,8 +274,10 @@ export const db = {
             authorId: _id,
             authorName: accountUser.name,
             content: 'vous suit',
+            timestamp: Date.now(),
           };
-          accountTarget.notifications.push(newNotif);
+          accountTarget.notifications.unshift(newNotif);
+          emitNotification(targetId, newNotif);
           accountTarget.save();
           console.log('Follow sounds OK2 - ', accountTarget.name);
         }
@@ -385,6 +388,38 @@ export const db = {
         }
       });
     }
+  },
+
+  markAllNotificationsAsRead(_id, cb) {
+    const Account = mongoose.model('Account', accountSchema);
+    Account.findOne({ _id }, (error, account) => {
+      if (!account || error) {
+        console.error('[markAllNotificationsAsRead] Error fetching Account...', error);
+        cb(error);
+      }
+      const newNotifList = account.notifications.map(notif => {
+        notif.status = 'read';
+        return notif;
+      });
+      console.log(account.notifications);
+      account.notifications = newNotifList;
+      console.log(newNotifList);
+      account.save();
+      cb(account);
+    });
+  },
+
+  flushNotifs(_id, cb) {
+    const Account = mongoose.model('Account', accountSchema);
+    Account.findOne({ _id }, (error, account) => {
+      if (!account || error) {
+        console.error('[markAllNotificationsAsRead] Error fetching Account...', error);
+        cb(error);
+      }
+      account.notifications = [];
+      account.save();
+      cb(account);
+    });
   },
 
 

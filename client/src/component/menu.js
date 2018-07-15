@@ -22,13 +22,6 @@ class Menu extends React.Component {
     });
   }
 
-  componentWillReceiveProps() {
-    const { account: { _id } } = this.props;
-    if (_id) {
-      socket.emit('notification', _id);
-      socket.on(_id, msg => console.log(msg));
-    }
-  }
 
   subscribeToListUpdates(cb) {
     socket.on('userList', list => cb(list));

@@ -80,6 +80,15 @@ const dataReducer = (state = initialState, action) => {
     case actionType.SYNC_CREATE_TIMELINE_ITEM:
       return { ...state, timeline: [action.payload, ...state.timeline] };
 
+    case actionType.MARK_AS_READ:
+      return {
+        ...state,
+        account: { ...state.account, notifications: state.account.notifications.map(notif => ({ ...notif, status: 'read' })) },
+      };
+
+    case actionType.FLUSH_NOTIFS:
+      return { ...state, account: { ...state.account, notifications: [] } };
+
     default:
       return state;
   }

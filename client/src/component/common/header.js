@@ -1,12 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import openSocket from 'socket.io-client';
 import { NavLink } from 'react-router-dom';
 import homeIcon from '../../asset/pic/home.png';
 import notifIcon from '../../asset/pic/notif.png';
 
+const socket = openSocket();
+
+
 const Header = ({ account }) => {
-  const { notifications } = account;
+  const { notifications, _id } = account;
+  socket.emit('notification', _id);
+  socket.on(_id, msg => console.log('glutt', msg));
+  socket.on('stuff', msg => console.log(msg));
+
+  const newNotifications = notifications ? notifications.filter(notif => notif.status === 'new') : [];
 
   return (
     <div className="header">
@@ -23,7 +31,7 @@ const Header = ({ account }) => {
           <img src={notifIcon} alt="notif" style={{ width: 35, marginTop: 4 }} />
         </NavLink>
       </div>
-      {notifications && notifications.length > 0 ? <div className="notif-light">{notifications.length < 10 ? notifications.length : '9+'}</div> : <div className="notif-light">0!</div>}
+      { newNotifications.length > 0 ? <div className="notif-light">{newNotifications.length < 10 ? newNotifications.length : '9+'}</div> : null}
     </div>
   );
 };

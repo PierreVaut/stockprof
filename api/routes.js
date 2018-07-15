@@ -109,6 +109,16 @@ app.get('/timeline', (req, res) => {
   });
 });
 
+app.get('/markAsRead/:id', (req, res) => {
+  const { id } = req.params;
+  db.markAllNotificationsAsRead(id, result => res.json(result));
+});
+
+app.get('/flushNotifs/:id', (req, res) => {
+  const { id } = req.params;
+  db.flushNotifs(id, result => res.json(result));
+});
+
 app.get('/api/', (req, res) => {
   const data = {
     cookie: '',

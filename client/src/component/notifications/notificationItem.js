@@ -1,7 +1,9 @@
 import React from 'react';
 
-const NotificationItem = ({ authorName, content }) => {
-  const initial = authorName.substr(0, 1).toUpperCase();
+const NotificationItem = ({
+  authorName, content, status, timestamp,
+}) => {
+  const initial = authorName ? authorName.substr(0, 1).toUpperCase() : '_';
 
   return (
     <div>
@@ -10,6 +12,8 @@ const NotificationItem = ({ authorName, content }) => {
       </div>
       <div className="user-name">
         {authorName} - {content}
+        {status === 'new' ? '    (New!)' : null}<br />
+        {timestamp}
       </div>
     </div>
   );

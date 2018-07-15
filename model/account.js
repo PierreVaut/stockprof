@@ -19,6 +19,7 @@ const accountSchema = mongoose.Schema({
     authorId: String,
     authorName: String,
     content: String,
+    timestamp: Date,
   }],
 });
 
