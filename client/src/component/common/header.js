@@ -1,11 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { NavLink } from 'react-router-dom';
 import homeIcon from '../../asset/pic/home.png';
 import notifIcon from '../../asset/pic/notif.png';
 
-const Header = () => (
-  <div>
+const Header = ({ account }) => {
+  const { notifications } = account;
+
+  return (
     <div className="header">
       <div className="menu-link">
         <NavLink to="/">
@@ -16,12 +19,17 @@ const Header = () => (
         <div id="title" style={{ textDecoration: 'none', color: 'white' }}>Stocks</div>
       </NavLink>
       <div className="notification-link">
-        <img src={notifIcon} alt="Home" style={{ width: 35, marginTop: 4 }} />
+        <NavLink to="/notifications">
+          <img src={notifIcon} alt="notif" style={{ width: 35, marginTop: 4 }} />
+        </NavLink>
       </div>
+      {notifications && notifications.length > 0 ? <div className="notif-light">{notifications.length < 10 ? notifications.length : ' 9+'}</div> : <div className="notif-light">9+</div>}
     </div>
+  );
+};
 
-  </div>
-);
+
+const mapStateToProps = state => state.dataReducer;
 
 
-export default Header;
+export default connect(mapStateToProps, null)(Header);

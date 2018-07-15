@@ -1,12 +1,14 @@
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import React from 'react';
-import './App.css';
+import './asset/css/App.css';
+import './asset/css/Market.css';
 import { Login, Register, Disconnect, Contact, Admin, RawData, Subheader, Header, About, NotFound, ResetPassword } from './component/common';
 import { Market, Dashboard } from './component/market/';
 import { UserTable } from './component/userlist';
 import { Timeline } from './component/timeline';
 import Chat from './component/chat';
 import Menu from './component/menu';
+import { Notifications } from './component/notifications';
 
 
 const App = () => (
@@ -30,6 +32,7 @@ const App = () => (
             <Route exact path="/raw" component={RawData} />
             <Route exact path="/chat" component={Chat} />
             <Route exact path="/timeline" component={Timeline} />
+            <Route exact path="/notifications" component={Notifications} />
             <Route exact path="/reset" component={ResetPassword} />
             <Route path="/*" component={NotFound} />
           </Switch>
