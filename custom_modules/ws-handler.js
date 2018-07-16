@@ -8,9 +8,6 @@ const chalk = require('chalk');
 const io = require('socket.io')(server, { wsEngine: 'ws' });
 const WebSocket = require('ws');
 
-const arrayMsg = [];
-
-
 const cexioWS = client => {
   // Connect to CEX.io ws-APi
   const cexWS = new WebSocket('wss://ws.cex.io/ws/', { perMessageDeflate: false });
@@ -42,7 +39,7 @@ const cexioWS = client => {
             // Update price in the Database and emit new price via WS
             priceDB.handle(msg.data, (docs) => {
               // console.log(chalk.green('[WS-handler] Emitting Prices...'))
-              client.emit('btc', docs);
+              io.emit('btc', docs);
             });
           } else {
             // Prices updates in other currencies
@@ -78,10 +75,17 @@ const getUsers = client => {
 
 
 export const ioServer = io.on('connection', (client) => {
-  client.on('chatMessage', (msg) => {
-    console.log('[Socket.io] receiving Msg: ', msg);
-    arrayMsg.push(msg);
-    client.emit('arrayMessage', arrayMsg);
+  client.on('chatMessage', data => {
+    console.log(chalk.blue(`New Channel (emitter) - ${JSON.stringify(data.emitterId)} `));
+
+    db.getChatHistory(data.emitterId, data.targetId, result => {
+      client.emit(data.emitterId, result);
+    });
+
+    client.on(data.emitterId, msg => {
+      db.addChatHistory(msg, () => io.emit(data.emitterId, msg));
+      io.emit(data.targetId, msg);
+    });
   });
 
   client.on('subscribeToListUpdates', () => {
@@ -91,12 +95,12 @@ export const ioServer = io.on('connection', (client) => {
 
   client.on('btc-initial', () => {
     console.log('[btc-initial] says hello...');
-    priceDB.get((docs) => { client.emit('btc', docs); });
+    priceDB.get((docs) => { io.emit('btc', docs); });
   });
 
   client.on('notification', id => {
-    console.log(chalk.green('[Notifications] - open', id));
-    client.emit(id, `salut yy ${id} !`);
+    // console.log(chalk.green('[Notifications] - open', id));
+    // client.emit(id, `salut yy ${id} !`);
   });
 
   cexioWS(client);

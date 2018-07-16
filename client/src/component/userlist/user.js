@@ -33,12 +33,12 @@ const User = (props) => {
               {isFriend ?
                 <div>
                   <div className="userSocialLink" onClick={() => { handleUnfollow({ userId, targetId }); }} >&#10173; Ne plus suivre</div>
-                  <NavLink className="userSocialLink" to="/" >&#9993; Message</NavLink>
+                  <NavLink className="userSocialLink" to={`/chat/${targetId}`} >&#9993; Message</NavLink>
                 </div>
               :
                 <div>
                   <div className="userSocialLink" onClick={() => { handleFollow({ userId, targetId }); }} >&#10173; Suivre</div>
-                  <NavLink className="userSocialLink" to="/" >&#9993; Message</NavLink>
+                  <NavLink className="userSocialLink" to={`/chat/${targetId}`} >&#9993; Message</NavLink>
                 </div>
               }
 

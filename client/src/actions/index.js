@@ -1,22 +1,21 @@
 import * as actionType from './actionType';
 import * as params from '../config/params';
 
-// only for UI
-/** * called by subheader component */
+/* called by subheader component */
 export const toggleVisibility = (target) => ({ type: actionType.TOGGLE_VISIBILITY, target });
 
 
 // sets input from user (login, pwd, email) into State for further apiPOST request (login or register)
-/** * called by Login and Register components */
+/* called by Login and Register components */
 export const requestBody = (field, content) => ({ type: actionType.REQUEST_BODY, field, content });
 export const resetRequestBody = () => ({ type: actionType.RESET_REQUEST_BODY });
 
 // sets Session, Account, Cookies into State
-/** * dispatched by apiFetch callback** */
+/* dispatched by apiFetch callback */
 export const receiveData = (data) => ({ type: actionType.RECEIVE_DATA, data });
 
 // sets list of users (with infos) into State
-/** * dispatched by users.js component when webSocket is updated ** */
+/* dispatched by users.js component when webSocket is updated */
 export const receiveUserList = (list) => ({ type: actionType.RECEIVE_USERLIST, list });
 export const receivePrices = (prices) => ({ type: actionType.RECEIVE_PRICES, prices });
 export const receiveTimeline = (data) => ({ type: actionType.RECEIVE_TIMELINE, data });
@@ -90,3 +89,6 @@ export const flushNotifs = (id) => {
   fetch(`/flushNotifs/${id}`, params.get);
   return { type: actionType.FLUSH_NOTIFS };
 };
+
+export const receiveChatItem = (data) => ({ type: actionType.RECEIVE_CHAT_ITEM, data });
+

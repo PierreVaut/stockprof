@@ -1,17 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import openSocket from 'socket.io-client';
 import { NavLink } from 'react-router-dom';
 import homeIcon from '../../asset/pic/home.png';
 import notifIcon from '../../asset/pic/notif.png';
 
-const socket = openSocket();
-
 
 const Header = ({ account }) => {
   const { notifications, _id } = account;
-  socket.emit('notification', _id);
-  socket.on(_id, msg => console.log('glutt', msg));
+
 
   const newNotifications = notifications ? notifications.filter(notif => notif.status === 'new') : [];
 

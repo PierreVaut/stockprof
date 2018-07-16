@@ -119,6 +119,17 @@ app.get('/flushNotifs/:id', (req, res) => {
   db.flushNotifs(id, result => res.json(result));
 });
 
+app.post('/chat/history/', (req, res) => {
+/*   console.log(req.body);
+  db.getChatHistory(req.body.emitterId, req.body.targetId, data => {
+    res.json(data);
+  }); */
+});
+app.post('/chat/add/', (req) => {
+  // db.addChatHistory(req.body);
+});
+
+
 app.get('/api/', (req, res) => {
   const data = {
     cookie: '',

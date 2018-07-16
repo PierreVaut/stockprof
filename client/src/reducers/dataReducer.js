@@ -24,6 +24,7 @@ const initialState = {
   ],
   priceListInitialized: false,
   timeline: [],
+  chatHistory: [],
 };
 
 
@@ -88,6 +89,9 @@ const dataReducer = (state = initialState, action) => {
 
     case actionType.FLUSH_NOTIFS:
       return { ...state, account: { ...state.account, notifications: [] } };
+
+    case actionType.RECEIVE_CHAT_ITEM:
+      return { ...state, chatHistory: [...state.chatHistory, ...action.data] };
 
     default:
       return state;

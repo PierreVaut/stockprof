@@ -1,5 +1,5 @@
 import { uri } from '../config/connect';
-import { accountSchema, timelineSchema } from '../model';
+import { accountSchema, timelineSchema, chatHistorySchema } from '../model';
 import { emitNotification } from './notif-handler';
 
 const chalk = require('chalk');
@@ -419,5 +419,29 @@ export const db = {
     });
   },
 
+  getChatHistory(id1, id2, cb) {
+    const ChatHistory = mongoose.model('chatHistory', chatHistorySchema);
+    ChatHistory.find({
+      $or: [
+        { emitterId: id1, targetId: id2 },
+        { emitterId: id2, targetId: id1 },
+      ],
+    }, (err, result) => cb(result));
+  },
 
+  addChatHistory(payload) {
+    const {
+      emitterId, targetId, content, timestamp,
+    } = payload;
+    console.log(chalk.blue('addChatItem START-', payload));
+    const ChatHistory = mongoose.model('chatHistory', chatHistorySchema);
+    const newChatMessage = new ChatHistory();
+    newChatMessage.emitterId = emitterId;
+    newChatMessage.targetId = targetId;
+    newChatMessage.content = content;
+    newChatMessage.timestamp = timestamp;
+    newChatMessage.save(() => {
+      console.log(chalk.blue(`addChatItem OK -  ${newChatMessage} `));
+    });
+  },
 };

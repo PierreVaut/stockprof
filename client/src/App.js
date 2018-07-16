@@ -6,7 +6,7 @@ import { Login, Register, Disconnect, Contact, Admin, RawData, Subheader, Header
 import { Market, Dashboard } from './component/market/';
 import { UserTable } from './component/userlist';
 import { Timeline } from './component/timeline';
-import Chat from './component/chat';
+import { Chat } from './component/chat/';
 import Menu from './component/menu';
 import { Notifications } from './component/notifications';
 
@@ -30,7 +30,7 @@ const App = () => (
             <Route exact path="/about" component={About} />
             <Route exact path="/admin" component={Admin} />
             <Route exact path="/raw" component={RawData} />
-            <Route exact path="/chat" component={Chat} />
+            <Route exact path="/chat/:id" component={Chat} />
             <Route exact path="/timeline" component={Timeline} />
             <Route exact path="/notifications" component={Notifications} />
             <Route exact path="/reset" component={ResetPassword} />
