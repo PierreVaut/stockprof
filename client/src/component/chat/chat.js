@@ -32,11 +32,7 @@ class Chat extends React.Component {
       socket.emit('chatMessage', connection);
     }
     socket.on(_id, data => {
-      /*       if (this.state.timestamp !== data.timestamp) {
-        this.setState({ lastMsg: { ...data } }); */
-      console.log('receiveChatItem...  ', data);
       this.props.receiveChatItem(data);
-      // }
     });
   }
 
@@ -59,7 +55,7 @@ class Chat extends React.Component {
       timestamp: Date.now(),
     };
     socket.emit(_id, newMsg);
-    this.props.receiveChatItem(newMsg);
+    this.props.receiveChatItem([newMsg]);
     this.setState({ msg: '' });
   }
 
@@ -97,7 +93,7 @@ class Chat extends React.Component {
 const mapStateToProps = state => state.dataReducer;
 
 const mapDispatchToProps = dispatch => ({
-  receiveChatItem: item => dispatch(receiveChatItemAC(item)),
+  receiveChatItem: data => dispatch(receiveChatItemAC(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

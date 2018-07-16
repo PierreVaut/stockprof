@@ -1,14 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import openSocket from 'socket.io-client';
 import { TimelineItem } from './timelineItem';
 import { GuestMenu, Loader, DoSomething } from '../common';
 import {
   getTimeline as getTimelineAC,
   createTimelineItem as createTimelineItemAC,
   updateTimelineItem as updateTimelineItemAC } from '../../actions/';
-
-const socket = openSocket();
 
 class Timeline extends React.Component {
   constructor(props) {
@@ -39,20 +36,6 @@ class Timeline extends React.Component {
 
           (timeline ?
             <div >
-              {/* <input
-                className="input-text"
-                type="text"
-                placeholder="Rechercher..."
-                onChange={e => { this.setState({ search: e.target.value }); }}
-                value={search}
-              /><br />
-              <input
-                className="input-checkbox"
-                type="checkbox"
-                checked={viewFriendsOnly}
-                onClick={() => { this.setState({ viewFriendsOnly: !viewFriendsOnly }); }}
-              />
-              <span className="input-checkbox-text"> Afficher uniquement les amis</span> <br /><br /> */}
               <div className="list-item">
 
                 <input

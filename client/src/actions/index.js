@@ -90,5 +90,8 @@ export const flushNotifs = (id) => {
   return { type: actionType.FLUSH_NOTIFS };
 };
 
-export const receiveChatItem = (data) => ({ type: actionType.RECEIVE_CHAT_ITEM, data });
+export const receiveChatItem = (data) => {
+  console.log('receiveChatItem', data);
+  return { type: actionType.RECEIVE_CHAT_ITEM, data };
+};
 

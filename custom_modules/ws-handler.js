@@ -76,9 +76,10 @@ const getUsers = client => {
 
 export const ioServer = io.on('connection', (client) => {
   client.on('chatMessage', data => {
-    console.log(chalk.blue(`New Channel (emitter) - ${JSON.stringify(data.emitterId)} `));
+    // console.log(chalk.blue(`New Channel (emitter) - ${JSON.stringify(data.emitterId)} `));
 
     db.getChatHistory(data.emitterId, data.targetId, result => {
+      // console.log(chalk.blue('Emit history', result));
       client.emit(data.emitterId, result);
     });
 

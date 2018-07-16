@@ -426,14 +426,13 @@ export const db = {
         { emitterId: id1, targetId: id2 },
         { emitterId: id2, targetId: id1 },
       ],
-    }, (err, result) => cb(result));
+    }).sort({ timestamp: -1 }).then(result => cb(result));
   },
 
   addChatHistory(payload) {
     const {
       emitterId, targetId, content, timestamp,
     } = payload;
-    console.log(chalk.blue('addChatItem START-', payload));
     const ChatHistory = mongoose.model('chatHistory', chatHistorySchema);
     const newChatMessage = new ChatHistory();
     newChatMessage.emitterId = emitterId;
