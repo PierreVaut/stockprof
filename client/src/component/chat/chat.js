@@ -2,6 +2,7 @@ import React from 'react';
 import openSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import { receiveChatItem as receiveChatItemAC,
+  receiveChatHistory as receiveChatHistoryAC,
 } from '../../actions';
 import ChatItem from './chatItem';
 
@@ -13,7 +14,6 @@ class Chat extends React.Component {
     this.state = {
       msg: '',
       _id: '',
-      // lastMsg: undefined,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,11 +28,18 @@ class Chat extends React.Component {
     };
     if (_id && _id !== this.state._id) {
       this.setState({ _id });
-      console.log('Emitting', connection);
+      // console.log('Emitting', connection);
       socket.emit('chatMessage', connection);
     }
     socket.on(_id, data => {
-      this.props.receiveChatItem(data);
+      // console.log(data);
+      if (data.history) {
+        this.props.receiveChatHistory(data.history);
+      } else if (data.item && !this.props.chatHistory.includes(data.item)) {
+        this.props.receiveChatItem(data.item);
+      } else {
+        console.log('Item already in store');
+      }
     });
   }
 
@@ -55,7 +62,7 @@ class Chat extends React.Component {
       timestamp: Date.now(),
     };
     socket.emit(_id, newMsg);
-    this.props.receiveChatItem([newMsg]);
+    this.props.receiveChatItem(newMsg);
     this.setState({ msg: '' });
   }
 
@@ -94,6 +101,7 @@ const mapStateToProps = state => state.dataReducer;
 
 const mapDispatchToProps = dispatch => ({
   receiveChatItem: data => dispatch(receiveChatItemAC(data)),
+  receiveChatHistory: data => dispatch(receiveChatHistoryAC(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

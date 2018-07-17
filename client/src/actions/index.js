@@ -95,3 +95,7 @@ export const receiveChatItem = (data) => {
   return { type: actionType.RECEIVE_CHAT_ITEM, data };
 };
 
+export const receiveChatHistory = (data) => {
+  console.log('receiveChatHistory', data);
+  return { type: actionType.RECEIVE_CHAT_HISTORY, data };
+};

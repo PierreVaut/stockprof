@@ -20,6 +20,7 @@ const ChatItem = ({
       </div>
     );
   }
+  return null;
 };
 
 export default ChatItem;

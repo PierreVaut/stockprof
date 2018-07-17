@@ -76,16 +76,16 @@ const getUsers = client => {
 
 export const ioServer = io.on('connection', (client) => {
   client.on('chatMessage', data => {
-    // console.log(chalk.blue(`New Channel (emitter) - ${JSON.stringify(data.emitterId)} `));
+    console.log(chalk.blue(`New Channel (emitter) - ${JSON.stringify(data.emitterId)} `));
 
     db.getChatHistory(data.emitterId, data.targetId, result => {
-      // console.log(chalk.blue('Emit history', result));
-      client.emit(data.emitterId, result);
+      const newObj = { history: result };
+      client.emit(data.emitterId, newObj);
     });
 
     client.on(data.emitterId, msg => {
       db.addChatHistory(msg, () => io.emit(data.emitterId, msg));
-      io.emit(data.targetId, msg);
+      io.emit(data.targetId, { item: msg });
     });
   });
 

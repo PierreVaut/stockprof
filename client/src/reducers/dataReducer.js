@@ -91,8 +91,14 @@ const dataReducer = (state = initialState, action) => {
       return { ...state, account: { ...state.account, notifications: [] } };
 
     case actionType.RECEIVE_CHAT_ITEM:
-      const newChatHistory = [...action.data, ...state.chatHistory].filter((value, index, self) => self.indexOf(value) === index);
+      const newChatHistory = [action.data, ...state.chatHistory].filter((value, index, self) => self.indexOf(value) === index);
+      console.log('receive chat item', action);
       return { ...state, chatHistory: [...newChatHistory] };
+
+    case actionType.RECEIVE_CHAT_HISTORY:
+      const newChatHistoryList = [...action.data, ...state.chatHistory].filter((value, index, self) => self.indexOf(value) === index);
+      console.log('receive chat history', action);
+      return { ...state, chatHistory: [...newChatHistoryList] };
 
     default:
       return state;
