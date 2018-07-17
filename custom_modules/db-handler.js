@@ -229,14 +229,10 @@ export const db = {
         authorName: producerName,
         content: `a aimé votre activité "${item.content.substr(0, 33)}"...`,
         timestamp: Date.now(),
+        notif_type: 'like',
       };
       emitNotification(item.authorId, newNotif);
-
-      const Account = mongoose.model('Account', accountSchema);
-      Account.findOne({ _id: item.authorId }, (error, account) => {
-        account.notifications.unshift(newNotif);
-        account.save();
-      });
+      this.addNotification(item.authorId, newNotif);
       return cb(item);
     });
   },
@@ -274,11 +270,10 @@ export const db = {
             authorName: accountUser.name,
             content: 'vous suit',
             timestamp: Date.now(),
+            notif_type: 'follow',
           };
-          accountTarget.notifications.unshift(newNotif);
+          this.addNotification(targetId, newNotif);
           emitNotification(targetId, newNotif);
-          accountTarget.save();
-          console.log('Follow sounds OK2 - ', accountTarget.name);
         }
       });
 
@@ -441,6 +436,21 @@ export const db = {
     newChatMessage.timestamp = timestamp;
     newChatMessage.save(() => {
       console.log(chalk.blue(`addChatItem OK -  ${newChatMessage} `));
+    });
+  },
+
+  addNotification(_id, notification) {
+    const Account = mongoose.model('Account', accountSchema);
+    Account.findOne({ _id }, (error, account) => {
+      account.notifications.unshift(notification);
+      account.save();
+    });
+  },
+
+  getAccount(_id, cb) {
+    const Account = mongoose.model('Account', accountSchema);
+    Account.findOne({ _id }, (error, account) => {
+      cb(account);
     });
   },
 };

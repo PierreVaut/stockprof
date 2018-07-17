@@ -16,10 +16,11 @@ const accountSchema = mongoose.Schema({
   source: String,
   notifications: [{
     status: String,
-    authorId: String,
+    authorId: mongoose.Schema.Types.ObjectId,
     authorName: String,
     content: String,
     timestamp: Date,
+    notif_type: String,
   }],
 });
 

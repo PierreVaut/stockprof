@@ -47,7 +47,7 @@ class Timeline extends React.Component {
                 /><br />
 
                 <button
-                  className="middle-button"
+                  className="middle primary"
                   onClick={() => {
                     this.setState({ newPost: '' });
                   const newTimelineItem = {

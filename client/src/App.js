@@ -2,6 +2,8 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import React from 'react';
 import './asset/css/App.css';
 import './asset/css/Market.css';
+import './asset/css/button.css';
+
 import { Login, Register, Disconnect, Contact, Admin, RawData, Subheader, Header, About, NotFound, ResetPassword } from './component/common';
 import { Market, Dashboard } from './component/market/';
 import { UserTable } from './component/userlist';

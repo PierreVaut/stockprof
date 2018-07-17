@@ -34,7 +34,7 @@ class UserList extends React.Component {
         {showSearchAndFilters ? (
           <div>
             <button
-              className="middle-button-disable"
+              className="middle disabled"
               onClick={() => this.setState({ showSearchAndFilters: false })}
             >
             Masquer
@@ -65,7 +65,7 @@ class UserList extends React.Component {
           </div>
         ) :
           (<button
-            className="middle-button"
+            className="middle primary"
             onClick={() => this.setState({ showSearchAndFilters: true })}
           >Filtrer / trier
            </button>)

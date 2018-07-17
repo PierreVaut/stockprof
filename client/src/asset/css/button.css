@@ -1,0 +1,26 @@
+.primary{
+    background-color: blue;
+  }
+  
+  .disabled{
+    background-color: grey;
+  }
+  
+  .middle{
+    width: 80px;
+    height: 25px;
+    border-radius: 5px;
+    color: white;
+    border: 0px;
+    margin: 5px 5px;
+  }
+  
+  .large{
+    width: 140px;
+    height: 35px;
+    border-radius: 5px;
+    color: white;
+    border: 0px;
+    margin: 5px 5px;
+  }
+  

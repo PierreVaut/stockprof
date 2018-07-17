@@ -86,6 +86,17 @@ export const ioServer = io.on('connection', (client) => {
     client.on(data.emitterId, msg => {
       db.addChatHistory(msg, () => io.emit(data.emitterId, msg));
       io.emit(data.targetId, { item: msg });
+      db.getAccount(data.targetId, account => {
+        const notif = {
+          status: 'new',
+          authorId: data.targetId,
+          authorName: account.name,
+          content: 'vous a envoyé un message',
+          timestamp: Date.now(),
+          notif_type: 'msg',
+        };
+        db.addNotification(data.targetId, notif);
+      });
     });
   });
 

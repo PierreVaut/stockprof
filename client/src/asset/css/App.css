@@ -150,35 +150,9 @@ h2{
   padding: 5px;
   border: 0px;
 }
-.middle-button {
-  background-color: blue;
-  border-radius: 5px;
-  color: white;
-  border: 0px;
-  margin: 5px 0;
-  width: 80px;
-  height: 25px;
-}
 
-.large-button {
-  background-color: blue;
-  border-radius: 5px;
-  color: white;
-  border: 0px;
-  margin: 5px 5px;
-  width: 140px;
-  height: 35px;
-}
 
-.large-button-disabled {
-  background-color:gray;
-  border-radius: 5px;
-  color: white;
-  border: 0px;
-  margin: 5px 0;
-  width: 140px;
-  height: 35px;
-}
+
 
 @media only screen and (max-width: 500px) {
   .list-item{
@@ -205,15 +179,6 @@ h2{
     margin-left: 5px;
   }
 
-  .middle-button {
-    background-color: blue;
-    border-radius: 5px;
-    color: white;
-    border: 0px;
-    margin-left: 5px;
-    width: 80px;
-    height: 25px;
-  }
 }
 .userSocialLink{
   text-decoration: none;
@@ -249,15 +214,7 @@ h2{
   font-size: 12px;
 }
 
-.middle-button-disable{
-  background-color: grey;
-  border-radius: 5px;
-  border: 0px;
-  width: 90px;
-  height: 25px;
-  color: white;
-  margin-bottom: 5px;
-}
+
 
 .comment-input-text{
   border-radius: 5px;

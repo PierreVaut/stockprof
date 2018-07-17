@@ -13,18 +13,18 @@ const NotificationList = ({ account, markAsRead, flushNotifs }) => {
   return (
     <div className="list-item">
       <button
-        className={newNotifications ? 'large-button' : 'large-button-disabled'}
+        className={newNotifications ? 'large primary' : 'large disabled'}
         onClick={
           () => { markAsRead(_id); }}
       >Marquer comme lu
       </button>
       <button
-        className={notifications && notifications.length > 0 ? 'large-button' : 'large-button-disabled'}
+        className={notifications && notifications.length > 0 ? 'large primary' : 'large disabled'}
         onClick={
           () => { flushNotifs(_id); }}
       >Tout supprimer
       </button>
-      {notifications && notifications.length > 0 ? notifications.map(notif => <NotificationItem {...notif} key={notif._id} />) : 'Aucune notification à afficher'}
+      {notifications && notifications.length > 0 ? notifications.map(notif => <NotificationItem {...notif} key={notif._id} />) : <div>Aucune notification à afficher</div>}
     </div>
   );
 };
