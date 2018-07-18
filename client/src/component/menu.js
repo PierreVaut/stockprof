@@ -37,6 +37,11 @@ class Menu extends React.Component {
       }
     });
     socket.emit('btc-initial', 'hello');
+    const { _id } = this.props.account;
+    if (_id) {
+      console.log('Emit notification', _id);
+      socket.emit('notification', _id);
+    }
   }
 
   render() {

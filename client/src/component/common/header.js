@@ -4,11 +4,8 @@ import { NavLink } from 'react-router-dom';
 import homeIcon from '../../asset/pic/home.png';
 import notifIcon from '../../asset/pic/notif.png';
 
-
 const Header = ({ account }) => {
-  const { notifications, _id } = account;
-
-
+  const { notifications } = account;
   const newNotifications = notifications ? notifications.filter(notif => notif.status === 'new') : [];
 
   return (

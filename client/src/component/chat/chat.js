@@ -28,11 +28,9 @@ class Chat extends React.Component {
     };
     if (_id && _id !== this.state._id) {
       this.setState({ _id });
-      // console.log('Emitting', connection);
       socket.emit('chatMessage', connection);
     }
     socket.on(_id, data => {
-      // console.log(data);
       if (data.history) {
         this.props.receiveChatHistory(data.history);
       } else if (data.item && !this.props.chatHistory.includes(data.item)) {
