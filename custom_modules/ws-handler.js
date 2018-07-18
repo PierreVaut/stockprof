@@ -117,6 +117,7 @@ export const ioServer = io.on('connection', (client) => {
     // client.emit(id, `salut yy ${id} !`);
   });
 
+  // bug...
   // cexioWS(client);
 });
 
