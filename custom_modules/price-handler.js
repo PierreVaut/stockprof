@@ -54,8 +54,11 @@ export const priceDB = {
   get(cb) {
     const Price = mongoose.model('Price', priceSchema);
     Price.find().lean().exec((err, docs) => {
-      if (err) { return err; }
-      // console.log(chalk.green('[priceDB] get: '+ JSON.stringify(docs).substr(0, 30)));
+      if (err) {
+        console.log(chalk.red('[priceDB] Error', err));
+        return err;
+      }
+      console.log(chalk.green(`[priceDB] get: ${JSON.stringify(docs).substr(0, 30)}`));
       cb(docs);
     });
   },
