@@ -10,15 +10,14 @@ const WebSocket = require('ws');
 
 const cexioWS = client => {
   // Connect to CEX.io ws-APi
-  console.log(chalk.green('[cexioWS] - initializing...'));
   const cexWS = new WebSocket('wss://ws.cex.io/ws/', { perMessageDeflate: false });
-  console.log(chalk.green('[cexioWS] - starting...'));
+  // console.log(chalk.green('[cexioWS] - starting...'));
 
   cexWS.on('open', () => {
     console.log(chalk.green('[cexioWS] - open'));
 
     cexWS.on('message', (el) => {
-      console.log('[CEX server] message:', el);
+      // console.log('[CEX server] message:', el);
       const msg = JSON.parse(el);
 
       if (client) {
@@ -118,6 +117,6 @@ export const ioServer = io.on('connection', (client) => {
   });
 
   // bug...
-  // cexioWS(client);
+  cexioWS(client);
 });
 

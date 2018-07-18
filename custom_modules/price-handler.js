@@ -58,7 +58,7 @@ export const priceDB = {
         console.log(chalk.red('[priceDB] Error', err));
         return err;
       }
-      console.log(chalk.green(`[priceDB] get: ${JSON.stringify(docs).substr(0, 30)}`));
+      // console.log(chalk.green(`[priceDB] get: ${JSON.stringify(docs).substr(0, 30)}`));
       cb(docs);
     });
   },
