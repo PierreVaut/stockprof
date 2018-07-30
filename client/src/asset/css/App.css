@@ -128,6 +128,7 @@ h2{
   position: absolute;
   top: 47px;
   right: 10px; 
+  line-height: 16px;
 }
 
 .list-item{

@@ -1,4 +1,6 @@
 import React from 'react';
+import { colors } from '../../config/color';
+
 
 const NotificationItem = ({
   authorName, content, status, timestamp,
@@ -7,7 +9,10 @@ const NotificationItem = ({
 
   return (
     <div>
-      <div className="user-avatar">
+      <div
+        className="user-avatar"
+        style={{ backgroundColor: colors[(initial.charCodeAt(0)) % colors.length] }}
+      >
         {initial}
       </div>
       <div className="user-name">

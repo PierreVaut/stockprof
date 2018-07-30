@@ -69,7 +69,7 @@ const dataReducer = (state = initialState, action) => {
       return newState;
 
     case actionType.RESET_REQUEST_BODY:
-      return { ...state, requestBody: {} };
+      return { };
 
     case actionType.SYNC_FOLLOW_USER:
       return { ...state, account: { ...state.account, friends: [...state.account.friends, action.id] } };

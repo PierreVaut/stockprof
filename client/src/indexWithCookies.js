@@ -1,11 +1,10 @@
-import App from './App';
 import React from 'react';
+import openSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import { receiveUserList } from './actions/';
-import { receivePrices } from './actions/';
-import openSocket from 'socket.io-client';
+import { receiveUserList, receivePrices } from './actions/';
+import App from './App';
 
 const socket = openSocket();
 const domain = 'stockprof-carb11.herokuapp.com';

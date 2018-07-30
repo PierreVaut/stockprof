@@ -33,6 +33,7 @@ export const db = {
 
         if (result !== null) {
           data.account = result;
+          console.log(chalk.green(`[accountDB-handler] Success - ${data.account}`));
           if (cb) {
             cb(data);
           } else {
@@ -42,6 +43,7 @@ export const db = {
       });
     } else {
       data.account = '[accountDB-handler] User not logged or Error';
+      console.log(chalk.blue(data.account));
       if (cb) {
         cb(data);
       } else {
@@ -161,22 +163,30 @@ export const db = {
       if (err) {
         data.account = `[accountDB-disconnect] DB error${err}`;
         res.json(data);
-      } else if (result !== null) {
+      }
+
+      if (result !== null) {
         result.isLogged = false;
         result.save();
-        data.account = result;
+        data.account = { isLogged: false };
         data.error = false;
         data.status = '';
+
+        // console.log(chalk.green(`[accountDB] Disconnect success - ${JSON.stringify(data)}`));
 
         if (cb) {
           cb(data);
         } else {
           res.json(data);
         }
-      } else if (cb) {
-        cb(data);
       } else {
-        res.json(data);
+        console.log(chalk.red(`[accountDB] Disconnect error on ${data}`));
+
+        if (cb) {
+          cb(data);
+        } else {
+          res.json(data);
+        }
       }
     });
   },

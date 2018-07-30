@@ -47,17 +47,15 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { account, session, error } = this.props;
-    const { name, cashAvailable } = this.props.account;
     return (
       <div className="menu" >
-        <h2>Bienvenue {account && name ? name : 'Guest' } !</h2>
+        <h2>Bienvenue {this.props.account && this.props.account.name ? this.props.account.name : 'Guest' } !</h2>
 
-        {session && session.isLogged ?
+        {this.props.session && this.props.session.isLogged ?
             (
               <div>
-                <div>Cash disponible: {cashAvailable} $</div>
-                <div>Plus/moins-values: <Balance account={account} /></div>
+                <div>Cash disponible: {this.props.account.cashAvailable} $</div>
+                <div>Plus/moins-values: <Balance account={this.props.account} /></div>
                 <br />
                 <br />
                 <p>Acheter et vendre des Monnaies virtuelles</p>
@@ -80,10 +78,10 @@ class Menu extends React.Component {
         <br />
         <div className="menu-entry"><NavLink to="/about">A propos</NavLink></div>
         <div className="menu-entry"><NavLink to="/contact">Contact</NavLink></div>
-        {session && session.isLogged ?
+        {this.props.session && this.props.session.isLogged ?
           <div className="menu-entry"><NavLink to="/disconnect">Déconnexion</NavLink></div> :
                     ''}
-        {error ? <ErrorHandler errorMsg={error} /> : ''}
+        {this.props.error ? <ErrorHandler errorMsg={this.props.error} /> : ''}
       </div>
     );
   }

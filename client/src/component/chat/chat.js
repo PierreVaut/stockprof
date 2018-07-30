@@ -52,16 +52,18 @@ class Chat extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { _id } = this.props.account;
-    const newMsg = {
-      emitterId: _id,
-      targetId: this.props.match.params.id,
-      content: this.state.msg,
-      timestamp: Date.now(),
-    };
-    socket.emit(_id, newMsg);
-    this.props.receiveChatItem(newMsg);
-    this.setState({ msg: '' });
+    if (this.state.msg.length > 0) {
+      const { _id } = this.props.account;
+      const newMsg = {
+        emitterId: _id,
+        targetId: this.props.match.params.id,
+        content: this.state.msg,
+        timestamp: Date.now(),
+      };
+      socket.emit(_id, newMsg);
+      this.props.receiveChatItem(newMsg);
+      this.setState({ msg: '' });
+    }
   }
 
 
@@ -79,7 +81,7 @@ class Chat extends React.Component {
           />
           <button type="submit">Send</button>
         </form>
-            Msg :     {this.state.msg} <br /><br />
+
 
         {this.props.chatHistory ? this.props.chatHistory.map(props => (
           <ChatItem

@@ -1,5 +1,7 @@
 import React from 'react';
 import Moment from 'react-moment';
+import { colors } from '../../config/color';
+
 
 const ChatItem = ({
   emitterId, timestamp, content, targetUser, currentUser,
@@ -10,11 +12,13 @@ const ChatItem = ({
   if (emitterId === currentUser._id || emitterId === targetUser._id) {
     return (
       <div className="list-item">
-        <div className="user-avatar">
+        <div
+          className="user-avatar"
+          style={{ backgroundColor: colors[(initial.charCodeAt(0)) % colors.length] }}
+        >
           {initial}
         </div>
         <div className="user-name">{author.name} - {content}
-          <div className="timeline-timestamp">{author._id}</div>
           <div className="timeline-timestamp"><Moment fromNow>{timestamp}</Moment></div>
         </div>
       </div>
