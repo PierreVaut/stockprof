@@ -1,61 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import openSocket from 'socket.io-client';
 import { NavLink } from 'react-router-dom';
 import { ErrorHandler, GuestMenu } from './common';
 import { receiveUserList, receivePrices } from '../actions/';
 import { Balance } from './market';
 
-const socket = openSocket();
 
+const Menu = ({ account, session, error }) => (
+  <div className="menu" >
+    <h2>Bienvenue {account && account.name ? account.name : 'Guest' } !</h2>
 
-class Menu extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.subscribeToListUpdates(list => {
-      this.props.updateUserList(list);
-    });
-
-    this.subscribeToPriceUpdates(price => {
-      this.props.updatePrice(price);
-    });
-  }
-
-
-  subscribeToListUpdates(cb) {
-    socket.on('userList', list => cb(list));
-    console.log('[subscribeToListUpdates] ');
-    socket.emit('subscribeToListUpdates', 'hello');
-  }
-
-  subscribeToPriceUpdates(cb) {
-    socket.on('btc', data => {
-      if (!this.props.priceListInitialized) {
-        console.log('[React] socket.io BTC:', data);
-        cb(data);
-      }
-    });
-    socket.emit('btc-initial', 'hello');
-    /*
-    const { _id } = this.props.account;
-
-    if (_id) {
-      console.log('Emit notification', _id);
-      socket.emit('notification', _id);
-    } */
-  }
-
-  render() {
-    return (
-      <div className="menu" >
-        <h2>Bienvenue {this.props.account && this.props.account.name ? this.props.account.name : 'Guest' } !</h2>
-
-        {this.props.session && this.props.session.isLogged ?
+    {session && session.isLogged ?
             (
               <div>
-                <div>Cash disponible: {this.props.account.cashAvailable} $</div>
-                <div>Plus/moins-values: <Balance account={this.props.account} /></div>
+                <div>Cash disponible: {account.cashAvailable || 0} $</div>
+                <div>Plus/moins-values: <Balance account={account} /></div>
                 <br />
                 <br />
                 <p>Acheter et vendre des Monnaies virtuelles</p>
@@ -75,33 +34,28 @@ class Menu extends React.Component {
             :
               <GuestMenu />
             }
-        <br />
-        <div className="menu-entry"><NavLink to="/about">A propos</NavLink></div>
-        <div className="menu-entry"><NavLink to="/contact">Contact</NavLink></div>
-        {this.props.session && this.props.session.isLogged ?
-          <div className="menu-entry"><NavLink to="/disconnect">Déconnexion</NavLink></div> :
+    <br />
+    <div className="menu-entry"><NavLink to="/about">A propos</NavLink></div>
+    <div className="menu-entry"><NavLink to="/contact">Contact</NavLink></div>
+    {session && session.isLogged ?
+      <div className="menu-entry"><NavLink to="/disconnect">Déconnexion</NavLink></div> :
                     ''}
-        {this.props.error ? <ErrorHandler errorMsg={this.props.error} /> : ''}
-      </div>
-    );
-  }
-}
+    {error ? <ErrorHandler errorMsg={error} /> : ''}
+  </div>
+);
 
 const mapStateToProps = state => state.dataReducer;
 
-function mapDispatchToProps(dispatch) {
-  return {
+const mapDispatchToProps = dispatch => ({
 
-    updatePrice: (prices) => {
-      dispatch(receivePrices(prices));
-    },
+  updatePrice: (prices) => {
+    dispatch(receivePrices(prices));
+  },
 
-    updateUserList: (list) => {
-      dispatch(receiveUserList(list));
-    },
-  };
-}
+  updateUserList: (list) => {
+    dispatch(receiveUserList(list));
+  },
+});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
-

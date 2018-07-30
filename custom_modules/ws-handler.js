@@ -1,4 +1,3 @@
-import { setTimeout } from 'timers';
 import { args } from '../config/connect';
 import { server } from '../api/routes';
 import { priceDB } from './price-handler';
@@ -65,15 +64,15 @@ const cexioWS = client => {
 
 
 const getUsers = client => {
-  db.getUsers(list => {
-    client.emit('userList', list);
-    // console.log(chalk.blue('[WS-handler] Emitting UserList...'));
-    setTimeout(() => {
-      getUsers(client);
-    }, 4000);
-  });
+  db.getUsers(list =>
+    client.emit('userList', list));
 };
 
+
+export const notifyWS = io.on('connection', (client) => {
+  console.log('zurgublmu');
+  client.emit('notification', 'zurgublmu');
+});
 
 export const ioServer = io.on('connection', (client) => {
   client.on('chatMessage', data => {
@@ -102,7 +101,7 @@ export const ioServer = io.on('connection', (client) => {
   });
 
   client.on('subscribeToListUpdates', () => {
-    console.log('[Socket.io] Client is subscribing to timer with interval 4000');
+    console.log('[Socket.io] Client gets userList');
     getUsers(client);
   });
 
@@ -112,8 +111,8 @@ export const ioServer = io.on('connection', (client) => {
   });
 
   client.on('notification', data => {
-    console.log(chalk.green('[Notifications] - open', data));
-    // client.emit(id, `salut yy ${id} !`);
+    console.log(chalk.blue('[Notifications] - open', data));
+    client.emit(data, `salut yy ${data} !`);
   });
 
   cexioWS(client);

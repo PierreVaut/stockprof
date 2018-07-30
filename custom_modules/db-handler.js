@@ -1,6 +1,6 @@
 import { uri } from '../config/connect';
 import { accountSchema, timelineSchema, chatHistorySchema } from '../model';
-import { emitNotification } from './notif-handler';
+// import { notifyWS } from './ws-handler';
 
 const chalk = require('chalk');
 const mongoose = require('mongoose');
@@ -241,7 +241,7 @@ export const db = {
         timestamp: Date.now(),
         notif_type: 'like',
       };
-      emitNotification(item.authorId, newNotif);
+      notifyWS(item.authorId);
       this.addNotification(item.authorId, newNotif);
       return cb(item);
     });
@@ -297,7 +297,7 @@ export const db = {
             notif_type: 'follow',
           };
           this.addNotification(targetId, newNotif);
-          emitNotification(targetId, newNotif);
+          notifyWS(targetId);
         }
       });
 

@@ -10,67 +10,70 @@ const socket = openSocket();
 const domain = 'stockprof-carb11.herokuapp.com';
 
 class IndexWithCookies extends React.Component {
-    static propTypes = {
-      cookies: instanceOf(Cookies).isRequired,
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired,
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.subscribeToPriceUpdates(price => this.props.updatePrice(price));
+
+    this.subscribeToListUpdates(list => this.props.updateUserList(list));
+
+    this.state = { _id: undefined };
+  }
+
+  componentWillMount() {
+    const { cookies } = this.props;
+
+    if (!cookies.get(domain)) {
+      const rdm = Math.floor(Math.random() * 99999942);
+      cookies.set(domain, rdm, { path: '/' });
     }
+    console.log('[React-cookies]', cookies.get(domain));
+  }
 
-    constructor(props) {
-      super(props);
-      this.subscribeToListUpdates(list => {
-        this.props.updateUserList(list);
-      });
-
-      this.subscribeToPriceUpdates(price => {
-        this.props.updatePrice(price);
-        // console.log('[Users] update price', price);
-      });
+  componentWillReceiveProps() {
+    if (this.props.dataReducer
+        && this.props.dataReducer.account
+        && this.props.dataReducer.account._id
+        && this.props.dataReducer.account._id !== this.state._id
+    ) {
+      console.log('[Users] notifs', this.props.dataReducer.account._id);
+      this.setState({ _id: this.props.dataReducer.account._id });
+      socket.on(`notif_${this.props.dataReducer.account._id}`, data => console.log('RESPONSE:', data));
+      socket.emit('notification', `notif_${this.props.dataReducer.account._id}`);
     }
+  }
 
-    componentWillMount() {
-      const { cookies } = this.props;
+  subscribeToListUpdates(cb) {
+    console.log('[subscribeToListUpdates] ');
+    socket.on('userList', list => cb(list));
+    socket.emit('subscribeToListUpdates', 'hello');
+  }
 
-      // setting cookie
-      if (!cookies.get(domain)) {
-        const rdm = Math.floor(Math.random() * 99999942);
-        cookies.set(domain, rdm, { path: '/' });
+
+  subscribeToPriceUpdates(cb) {
+    console.log('[subscribeToPriceUpdates]');
+
+    socket.on('btc', data => {
+      if (!this.props.priceListInitialized) {
+        cb(data);
       }
-      console.log('[React-cookies]', cookies.get(domain));
-    }
+    });
+    socket.emit('btc-initial', 'hello');
+  }
 
-    subscribeToListUpdates(cb) {
-      socket.on('userList', list => cb(list));
-      console.log('[subscribeToListUpdates] ');
-      socket.emit('subscribeToListUpdates', 'hello');
-    }
-
-
-    subscribeToPriceUpdates(cb) {
-      socket.on('btc', data => {
-        if (!this.props.priceListInitialized) {
-          // console.log('[React] socket.io BTC:', data);
-          cb(data);
-        }
-      });
-      socket.emit('btc-initial', 'hello');
-    }
-
-    render() { return <App />; }
+  render() { return <App />; }
 }
 
 const mapStateToProps = state => state;
 
-function mapDispatchToProps(dispatch) {
-  return {
-
-    updatePrice: (prices) => {
-      dispatch(receivePrices(prices));
-    },
-
-    updateUserList: (list) => {
-      dispatch(receiveUserList(list));
-    },
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  updatePrice: prices => dispatch(receivePrices(prices)),
+  updateUserList: list => dispatch(receiveUserList(list)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(withCookies(IndexWithCookies));
 

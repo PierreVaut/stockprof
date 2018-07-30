@@ -11,7 +11,7 @@ const NotificationItem = ({
     <div>
       <div
         className="user-avatar"
-        style={{ backgroundColor: colors[(initial.charCodeAt(0)) % colors.length] }}
+        style={status === 'new' ? { backgroundColor: colors[(initial.charCodeAt(0)) % colors.length] } : null}
       >
         {initial}
       </div>
