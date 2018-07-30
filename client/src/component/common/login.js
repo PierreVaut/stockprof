@@ -11,14 +11,14 @@ const Login = props => (
       <label>Email<br />
         <input
           name="email"
-          value={props.data.dataReducer.requestBody.email}
+          value={props.data.dataReducer.requestBody && props.data.dataReducer.requestBody.email ? props.data.dataReducer.requestBody.email : ''}
           onChange={e => { props.onChange('email', e.target.value); }}
         /><br />
       </label><br />
       <label>Mot de passe<br />
         <input
           name="password"
-          value={props.data.dataReducer.requestBody.pwd}
+          value={props.data.dataReducer.requestBody && props.data.dataReducer.requestBody.pwd ? props.data.dataReducer.requestBody.pwd : ''}
           onChange={e => { props.onChange('pwd', e.target.value); }}
         /><br />
       </label><br />
@@ -28,8 +28,8 @@ const Login = props => (
       to="/"
       onClick={() => {
         const body = {
-            email: props.data.dataReducer.requestBody.email,
-            password: props.data.dataReducer.requestBody.pwd,
+            email: props.data.dataReducer.requestBody.email || '',
+            password: props.data.dataReducer.requestBody.pwd || '',
         };
         props.onSubmit(body, '/login');
         props.reset();

@@ -140,7 +140,7 @@ h2{
 .user-name{
   text-align: left;
   display: inline-block;  
-  margin-left: 20px;
+  margin: 0 0 10px 20px;
   max-width: 420px;
   word-break: break-all;
 }
@@ -221,8 +221,8 @@ h2{
   border-radius: 5px;
   border: 0px;
   padding: 3px;
-  margin-left: 5px;
-  margin-top: 4px
+  margin: 5px;
+  width: 300px
 }
 
 .comment-input-button{
@@ -234,3 +234,7 @@ h2{
   margin-left: 5px;
 }
 
+.comment-item{
+  font-size: 14px;
+  margin: 0 0 0 5px
+}

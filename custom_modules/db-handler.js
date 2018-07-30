@@ -33,7 +33,7 @@ export const db = {
 
         if (result !== null) {
           data.account = result;
-          console.log(chalk.green(`[accountDB-handler] Success - ${data.account}`));
+          // console.log(chalk.green(`[accountDB-handler] Success - ${data.account}`));
           if (cb) {
             cb(data);
           } else {
@@ -244,6 +244,20 @@ export const db = {
       emitNotification(item.authorId, newNotif);
       this.addNotification(item.authorId, newNotif);
       return cb(item);
+    });
+  },
+
+  commentTimelineItem(payload, cb) {
+    console.log('commentTimelineItem', payload);
+    const { targetTimelineItem: _id } = payload;
+    const Timeline = mongoose.model('Timeline', timelineSchema);
+    Timeline.findOne({ _id }, (err, item) => {
+      if (err) {
+        return err;
+      }
+      item.comments.push(payload);
+      item.save();
+      cb(item);
     });
   },
 

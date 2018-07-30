@@ -100,6 +100,17 @@ const dataReducer = (state = initialState, action) => {
       console.log('receive chat history', action);
       return { ...state, chatHistory: [...newChatHistoryList] };
 
+    case actionType.SYNC_ADD_COMMENT:
+      const updatedTimeline = state.timeline.map(el => {
+        if (el._id === action.data.targetTimelineItem) {
+          const newEl = { ...el };
+          newEl.comments.push(action.data);
+          return newEl;
+        }
+        return el;
+      });
+      return { ...state, timeline: updatedTimeline };
+
     default:
       return state;
   }

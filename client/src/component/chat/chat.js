@@ -5,6 +5,7 @@ import { receiveChatItem as receiveChatItemAC,
   receiveChatHistory as receiveChatHistoryAC,
 } from '../../actions';
 import ChatItem from './chatItem';
+import { GuestMenu } from '../common';
 
 const socket = openSocket();
 
@@ -68,32 +69,35 @@ class Chat extends React.Component {
 
 
   render() {
-    const targetUser = this.props.userList.find(el => el._id === this.props.match.params.id);
-    return (
-      <div className="list-item-center">
-        Chat with : { targetUser ? `${targetUser.name} (${targetUser._id})` : '' }
+    if (this.props.account && this.props.account.isLogged) {
+      const targetUser = this.props.userList.find(el => el._id === this.props.match.params.id);
+      return (
+        <div className="list-item-center">
+          Chat with : { targetUser ? `${targetUser.name} (${targetUser._id})` : '' }
 
-        <form onSubmit={this.handleSubmit}>
-          <input
-            name="msg"
-            value={this.state.msg}
-            onChange={this.handleChange}
-          />
-          <button type="submit">Send</button>
-        </form>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              name="msg"
+              value={this.state.msg}
+              onChange={this.handleChange}
+            />
+            <button type="submit">Send</button>
+          </form>
 
 
-        {this.props.chatHistory ? this.props.chatHistory.map(props => (
-          <ChatItem
-            currentUser={this.props.account}
-            targetUser={targetUser}
-            {...props}
-            key={props._id}
-          />)) : <i>Pas encore de données</i>
-            }
+          {this.props.chatHistory ? this.props.chatHistory.map(props => (
+            <ChatItem
+              currentUser={this.props.account}
+              targetUser={targetUser}
+              {...props}
+              key={props._id}
+            />)) : <i>Pas encore de données</i>
+              }
 
-      </div>
-    );
+        </div>
+      );
+    }
+    return <GuestMenu />;
   }
 }
 

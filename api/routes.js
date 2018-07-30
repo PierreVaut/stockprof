@@ -94,6 +94,10 @@ app.post('/vote/:id', (req, res) => {
   });
 });
 
+app.post('/comment', (req, res) => {
+  db.commentTimelineItem(req.body, response => res.json(response));
+});
+
 app.post('/follow', (req, res) => {
   db.followUser(req.body, data => res.json(data));
 });
@@ -120,13 +124,13 @@ app.get('/flushNotifs/:id', (req, res) => {
 });
 
 app.post('/chat/history/', (req, res) => {
-/*   console.log(req.body);
+  console.log(req.body);
   db.getChatHistory(req.body.emitterId, req.body.targetId, data => {
     res.json(data);
-  }); */
+  });
 });
 app.post('/chat/add/', (req) => {
-  // db.addChatHistory(req.body);
+  db.addChatHistory(req.body);
 });
 
 

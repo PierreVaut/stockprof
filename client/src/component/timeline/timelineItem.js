@@ -1,8 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import { colors } from '../../config/color';
+import { CommentList } from './';
+import {
+  sendComment as sendCommentAC } from '../../actions/';
 
-export class TimelineItem extends React.Component {
+class TimelineItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,16 +17,10 @@ export class TimelineItem extends React.Component {
 
   render() {
     const {
-      timestamp, content, author, upvote, downvote, comments, handleSubmit, _id, currentUser,
+      timestamp, content, author, upvote, downvote, comments, handleSubmit, _id, account, sendComment,
     } = this.props;
-    const { showComments, newComment } = this.state;
     const initial = author.substr(0, 1);
-    const commTest = [
-      { author: 'Roger', authorId: '683513513515', content: 'triallalalmokjlp' },
-      { author: 'Roger', authorId: '683513513515', content: 'triallalalmokjlp' },
-      { author: 'Roger', authorId: '683513513515', content: 'triallalalmokjlp' },
-      { author: 'Roger', authorId: '683513513515', content: 'triallalalmokjlp' },
-    ];
+
     return (
       <div className="list-item">
         <div
@@ -43,7 +41,7 @@ export class TimelineItem extends React.Component {
               style={{ cursor: 'pointer' }}
               onClick={() => {
             handleSubmit({
- upvote: upvote + 1, _id, producerId: currentUser._id, producerName: currentUser.name,
+ upvote: upvote + 1, _id, producerId: account._id, producerName: account.name,
 });
         }}
             > 👍
@@ -54,7 +52,7 @@ export class TimelineItem extends React.Component {
               style={{ cursor: 'pointer' }}
               onClick={() => {
             handleSubmit({
- downvote: downvote + 1, _id, producerId: currentUser._id, producerName: currentUser.name,
+ downvote: downvote + 1, _id, producerId: account._id, producerName: account.name,
 });
         }}
             > 👎
@@ -63,30 +61,39 @@ export class TimelineItem extends React.Component {
               role="img"
               aria-label="comments"
               style={{ cursor: 'pointer' }}
-              onClick={() => this.setState({ showComments: !showComments })
+              onClick={() => this.setState({ showComments: !this.state.showComments })
         }
             >💬
-            </span>{ commTest ? commTest.length : 0 }
-            {showComments ?
+            </span>{ comments ? comments.length : 0 }
+            {this.state.showComments ?
               <div>
                 <input
                   className="comment-input-text"
                   type="text"
-                  value={newComment}
+                  value={this.state.newComment}
                   onChange={e => this.setState({ newComment: e.target.value })}
                   placeholder="Commenter..."
                 />
                 <button
                   className="comment-input-button"
+                  onClick={() => {
+                    this.setState({ newComment: '' });
+                  const newComment = {
+                    content: this.state.newComment,
+                    author: account.name,
+                    authorId: account._id,
+                    authorEmail: account.email,
+                    timestamp: Date.now(),
+                    targetTimelineItem: _id,
+                  };
+                  sendComment(newComment);
+                  }}
                 >send
                 </button>
-                <ul>
-                  {commTest && commTest.map(comment =>
-                    <li>{JSON.stringify(comment)}</li>)}
-                </ul>
+                <CommentList comments={comments} />
                 <span
                   className="userSocialLink"
-                  onClick={() => this.setState({ showComments: !showComments })}
+                  onClick={() => this.setState({ showComments: !this.state.showComments })}
                 >Fermer
                 </span>
               </div>
@@ -97,4 +104,10 @@ export class TimelineItem extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  sendComment: comment => dispatch(sendCommentAC(comment)),
+});
+
+export default connect(null, mapDispatchToProps)(TimelineItem);
 

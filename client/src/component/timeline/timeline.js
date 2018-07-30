@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { TimelineItem } from './timelineItem';
+import { TimelineItem } from './';
 import { GuestMenu, Loader, DoSomething } from '../common';
 import {
   getTimeline as getTimelineAC,
@@ -23,10 +23,10 @@ class Timeline extends React.Component {
 
   render() {
     const {
-      session, handleSubmit, timeline, account, createTimelineItem,
+      session, handleSubmit, timeline, account, createTimelineItem, _id,
     } = this.props;
     const {
-      friends, _id, email, name,
+      friends, email, name,
     } = account;
     const { search, viewFriendsOnly, newPost } = this.state;
 
@@ -53,7 +53,7 @@ class Timeline extends React.Component {
                   const newTimelineItem = {
                     content: newPost,
                     author: name,
-                    authorId: _id,
+                    authorId: account._id,
                     authorEmail: email,
                   };
                   createTimelineItem(newTimelineItem);
@@ -68,18 +68,18 @@ class Timeline extends React.Component {
               timeline
               .filter(timelineItem => {
                 if (viewFriendsOnly) {
-                  return timelineItem.authorId === _id ||
+                  return timelineItem.authorId === account._id ||
                   (timelineItem.author.toLowerCase().includes(search.toLowerCase())
                   && friends.includes(timelineItem.authorId));
                 }
-                return timelineItem.authorId === _id ||
+                return timelineItem.authorId === account._id ||
                 timelineItem.author.toLowerCase().includes(search.toLowerCase());
               }).map((el, index) =>
                 (<TimelineItem
                   {...el}
                   handleSubmit={handleSubmit}
                   key={index}
-                  currentUser={account}
+                  account={account}
                 />))
                 :
               <DoSomething />

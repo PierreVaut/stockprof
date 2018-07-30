@@ -53,7 +53,7 @@ export const getTimeline = () => dispatch => {
   fetch('/timeline', params.get)
     .then(response => {
       response.json().then(json => {
-        console.log('[Timeline Fetch] success:', json);
+        // console.log('[Timeline Fetch] success:', json);
         dispatch(receiveTimeline(json));
       });
     })
@@ -98,4 +98,10 @@ export const receiveChatItem = (data) => {
 export const receiveChatHistory = (data) => {
   console.log('receiveChatHistory', data);
   return { type: actionType.RECEIVE_CHAT_HISTORY, data };
+};
+
+export const sendComment = comment => {
+  console.log('New comment', comment);
+  fetch('/comment/', params.post(comment));
+  return { type: actionType.SYNC_ADD_COMMENT, data: comment };
 };
