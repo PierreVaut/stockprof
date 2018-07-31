@@ -456,7 +456,18 @@ export const db = {
     newChatMessage.content = content;
     newChatMessage.timestamp = timestamp;
     newChatMessage.save(() => {
+      this.addChatSession(emitterId, targetId);
       console.log(chalk.blue(`addChatItem OK -  ${newChatMessage} `));
+    });
+  },
+
+  addChatSession(_id, targetId) {
+    const Account = mongoose.model('Account', accountSchema);
+    Account.findOne({ _id }, (error, account) => {
+      if (!account.chatSessions.find(targetId)) {
+        account.chatSessions.unshift(targetId);
+        account.save();
+      }
     });
   },
 

@@ -42,6 +42,9 @@ const Menu = ({
                 <p>Votre compte</p>
                 <div className="menu-entry"><span role="img" aria-label="dashboard">💹 </span><NavLink to="/dashboard"> Dashboard</NavLink></div>
                 <br />
+                <p>Messagerie instantanée</p>
+                <div className="menu-entry"><span role="img" aria-label="chat">📲 </span><NavLink to="/chat/ongoing"> Chat</NavLink></div>
+                <br />
               </div>)
 
             :
