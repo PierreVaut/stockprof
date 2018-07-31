@@ -22,7 +22,7 @@ const accountSchema = mongoose.Schema({
     timestamp: Date,
     notif_type: String,
   }],
-  chatSessions: [{ type: String }],
+  chatSessions: [mongoose.Schema.Types.Mixed],
 });
 
 accountSchema.methods.order = (operation, stockID, qty) => {

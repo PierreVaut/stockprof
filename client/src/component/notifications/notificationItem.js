@@ -24,7 +24,7 @@ const NotificationItem = ({
       link = '/notifications';
   }
   return (
-    <div>
+    <div className="list-item">
       <div
         className="user-avatar"
         style={status === 'new' ? { backgroundColor: colors[(initial.charCodeAt(0)) % colors.length] } : null}
@@ -32,7 +32,7 @@ const NotificationItem = ({
         {initial}
       </div>
       <div className="user-name">
-        {authorName} - <NavLink to={link}>{content}</NavLink>
+        {authorName} - <NavLink className="notification-navlink" to={link}>{content}</NavLink>
         {status === 'new' ? '    (New!)' : null}<br />
         <div className="timeline-timestamp"><Moment fromNow>{timestamp}</Moment></div>
       </div>

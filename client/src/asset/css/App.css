@@ -209,6 +209,12 @@ h2{
   color: #595959;
 }
 
+.span-timestamp{
+  font-size: 12px;
+  font-style: italic;
+  color: #595959;
+}
+
 
 
 .input-checkbox-text{
@@ -237,4 +243,16 @@ h2{
 .comment-item{
   font-size: 14px;
   margin: 0 0 0 5px
+}
+
+.notification-navlink{
+  color: gray;
+  font-size: 15px;
+  text-decoration: none
+}
+
+.notification-navlink:hover{
+  color: gray;
+  font-size: 15px;
+  text-decoration: underline;
 }

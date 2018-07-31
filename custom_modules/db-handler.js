@@ -446,6 +446,8 @@ export const db = {
   },
 
   addChatHistory(payload) {
+    console.log(chalk.blue(`addChatItem starting -  ${payload} `));
+
     const {
       emitterId, targetId, content, timestamp,
     } = payload;
@@ -462,17 +464,15 @@ export const db = {
   },
 
   addChatSession(_id, targetId) {
+    console.log(chalk.yellow('addChatSession - starting'));
     const Account = mongoose.model('Account', accountSchema);
     Account.findOne({ _id }, (error, account) => {
-      if (!account.chatSessions.find(el => el === targetId)) {
-        account.chatSessions.push(targetId);
+      if (account && account.chatSessions && !account.chatSessions.find(el => el.id === targetId)) {
+        account.chatSessions.push({ id: targetId, timestamp: Date.now() });
         account.save();
-      }
-    });
-    Account.findOne({ targetId }, (error, account) => {
-      if (!account.chatSessions.find(el => el === _id)) {
-        account.chatSessions.push(_id);
-        account.save();
+        console.log(chalk.yellow(account));
+      } else {
+        console.log(chalk.red('Error with account', account));
       }
     });
   },
