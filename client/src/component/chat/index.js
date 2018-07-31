@@ -1,7 +1,8 @@
 import Chat from './chat';
 import ChatItem from './chatItem';
-import OngoingChat from './ongoingChat';
 import DoSomething from './doSomethingChat';
+import ChatSession from './chatSession';
+import ChatSessionItem from './chatSessionItem';
 
-export { Chat, ChatItem, OngoingChat, DoSomething,
+export { Chat, ChatItem, ChatSession, DoSomething, ChatSessionItem,
 };

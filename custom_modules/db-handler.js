@@ -464,7 +464,7 @@ export const db = {
   addChatSession(_id, targetId) {
     const Account = mongoose.model('Account', accountSchema);
     Account.findOne({ _id }, (error, account) => {
-      if (!account.chatSessions.find(targetId)) {
+      if (!account.chatSessions.find(el => el === targetId)) {
         account.chatSessions.unshift(targetId);
         account.save();
       }
