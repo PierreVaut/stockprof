@@ -3,6 +3,7 @@ import openSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import { receiveChatItem as receiveChatItemAC,
   receiveChatHistory as receiveChatHistoryAC,
+  flushChatHistory as flushChatHistoryAC,
 } from '../../actions';
 import ChatItem from './chatItem';
 import { GuestMenu } from '../common';
@@ -46,6 +47,7 @@ class Chat extends React.Component {
 
   componentWillUnmount() {
     socket.close();
+    this.props.flushChatHistory();
   }
 
   handleChange(event) {
@@ -107,6 +109,7 @@ const mapStateToProps = state => state.dataReducer;
 const mapDispatchToProps = dispatch => ({
   receiveChatItem: data => dispatch(receiveChatItemAC(data)),
   receiveChatHistory: data => dispatch(receiveChatHistoryAC(data)),
+  flushChatHistory: () => dispatch(flushChatHistoryAC()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

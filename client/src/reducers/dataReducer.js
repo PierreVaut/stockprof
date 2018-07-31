@@ -101,6 +101,9 @@ const dataReducer = (state = initialState, action) => {
       console.log('receive chat history', action);
       return { ...state, chatHistory: [...newChatHistoryList] };
 
+    case actionType.FLUSH_CHAT_HISTORY:
+      return { ...state, chatHistory: [] };
+
     case actionType.SYNC_ADD_COMMENT:
       const updatedTimeline = state.timeline.map(el => {
         if (el._id === action.data.targetTimelineItem) {

@@ -130,6 +130,11 @@ export const receiveChatHistory = (data) => {
   return { type: actionType.RECEIVE_CHAT_HISTORY, data };
 };
 
+export const flushChatHistory = () => {
+  console.log('flushChatHistory');
+  return { type: actionType.FLUSH_CHAT_HISTORY };
+};
+
 export const sendComment = comment => {
   console.log('New comment', comment);
   fetch('/comment/', params.post(comment));

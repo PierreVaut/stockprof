@@ -9,7 +9,7 @@ const ChatItem = ({
   const author = (emitterId === currentUser._id) ? currentUser : targetUser;
   const initial = author ? author.name.substr(0, 1).toUpperCase() : '_';
 
-  if (emitterId === currentUser._id || emitterId === targetUser._id) {
+  if ((currentUser && emitterId === currentUser._id) || (targetUser && emitterId === targetUser._id)) {
     return (
       <div className="list-item">
         <div
