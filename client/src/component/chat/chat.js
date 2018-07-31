@@ -22,9 +22,10 @@ class Chat extends React.Component {
 
 
   componentWillReceiveProps() {
-    const { _id } = this.props.account;
+    const { _id, name } = this.props.account;
     const connection = {
       emitterId: _id,
+      emitterName: name,
       targetId: this.props.match.params.id,
     };
     if (_id && _id !== this.state._id) {

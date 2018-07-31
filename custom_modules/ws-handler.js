@@ -87,11 +87,11 @@ export const ioServer = io.on('connection', client => {
     client.on(data.emitterId, msg => {
       db.addChatHistory(msg, () => io.emit(data.emitterId, msg));
       io.emit(data.targetId, { item: msg });
-      db.getAccount(data.targetId, account => {
+      db.getAccount(data.targetId, () => {
         const notif = {
           status: 'new',
-          authorId: data.targetId,
-          authorName: account.name,
+          authorId: data.emitterId,
+          authorName: data.emitterName,
           content: 'vous a envoyé un message',
           timestamp: Date.now(),
           notif_type: 'msg',
