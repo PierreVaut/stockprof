@@ -120,20 +120,11 @@ export const flushNotifs = (id) => {
   return { type: actionType.FLUSH_NOTIFS };
 };
 
-export const receiveChatItem = (data) => {
-  console.log('receiveChatItem', data);
-  return { type: actionType.RECEIVE_CHAT_ITEM, data };
-};
+export const receiveChatItem = (data) => ({ type: actionType.RECEIVE_CHAT_ITEM, data });
 
-export const receiveChatHistory = (data) => {
-  console.log('receiveChatHistory', data);
-  return { type: actionType.RECEIVE_CHAT_HISTORY, data };
-};
+export const receiveChatHistory = (data) => ({ type: actionType.RECEIVE_CHAT_HISTORY, data });
 
-export const flushChatHistory = () => {
-  console.log('flushChatHistory');
-  return { type: actionType.FLUSH_CHAT_HISTORY };
-};
+export const flushChatHistory = () => ({ type: actionType.FLUSH_CHAT_HISTORY });
 
 export const sendComment = comment => {
   console.log('New comment', comment);

@@ -465,7 +465,13 @@ export const db = {
     const Account = mongoose.model('Account', accountSchema);
     Account.findOne({ _id }, (error, account) => {
       if (!account.chatSessions.find(el => el === targetId)) {
-        account.chatSessions.unshift(targetId);
+        account.chatSessions.push(targetId);
+        account.save();
+      }
+    });
+    Account.findOne({ targetId }, (error, account) => {
+      if (!account.chatSessions.find(el => el === _id)) {
+        account.chatSessions.push(_id);
         account.save();
       }
     });
