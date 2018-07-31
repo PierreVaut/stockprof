@@ -5,7 +5,8 @@ import { GuestMenu, Loader, DoSomething } from '../common';
 import {
   getTimeline as getTimelineAC,
   createTimelineItem as createTimelineItemAC,
-  updateTimelineItem as updateTimelineItemAC } from '../../actions/';
+  updateTimelineItem as updateTimelineItemAC,
+} from '../../actions/';
 
 class Timeline extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class Timeline extends React.Component {
       friends, email, name,
     } = account;
     const { search, viewFriendsOnly, newPost } = this.state;
+    const isAdmin = account.name === 'admin' && account.email === 'admin';
 
     return (
       <div>
@@ -67,7 +69,7 @@ class Timeline extends React.Component {
 
               timeline
               .filter(timelineItem => {
-                if (viewFriendsOnly) {
+                if (!isAdmin && viewFriendsOnly) {
                   return timelineItem.authorId === account._id ||
                   (timelineItem.author.toLowerCase().includes(search.toLowerCase())
                   && friends.includes(timelineItem.authorId));

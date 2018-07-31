@@ -19,6 +19,9 @@ const Menu = ({
           <h2>&#9937; ADMIN MODE &#9937;</h2>
           <div className="menu-entry"><NavLink to="/userlist"> Liste des utilisateurs </NavLink></div>
           <br />
+
+          <div className="menu-entry"><NavLink to="/timeline"> Timeline</NavLink></div>
+          <br />
         </div>
       ) :
         <div>

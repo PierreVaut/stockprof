@@ -146,6 +146,21 @@ const dataReducer = (state = initialState, action) => {
       });
       return { ...state, userList: updatedUserList };
 
+    case actionType.SYNC_DELETE_TIMELINE_ITEM:
+      let newnewTimeline = state.timeline;
+      state.timeline.forEach((item, index) => {
+        if (item._id === action.id) {
+          console.log(item, index);
+
+          newnewTimeline = [
+            ...state.timeline.slice(0, index),
+            ...state.timeline.slice(index + 1),
+
+          ];
+        }
+      });
+      return { ...state, timeline: newnewTimeline };
+
     default:
       return state;
   }

@@ -93,6 +93,13 @@ export const updateTimelineItem = payload => {
   return { type: actionType.SYNC_UPDATE_TIMELINE_ITEM, payload };
 };
 
+export const deleteTimelineItem = (adminToken, id) => {
+  if (adminToken === 'admin12345') {
+    fetch(`/admin/deleteTimelineItem/${id}`, params.post({ adminToken, id }));
+    return { type: actionType.SYNC_DELETE_TIMELINE_ITEM, id };
+  }
+};
+
 export const followUser = payload => {
   fetch('/follow/', params.post(payload));
   return { type: actionType.SYNC_FOLLOW_USER, id: payload.targetId };

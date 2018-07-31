@@ -4,7 +4,9 @@ import Moment from 'react-moment';
 import { colors } from '../../config/color';
 import { CommentList } from './';
 import {
-  sendComment as sendCommentAC } from '../../actions/';
+  sendComment as sendCommentAC,
+  deleteTimelineItem as deleteTimelineItemAC,
+} from '../../actions/';
 
 class TimelineItem extends React.Component {
   constructor(props) {
@@ -17,9 +19,11 @@ class TimelineItem extends React.Component {
 
   render() {
     const {
-      timestamp, content, author, upvote, downvote, comments, handleSubmit, _id, account, sendComment,
+      timestamp, content, author, upvote, downvote, comments, handleSubmit, _id, account, sendComment, deleteTimelineItem,
     } = this.props;
     const initial = author.substr(0, 1);
+    const isAdmin = account.name === 'admin' && account.email === 'admin';
+
 
     return (
       <div className="list-item">
@@ -65,6 +69,16 @@ class TimelineItem extends React.Component {
         }
             >💬
             </span>{ comments ? comments.length : 0 }
+            {isAdmin ? (<span
+              role="img"
+              aria-label="comments"
+              style={{ cursor: 'pointer' }}
+              onClick={() => deleteTimelineItem('admin12345', _id)
+        }
+            >🗑️ Suppr. (admin)
+                        </span>) : ''}
+
+
             {this.state.showComments ?
               <div>
                 <input
@@ -107,6 +121,8 @@ class TimelineItem extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   sendComment: comment => dispatch(sendCommentAC(comment)),
+  deleteTimelineItem: (adminToken, id) => dispatch(deleteTimelineItemAC(adminToken, id)),
+
 });
 
 export default connect(null, mapDispatchToProps)(TimelineItem);

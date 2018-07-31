@@ -509,4 +509,22 @@ export const db = {
       }
     });
   },
+
+  deleteTimelineItem(_id, cb) {
+    const Timeline = mongoose.model('Timeline', timelineSchema);
+    Timeline.findOne({ _id }, (error, item) => {
+      if (error) {
+        return error;
+      }
+
+      if (item) {
+        item.remove(() => {
+          console.log(chalk.blue(`Account remove OK -  ${item} `));
+          cb(item);
+        });
+      } else {
+        console.error('Error in item removal', item);
+      }
+    });
+  },
 };
