@@ -30,6 +30,22 @@ const dataReducer = (state = initialState, action) => {
         ...action.data,
         balance: updatedBalance,
       };
+    case actionType.SYNC_UPDATE_MARKET_OPERATION:
+      const {
+        symbol, operation, amount, qty,
+      } = action.payload;
+      const { position } = state.account;
+      const newPosition = { ...position };
+      newPosition[symbol] = operation === 'buy' ? position[symbol] + qty : position[symbol] - qty;
+      return {
+        ...state,
+        account: {
+          ...state.account,
+          position: newPosition,
+          cashAvailable: (state.account.cashAvailable + amount),
+        },
+        balance: balance(state.prices, newPosition),
+      };
 
     case actionType.RECEIVE_TIMELINE:
       return { ...state, timeline: action.data };

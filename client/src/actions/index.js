@@ -41,12 +41,12 @@ export const apiPost = (body, url) => dispatch => fetch(url, params.post(body))
   });
 
 
-export const syncUpdatePosition = payload => ({ type: actionType.SYNC_UPDATE_POSITION, payload });
+export const syncUpdateMarketOperation = payload => ({ type: actionType.SYNC_UPDATE_MARKET_OPERATION, payload });
 
 export const marketOperation = body => {
   const url = '/market-operation';
   return dispatch => {
-    dispatch(syncUpdatePosition(body));
+    dispatch(syncUpdateMarketOperation(body));
 
     fetch(url, params.post(body))
       .then(response => {

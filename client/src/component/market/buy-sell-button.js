@@ -14,7 +14,6 @@ class BuySellButton extends React.Component {
   render() {
     let detainedQty = 0;
     const { position, cashAvailable, _id } = this.props;
-    console.log(this.props);
 
     for (const el in position) {
       if (el === this.props.symbol) {
@@ -42,7 +41,6 @@ const options = {
   qty: parseFloat((cashAvailable / price).toFixed(8)),
   symbol: this.props.symbol,
 };
-console.log('[market] :', options);
 this.props.onClick(options);
 }
 }
@@ -59,7 +57,6 @@ amount: -500,
 qty: parseFloat((500 / price).toFixed(8)),
 symbol: this.props.symbol,
 };
-console.log('[market] :', options);
 this.props.onClick(options);
 }}
           >Buy 500$ <span role="img" aria-label="buy 500">👍</span>
@@ -75,7 +72,6 @@ amount: parseFloat((detainedQty * price).toFixed(8)),
 qty: detainedQty,
 symbol: this.props.symbol,
 };
-console.log('[market] :', options);
 this.props.onClick(options);
 }
 }
@@ -93,7 +89,6 @@ amount: 500,
 qty: parseFloat((500 / price).toFixed(8)),
 symbol: this.props.symbol,
 };
-console.log('[market] :', options);
 this.props.onClick(options);
 }
 }

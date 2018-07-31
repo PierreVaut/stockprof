@@ -13,7 +13,7 @@ const Market = props => {
       <p>Cash disponible: {Math.round(cashAvailable) }$ </p>
       <p>Plus/moins-values: <CurrentBalance account={props.account} /></p><br />
 
-      {props.prices.map(el => {
+      {props.prices && props.prices.map(el => {
                    if (el.symbol1 === 'TEST') {
                        return <Loader key={el.symbol1} />;
                    }
