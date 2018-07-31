@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Balance from './balance';
+import { CurrentBalance } from './';
 import { GuestMenu } from '../common';
 
 const Dashboard = props => {
@@ -14,7 +14,7 @@ const Dashboard = props => {
         <div>Votre nom: {name}</div>
         <div>Votre Id: {_id}</div>
         <div>Cash disponible: {cashAvailable} $</div><br />
-        <div>Plus/moins-values: <Balance account={props.account} /></div><br />
+        <div>Plus/moins-values: <CurrentBalance account={props.account} /></div><br />
         <div>Portefeuille: {JSON.stringify(position)}</div><br />
         <div>Vous suivez: {JSON.stringify(friends)}</div><br />
         <div>Vous êtes suivis par : {JSON.stringify(isFollowingYou)}</div><br />

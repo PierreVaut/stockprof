@@ -93,6 +93,13 @@ export const unfollowUser = payload => {
   return { type: actionType.SYNC_UNFOLLOW_USER, id: payload.targetId };
 };
 
+export const suppressAccount = (adminToken, id) => {
+  if (adminToken === 'admin12345') {
+    fetch(`/admin/suppressAccount/${id}`, params.post({ adminToken, id }));
+    return { type: actionType.SYNC_SUPPRESS_ACCOUNT, id };
+  }
+};
+
 export const markAsRead = (id) => {
   fetch(`/markAsRead/${id}`, params.get);
   return { type: actionType.MARK_AS_READ };

@@ -474,4 +474,22 @@ export const db = {
       cb(account);
     });
   },
+
+  suppressAccount(_id, cb) {
+    const Account = mongoose.model('Account', accountSchema);
+    Account.findOne({ _id }, (error, account) => {
+      if (error) {
+        return error;
+      }
+
+      if (account) {
+        account.remove(() => {
+          console.log(chalk.blue(`Account remove OK -  ${account} `));
+          cb(account);
+        });
+      } else {
+        console.error('Error in item removal', account);
+      }
+    });
+  },
 };

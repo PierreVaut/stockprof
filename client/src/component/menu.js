@@ -10,12 +10,20 @@ const Menu = ({
   account, session, error, fetchPrices, prices,
 }) => {
   if (!prices) { fetchPrices(); }
+  const isAdmin = account.name === 'admin' && account.email === 'admin';
 
   return (
     <div className="menu" >
-      <h2>Bienvenue {account && account.name ? account.name : 'Guest' } !</h2>
-
-      {session && session.isLogged ?
+      {isAdmin ? (
+        <div>
+          <h2>&#9937; ADMIN MODE &#9937;</h2>
+          <div className="menu-entry"><NavLink to="/userlist"> Liste des utilisateurs </NavLink></div>
+          <br />
+        </div>
+      ) :
+        <div>
+          <h2>Bienvenue {account && account.name ? account.name : 'Guest' } !</h2>
+          {session && session.isLogged ?
             (
               <div>
                 <div>Cash disponible: {account.cashAvailable || 0} $</div>
@@ -38,10 +46,18 @@ const Menu = ({
 
             :
               <GuestMenu />
-            }
+      }
+        </div>
+
+      }
+
       <br />
-      <div className="menu-entry"><NavLink to="/about">A propos</NavLink></div>
-      <div className="menu-entry"><NavLink to="/contact">Contact</NavLink></div>
+      {isAdmin ? null :
+      <div>
+        <div className="menu-entry"><NavLink to="/about">A propos</NavLink></div>
+        <div className="menu-entry"><NavLink to="/contact">Contact</NavLink></div>
+      </div>
+      }
       {session && session.isLogged ?
         <div className="menu-entry"><NavLink to="/disconnect">Déconnexion</NavLink></div> :
                     ''}

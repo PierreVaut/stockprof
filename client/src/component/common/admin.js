@@ -6,12 +6,12 @@ import { connect } from 'react-redux';
 const Admin = (props) => {
   if (
     (
-      props.dataReducer.account.name === 'admin'
-        && props.dataReducer.account.email === 'admin'
+      props.account.name === 'admin'
+        && props.account.email === 'admin'
     ) ||
         (
-          props.dataReducer.account.name === '00'
-        && props.dataReducer.account.email === '00'
+          props.account.name === '00'
+        && props.account.email === '00'
         )
   ) {
     return (
@@ -22,8 +22,8 @@ const Admin = (props) => {
     );
   }
 
-  return <p>Sorry {(props.dataReducer.account.name) ? props.dataReducer.account.name : 'Guest'}, you cannot see this page</p>;
+  return <p>Sorry {(props.account.name) ? props.account.name : 'Guest'}, you cannot see this page</p>;
 };
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.dataReducer;
 
 export default connect(mapStateToProps)(Admin);

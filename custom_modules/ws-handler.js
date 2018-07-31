@@ -69,7 +69,7 @@ const getUsers = client => {
 };
 
 
-export const ioServer = io.on('connection', (client) => {
+export const ioServer = io.on('connection', client => {
   client.on('chatMessage', data => {
     console.log(chalk.blue(`New Channel (emitter) - ${JSON.stringify(data.emitterId)} `));
 

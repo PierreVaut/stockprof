@@ -4,6 +4,7 @@ import User from './user';
 import {
   followUser as followUserAC,
   unfollowUser as unfollowUserAC,
+  suppressAccount as suppressAccountAC,
 } from '../../actions/';
 
 class UserList extends React.Component {
@@ -23,7 +24,7 @@ class UserList extends React.Component {
 
   render() {
     const {
-      userList, followUser, unfollowUser, account,
+      userList, followUser, unfollowUser, account, suppressAccount,
     } = this.props;
     const { friends, isFollowingYou } = account;
     const {
@@ -89,17 +90,25 @@ class UserList extends React.Component {
               return user;
           })
 
-        .map(userProps => (<User
-          {...userProps}
-          key={userProps._id}
-          targetId={userProps._id}
-          userId={account._id}
-          handleFollow={followUser}
-          handleUnfollow={unfollowUser}
-          isFriend={friends.includes(userProps._id)}
-          isYourself={userProps._id === account._id}
-          isFollowingYou={isFollowingYou.includes(userProps._id)}
-        />))}
+        .map(userProps => {
+          if (userProps.name !== 'admin') {
+            return (<User
+              {...userProps}
+              key={userProps._id}
+              targetId={userProps._id}
+              userId={account._id}
+              currentUser={account}
+              handleFollow={followUser}
+              handleUnfollow={unfollowUser}
+              isFriend={friends.includes(userProps._id)}
+              isYourself={userProps._id === account._id}
+              isFollowingYou={isFollowingYou.includes(userProps._id)}
+              suppressAccount={suppressAccount}
+            />);
+          }
+          return null;
+        })
+          }
       </div>);
   }
 }
@@ -114,6 +123,11 @@ const mapDispatchToProps = dispatch => ({
   unfollowUser: payload => {
     console.log('Un-follow: ', payload);
     dispatch(unfollowUserAC(payload));
+  },
+
+  suppressAccount: (adminToken, id) => {
+    console.log('suppressAccount ', id);
+    dispatch(suppressAccountAC(adminToken, id));
   },
 });
 

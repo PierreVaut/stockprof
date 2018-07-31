@@ -114,6 +114,21 @@ const dataReducer = (state = initialState, action) => {
       });
       return { ...state, timeline: updatedTimeline };
 
+    case actionType.SYNC_SUPPRESS_ACCOUNT:
+      let updatedUserList = state.userList;
+      state.userList.forEach((user, index) => {
+        if (user._id === action.id) {
+          console.log(user, index);
+
+          updatedUserList = [
+            ...state.userList.slice(0, index),
+            ...state.userList.slice(index + 1),
+
+          ];
+        }
+      });
+      return { ...state, userList: updatedUserList };
+
     default:
       return state;
   }

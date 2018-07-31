@@ -133,8 +133,16 @@ app.post('/chat/history/', (req, res) => {
     res.json(data);
   });
 });
+
 app.post('/chat/add/', (req) => {
   db.addChatHistory(req.body);
+});
+
+app.post('/admin/suppressAccount/:id', (req, res) => {
+  if (req.body.adminToken === 'admin12345') {
+    console.log('Suppressing', req.params.id);
+    db.suppressAccount(req.params.id, data => res.json(data));
+  }
 });
 
 
