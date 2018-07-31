@@ -1,3 +1,4 @@
+import { setTimeout } from 'timers';
 import { args } from '../config/connect';
 import { server } from '../api/routes';
 import { priceDB } from './price-handler';
@@ -64,8 +65,13 @@ const cexioWS = client => {
 
 
 const getUsers = client => {
-  db.getUsers(list =>
-    client.emit('userList', list));
+  db.getUsers(list => {
+    client.emit('userList', list);
+    // console.log(chalk.blue('[WS-handler] Emitting UserList...'));
+    setTimeout(() => {
+      getUsers(client);
+    }, 4000);
+  });
 };
 
 
@@ -103,6 +109,7 @@ export const ioServer = io.on('connection', client => {
   client.on('btc-initial', () => {
     console.log('[btc-initial] says hello...');
     priceDB.get((docs) => {
+      console.log('[btc-initial] will receive prices...');
       io.emit('btc', docs);
     });
   });

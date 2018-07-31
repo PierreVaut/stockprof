@@ -10,6 +10,8 @@ export const toggleVisibility = (target) => ({ type: actionType.TOGGLE_VISIBILIT
 export const requestBody = (field, content) => ({ type: actionType.REQUEST_BODY, field, content });
 export const resetRequestBody = () => ({ type: actionType.RESET_REQUEST_BODY });
 
+export const disconnect = () => ({ type: actionType.USER_DISCONNECT });
+
 // sets Session, Account, Cookies into State
 /* dispatched by apiFetch callback */
 export const receiveData = (data) => ({ type: actionType.RECEIVE_DATA, data });
@@ -38,16 +40,24 @@ export const apiPost = (body, url) => dispatch => fetch(url, params.post(body))
     });
   });
 
+
+export const syncUpdatePosition = payload => ({ type: actionType.SYNC_UPDATE_POSITION, payload });
+
 export const marketOperation = body => {
   const url = '/market-operation';
-  return dispatch => fetch(url, params.post(body))
-    .then(response => {
-      response.json().then(json => {
-        console.log('[API Market operation] success:', json);
-        dispatch(receivePrices(json));
+  return dispatch => {
+    dispatch(syncUpdatePosition(body));
+
+    fetch(url, params.post(body))
+      .then(response => {
+        response.json().then(json => {
+          console.log('[API Market operation] success:', json);
+          dispatch(receivePrices(json));
+        });
       });
-    });
+  };
 };
+
 
 export const getPrices = () => dispatch => {
   console.log('[Prices] start');

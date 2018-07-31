@@ -116,10 +116,12 @@ class UserList extends React.Component {
 const mapStateToProps = state => state.dataReducer;
 
 const mapDispatchToProps = dispatch => ({
+
   followUser: payload => {
     console.log('Follow: ', payload);
     dispatch(followUserAC(payload));
   },
+
   unfollowUser: payload => {
     console.log('Un-follow: ', payload);
     dispatch(unfollowUserAC(payload));

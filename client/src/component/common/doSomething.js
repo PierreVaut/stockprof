@@ -7,7 +7,7 @@ const DoSomething = () =>
       <div style={{ 'text-align': 'center' }}>
         <span role="img" aria-label="sad-emoji">😢</span><br />
       la Timeline est vide car vous ne suivez personne pour le moment...<br />
-        <NavLink to="/userlist">Suivez d'autres utilisateurs</NavLink>
+        <NavLink to="/userlist">Suivez d'autres utilisateurs</NavLink><br />
         <span role="img" aria-label="happy-emoji">Ne soyez pas timide ! 😁😁😁</span>
       </div>
 

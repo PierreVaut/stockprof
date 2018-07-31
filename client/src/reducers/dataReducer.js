@@ -8,20 +8,12 @@ const initialState = {
     lastVisit: Date.now(),
     ip: ['ip'],
   },
-  account: { name: 'Guest', position: [{ symbol: 'TEST', qty: 15 }] },
+  account: { name: 'Guest', position: false },
   requestBody: { email: '', pwd: '', name: '' },
   userList: [{
     name: 'no data yet...', isLogged: false, lastLogin: 0, _id: false,
   }],
-  prices: [
-    {
-      symbol1: 'TEST',
-      symbol2: 'USD',
-      price: 120,
-      open24: 100,
-      timestamp: 0,
-    },
-  ],
+  prices: false,
   priceListInitialized: false,
   timeline: [],
   chatHistory: [],
@@ -32,11 +24,11 @@ const initialState = {
 const dataReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.RECEIVE_DATA:
+      const updatedBalance = balance(state.prices, action.data.account.position);
       return {
         ...state,
-
         ...action.data,
-
+        balance: updatedBalance,
       };
 
     case actionType.RECEIVE_TIMELINE:
@@ -72,6 +64,12 @@ const dataReducer = (state = initialState, action) => {
       return newState;
 
     case actionType.RESET_REQUEST_BODY:
+      return {
+        ...state,
+        requestBody: {},
+      };
+
+    case actionType.USER_DISCONNECT:
       return { ...initialState };
 
     case actionType.SYNC_FOLLOW_USER:

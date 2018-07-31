@@ -7,7 +7,7 @@ class BuySellButton extends React.Component {
   constructor(props) {
     super(props);
     // local state only
-    this.state = { visible: false, msg: 'test' };
+    this.state = { visible: false };
   }
 
 
@@ -21,7 +21,7 @@ class BuySellButton extends React.Component {
         detainedQty = position[el];
       }
     }
-    const price = this.props.price;
+    const { price } = this.props;
 
     if (this.state.visible) {
       return (
@@ -29,80 +29,76 @@ class BuySellButton extends React.Component {
           <div
             onClick={() => { this.setState({ visible: false }); }}
             className="buy-sell-close"
-          >
-                        X
+          >X
           </div>
           <button
             disabled={cashAvailable < 1}
             className="buy-sell-btn"
             onClick={() => {
-                const options = {
-                                    _id,
-                                    operation: 'buy',
-                                    amount: -cashAvailable,
-                                    qty: parseFloat((cashAvailable / price).toFixed(8)),
-                                    symbol: this.props.symbol,
-                                };
-                                console.log('[market] :', options);
-                                this.props.onClick(options);
+const options = {
+  _id,
+  operation: 'buy',
+  amount: -cashAvailable,
+  qty: parseFloat((cashAvailable / price).toFixed(8)),
+  symbol: this.props.symbol,
+};
+console.log('[market] :', options);
+this.props.onClick(options);
 }
-                            }
-          >
-                        All in !!! 🛒
+}
+          > All in !!! <span role="img" aria-label="buy all">🛒</span>
           </button>
           <button
             disabled={cashAvailable < 500}
             className="buy-sell-btn"
             onClick={() => {
-                                const options = {
-                                    _id,
-                                    operation: 'buy',
-                                    amount: -500,
-                                    qty: parseFloat((500 / price).toFixed(8)),
-                                    symbol: this.props.symbol,
-                                };
-                                console.log('[market] :', options);
-                                this.props.onClick(options);
-}
-                            }
-          >
-                        Buy 500$ 👍
+const options = {
+_id,
+operation: 'buy',
+amount: -500,
+qty: parseFloat((500 / price).toFixed(8)),
+symbol: this.props.symbol,
+};
+console.log('[market] :', options);
+this.props.onClick(options);
+}}
+          >Buy 500$ <span role="img" aria-label="buy 500">👍</span>
           </button><br />
           <button
             disabled={detainedQty <= 0}
             className="buy-sell-btn"
             onClick={() => {
-                                const options = {
-                                    _id,
-                                    operation: 'sell',
-                                    amount: parseFloat((detainedQty * price).toFixed(8)),
-                                    qty: detainedQty,
-                                    symbol: this.props.symbol,
-                                };
-                                console.log('[market] :', options);
-                                this.props.onClick(options);
+const options = {
+_id,
+operation: 'sell',
+amount: parseFloat((detainedQty * price).toFixed(8)),
+qty: detainedQty,
+symbol: this.props.symbol,
+};
+console.log('[market] :', options);
+this.props.onClick(options);
 }
-                            }
+}
           >
-                        Sell it all 🔥
+Sell it all <span role="img" aria-label="sell all">🔥</span>
           </button>
           <button
             disabled={detainedQty * price < 500}
             className="buy-sell-btn"
             onClick={() => {
-                                const options = {
-                                    _id,
-                                    operation: 'sell',
-                                    amount: 500,
-                                    qty: parseFloat((500 / price).toFixed(8)),
-                                    symbol: this.props.symbol,
-                                };
-                                console.log('[market] :', options);
-                                this.props.onClick(options);
+const options = {
+_id,
+operation: 'sell',
+amount: 500,
+qty: parseFloat((500 / price).toFixed(8)),
+symbol: this.props.symbol,
+};
+console.log('[market] :', options);
+this.props.onClick(options);
 }
-                            }
+}
           >
-                        Sell 500$ 💸
+Sell 500$ <span role="img" aria-label="sell 500">💸</span>
           </button>
 
         </div>
