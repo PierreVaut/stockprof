@@ -1,23 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { getPrices } from '../../actions';
+import { balance } from '../../config/balance';
 
-const Balance = props => {
-  const { cashAvailable, position } = props.account;
-  const { prices } = props;
-  let profit = Math.round(cashAvailable - 5000);
-  for (const el in position) {
-    if (prices) {
-      prices.forEach(price => {
-        if (price.symbol1 === el) {
-          profit += Math.round(position[el] * price.price);
-        }
-      });
-    }
-  }
-
+const Balance = ({ prices, userAccount }) => {
+  const profit = balance(prices, userAccount.position) - 5000 + userAccount.cashAvailable;
   return (
     <span>
-      {profit >= 0 ?
+      {profit && profit >= 0 ?
         <span style={{ color: 'green' }}>{`+${profit}` + '$'}</span>
             :
         <span style={{ color: 'red' }}>{`${profit}` + '$'}</span>
@@ -25,9 +15,12 @@ const Balance = props => {
     </span>
   );
 };
-const mapStateToProps = state => ({
-  prices: state.dataReducer.prices,
+
+const mapStateToProps = state => state.dataReducer;
+
+const mapDispatchToProps = dispatch => ({
+  fetchPrices: () => dispatch(getPrices()),
 });
 
-export default connect(mapStateToProps)(Balance);
+export default connect(mapStateToProps, mapDispatchToProps)(Balance);
 

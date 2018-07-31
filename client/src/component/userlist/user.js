@@ -25,7 +25,7 @@ const User = (props) => {
       </div>
 
       <div className="user-name">{name} {isYourself ? '(Vous)' : null} {'   '}{isFollowingYou ? <i>(Follower)</i> : null}
-        {'   '}<Balance account={props} /><br />
+        {'   '}<Balance userAccount={props} /><br />
         { isYourself ?
           null :
           (

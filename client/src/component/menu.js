@@ -2,19 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { ErrorHandler, GuestMenu } from './common';
-import { receiveUserList, receivePrices } from '../actions/';
-import { Balance } from './market';
+import { receiveUserList, receivePrices, getPrices } from '../actions/';
+import { CurrentBalance } from './market';
 
 
-const Menu = ({ account, session, error }) => (
-  <div className="menu" >
-    <h2>Bienvenue {account && account.name ? account.name : 'Guest' } !</h2>
+const Menu = ({
+  account, session, error, fetchPrices, prices,
+}) => {
+  if (!prices) { fetchPrices(); }
 
-    {session && session.isLogged ?
+  return (
+    <div className="menu" >
+      <h2>Bienvenue {account && account.name ? account.name : 'Guest' } !</h2>
+
+      {session && session.isLogged ?
             (
               <div>
                 <div>Cash disponible: {account.cashAvailable || 0} $</div>
-                <div>Plus/moins-values: <Balance account={account} /></div>
+                <div>Plus/moins-values: <CurrentBalance /></div>
                 <br />
                 <br />
                 <p>Acheter et vendre des Monnaies virtuelles</p>
@@ -34,16 +39,16 @@ const Menu = ({ account, session, error }) => (
             :
               <GuestMenu />
             }
-    <br />
-    <div className="menu-entry"><NavLink to="/about">A propos</NavLink></div>
-    <div className="menu-entry"><NavLink to="/contact">Contact</NavLink></div>
-    {session && session.isLogged ?
-      <div className="menu-entry"><NavLink to="/disconnect">Déconnexion</NavLink></div> :
+      <br />
+      <div className="menu-entry"><NavLink to="/about">A propos</NavLink></div>
+      <div className="menu-entry"><NavLink to="/contact">Contact</NavLink></div>
+      {session && session.isLogged ?
+        <div className="menu-entry"><NavLink to="/disconnect">Déconnexion</NavLink></div> :
                     ''}
-    {error ? <ErrorHandler errorMsg={error} /> : ''}
-  </div>
-);
-
+      {error ? <ErrorHandler errorMsg={error} /> : ''}
+    </div>
+  );
+};
 const mapStateToProps = state => state.dataReducer;
 
 const mapDispatchToProps = dispatch => ({
@@ -55,6 +60,8 @@ const mapDispatchToProps = dispatch => ({
   updateUserList: (list) => {
     dispatch(receiveUserList(list));
   },
+
+  fetchPrices: () => dispatch(getPrices()),
 });
 
 

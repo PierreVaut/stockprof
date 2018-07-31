@@ -44,9 +44,22 @@ export const marketOperation = body => {
     .then(response => {
       response.json().then(json => {
         console.log('[API Market operation] success:', json);
-        dispatch(receiveData(json));
+        dispatch(receivePrices(json));
       });
     });
+};
+
+export const getPrices = () => dispatch => {
+  console.log('[Prices] start');
+
+  fetch('/prices', params.get)
+    .then(response => {
+      response.json().then(json => {
+        console.log('[Prices] success:', json);
+        dispatch(receiveTimeline(json));
+      });
+    })
+    .catch(error => console.log('[Timeline Fetch] error: ', error));
 };
 
 export const getTimeline = () => dispatch => {

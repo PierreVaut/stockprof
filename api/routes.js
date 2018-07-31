@@ -1,6 +1,7 @@
 import { cookie } from '../custom_modules/cookie-handler';
 import { db } from '../custom_modules/db-handler';
 import { session } from '../custom_modules/session-handler';
+import { priceDB } from '../custom_modules/price-handler';
 
 const express = require('express');
 
@@ -106,6 +107,9 @@ app.post('/unfollow', (req, res) => {
   db.unfollowUser(req.body, data => res.json(data));
 });
 
+app.get('/prices', (req, res) => {
+  priceDB.get(data => res.json(data));
+});
 
 app.get('/timeline', (req, res) => {
   db.getTimeline(data => {

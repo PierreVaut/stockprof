@@ -1,5 +1,5 @@
 import * as actionType from '../actions/actionType';
-
+import { balance } from '../config/balance';
 
 const initialState = {
   cookie: 'no cookie yet',
@@ -25,6 +25,7 @@ const initialState = {
   priceListInitialized: false,
   timeline: [],
   chatHistory: [],
+  balance: 0,
 };
 
 
@@ -56,7 +57,9 @@ const dataReducer = (state = initialState, action) => {
       return { ...state, userList: action.list };
 
     case actionType.RECEIVE_PRICES:
-      return { ...state, priceListInitialized: true, prices: action.prices };
+      return {
+        ...state, priceListInitialized: true, prices: action.prices, balance: balance(action.prices, state.account.position),
+      };
 
     case actionType.REQUEST_BODY:
       const newState = {
@@ -69,7 +72,7 @@ const dataReducer = (state = initialState, action) => {
       return newState;
 
     case actionType.RESET_REQUEST_BODY:
-      return { };
+      return { ...initialState };
 
     case actionType.SYNC_FOLLOW_USER:
       return { ...state, account: { ...state.account, friends: [...state.account.friends, action.id] } };

@@ -102,7 +102,9 @@ export const ioServer = io.on('connection', (client) => {
 
   client.on('btc-initial', () => {
     console.log('[btc-initial] says hello...');
-    priceDB.get((docs) => { io.emit('btc', docs); });
+    priceDB.get((docs) => {
+      io.emit('btc', docs);
+    });
   });
 
   client.on('notification', data => {
