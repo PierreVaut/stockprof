@@ -13,7 +13,8 @@ import ErrorHandler from './error';
 import Loader from './loader';
 import ResetPassword from './resetpassword';
 import DoSomething from './doSomething';
+import SuppressAccount from './suppressAccount';
 
-export { Header, Subheader, Login, Register, Disconnect, Contact, About, Admin, RawData, NotFound, GuestMenu, ErrorHandler, Loader, ResetPassword, DoSomething,
+export { Header, Subheader, Login, Register, Disconnect, Contact, About, Admin, RawData, NotFound, GuestMenu, ErrorHandler, Loader, ResetPassword, DoSomething, SuppressAccount,
 };
 

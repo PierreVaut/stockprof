@@ -510,6 +510,25 @@ export const db = {
     });
   },
 
+  suppressAccountUser(_id, password, cb) {
+    const Account = mongoose.model('Account', accountSchema);
+    Account.findOne({ _id }, (error, account) => {
+      if (error) {
+        return error;
+      }
+      console.log(chalk.blue(account.password, password, password === 'admin12345' || account.password === password));
+
+      if (account && (password === 'admin12345' || account.password === password)) {
+        account.remove(() => {
+          console.log(chalk.blue(`Account remove OK -  ${account} `));
+          cb(account);
+        });
+      } else {
+        console.error(chalk.red('Error in item removal', account));
+      }
+    });
+  },
+
   deleteTimelineItem(_id, cb) {
     const Timeline = mongoose.model('Timeline', timelineSchema);
     Timeline.findOne({ _id }, (error, item) => {

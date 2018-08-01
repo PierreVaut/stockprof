@@ -145,6 +145,13 @@ app.post('/admin/suppressAccount/:id', (req, res) => {
   }
 });
 
+app.post('/user/suppressAccount/:id', (req, res) => {
+  if (req.body.password && req.body.password.length > 0) {
+    console.log('Suppressing', req.params.id);
+    db.suppressAccountUser(req.params.id, req.body.password, data => res.json(data));
+  }
+});
+
 app.post('/admin/deleteTimelineItem/:id', (req, res) => {
   if (req.body.adminToken === 'admin12345') {
     console.log('Suppressing', req.params.id);

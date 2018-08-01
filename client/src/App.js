@@ -4,7 +4,7 @@ import './asset/css/App.css';
 import './asset/css/Market.css';
 import './asset/css/button.css';
 
-import { Login, Register, Disconnect, Contact, Admin, Subheader, Header, About, NotFound, ResetPassword } from './component/common';
+import { Login, Register, Disconnect, Contact, Admin, Subheader, Header, About, NotFound, ResetPassword, SuppressAccount } from './component/common';
 import { Market, Dashboard } from './component/market/';
 import { UserTable } from './component/userlist';
 import { Timeline } from './component/timeline';
@@ -29,6 +29,7 @@ const App = () => (
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/disconnect" component={Disconnect} />
+            <Route exact path="/suppressAccount" component={SuppressAccount} />
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/about" component={About} />
             <Route exact path="/admin" component={Admin} />

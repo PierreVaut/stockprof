@@ -170,7 +170,6 @@ export const session = {
           } else {
             data.error = false;
             if (cb) {
-              console.log('[Session-disconnect] Passing CB on:', data);
               cb(data);
             } else {
               res.json(data);

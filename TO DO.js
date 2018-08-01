@@ -4,7 +4,6 @@ import dataReducer from "./client/src/reducers/dataReducer";
 
 
 TO DO :
--- market reducer .. 
--- bug chat
+
  -- profile page ;
  -- notif en Socket.io => à mettre dans IndexWithCookies

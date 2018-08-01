@@ -65,7 +65,6 @@ export const getPrices = () => dispatch => {
   fetch('/prices', params.get)
     .then(response => {
       response.json().then(json => {
-        console.log('[Prices] success:', json);
         dispatch(receiveTimeline(json));
       });
     })
@@ -113,6 +112,13 @@ export const unfollowUser = payload => {
 export const suppressAccount = (adminToken, id) => {
   if (adminToken === 'admin12345') {
     fetch(`/admin/suppressAccount/${id}`, params.post({ adminToken, id }));
+    return { type: actionType.SYNC_SUPPRESS_ACCOUNT, id };
+  }
+};
+
+export const suppressAccountUser = (pwd, id) => {
+  if (pwd && pwd.length > 0) {
+    fetch(`/user/suppressAccount/${id}`, params.post({ password: pwd }));
     return { type: actionType.SYNC_SUPPRESS_ACCOUNT, id };
   }
 };

@@ -18,6 +18,7 @@ const initialState = {
   timeline: [],
   chatHistory: [],
   balance: 0,
+  position: {},
 };
 
 
@@ -36,7 +37,8 @@ const dataReducer = (state = initialState, action) => {
       } = action.payload;
       const { position } = state.account;
       const newPosition = { ...position };
-      newPosition[symbol] = operation === 'buy' ? position[symbol] + qty : position[symbol] - qty;
+      const oldPosition = position && position[symbol] ? position[symbol] : 0;
+      newPosition[symbol] = operation === 'buy' ? oldPosition + qty : oldPosition - qty;
       return {
         ...state,
         account: {
