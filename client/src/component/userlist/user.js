@@ -25,7 +25,7 @@ const User = (props) => {
         />
       </div>
 
-      <div className="user-name">{name} {isYourself ? '(Vous)' : null} {'   '}{!isAdmin && isFollowingYou ? <i>(Follower)</i> : null}
+      <div className="user-name"><NavLink to={`/profile/${targetId}`} className="user-name-link">{name}</NavLink> {isYourself ? '(Vous)' : null} {'   '}{!isAdmin && isFollowingYou ? <i>(Follower)</i> : null}
         {'   '}<Balance userAccount={props} /><br />
         { isAdmin ?
           <div>

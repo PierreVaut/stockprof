@@ -34,19 +34,29 @@ const Menu = ({
                 <br />
                 <br />
                 <p>Acheter et vendre des Monnaies virtuelles</p>
-                <div className="menu-entry"><span role="img" aria-label="market">🏦 </span><NavLink to="/market">Market Place</NavLink></div>
+                <div className="menu-entry"><span role="img" aria-label="market">🏦 </span>
+                  <NavLink className="normal-link" to="/market">Market Place</NavLink>
+                </div>
                 <br />
                 <p>Votre flux d&#8217;information</p>
-                <div className="menu-entry"><span role="img" aria-label="timeline">🕗 </span><NavLink to="/timeline">Timeline</NavLink></div>
+                <div className="menu-entry"><span role="img" aria-label="timeline">🕗 </span>
+                  <NavLink className="normal-link" to="/timeline">Timeline</NavLink>
+                </div>
                 <br />
                 <p>Voir les autres utilisateurs</p>
-                <div className="menu-entry"><span role="img" aria-label="userlist">🏆</span><NavLink to="/userlist"> Liste </NavLink></div>
+                <div className="menu-entry"><span role="img" aria-label="userlist">🏆</span>
+                  <NavLink className="normal-link" to="/userlist"> Liste </NavLink>
+                </div>
                 <br />
                 <p>Votre compte</p>
-                <div className="menu-entry"><span role="img" aria-label="dashboard">💹 </span><NavLink to="/dashboard"> Dashboard</NavLink></div>
+                <div className="menu-entry"><span role="img" aria-label="dashboard">💹 </span>
+                  <NavLink className="normal-link" to="/dashboard"> Dashboard</NavLink>
+                </div>
                 <br />
                 <p>Messagerie instantanée</p>
-                <div className="menu-entry"><span role="img" aria-label="chat">📲 </span><NavLink to="/chat/sessions"> Chat</NavLink></div>
+                <div className="menu-entry"><span role="img" aria-label="chat">📲 </span>
+                  <NavLink className="normal-link" to="/chat/sessions"> Chat</NavLink>
+                </div>
                 <br />
               </div>)
 
@@ -60,12 +70,12 @@ const Menu = ({
       <br />
       {isAdmin ? null :
       <div>
-        <div className="menu-entry"><NavLink to="/about">A propos</NavLink></div>
-        <div className="menu-entry"><NavLink to="/contact">Contact</NavLink></div>
+        <div className="menu-entry"><NavLink className="normal-link"to="/about">A propos</NavLink></div>
+        <div className="menu-entry"><NavLink className="normal-link"to="/contact">Contact</NavLink></div>
       </div>
       }
       {session && session.isLogged ?
-        <div className="menu-entry"><NavLink to="/disconnect">Déconnexion</NavLink></div> :
+        <div className="menu-entry"><NavLink className="normal-link" to="/disconnect">Déconnexion</NavLink></div> :
                     ''}
       {error ? <ErrorHandler errorMsg={error} /> : ''}
     </div>

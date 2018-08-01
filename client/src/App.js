@@ -6,7 +6,7 @@ import './asset/css/button.css';
 
 import { Login, Register, Disconnect, Contact, Admin, Subheader, Header, About, NotFound, ResetPassword, SuppressAccount } from './component/common';
 import { Market } from './component/market/';
-import { Dashboard } from './component/profile/';
+import { Dashboard, Profile } from './component/profile/';
 import { UserTable } from './component/userlist';
 import { Timeline } from './component/timeline';
 import { Chat, ChatSession } from './component/chat/';
@@ -25,7 +25,7 @@ const App = () => (
             <Route exact path="/" component={Menu} />
             <Route exact path="/userlist" component={UserTable} />
             <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/profile/:id" component={Dashboard} />
+            <Route exact path="/profile/:id" component={Profile} />
             <Route exact path="/market" component={Market} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />

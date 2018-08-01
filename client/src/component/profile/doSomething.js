@@ -1,17 +1,15 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const DoSomething = () =>
+const DoSomethingFriendList = () =>
   (
     <div className="list-item">
       <div style={{ 'text-align': 'center' }}>
-        <span role="img" aria-label="sad-emoji">😢</span><br />
-      la Timeline est vide car vous ne suivez personne pour le moment...<br />
-        <NavLink to="/userlist">Suivez d'autres utilisateurs</NavLink><br />
-        <span role="img" aria-label="happy-emoji">Ne soyez pas timide ! 😁😁😁</span>
+        <span role="img" aria-label="sad-emoji">😢</span>Vous ne suivez personne pour le moment...<br />
+        <NavLink to="/userlist">Aller sur la liste des utilisateurs</NavLink><br />
       </div>
 
     </div>
   );
 
-export default DoSomething;
+export default DoSomethingFriendList;

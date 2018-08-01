@@ -4,6 +4,17 @@
   padding: 0;
 }
 
+a{
+    text-decoration: none ;
+    color: white;
+    cursor:pointer ;
+}
+
+a:hover{
+  text-decoration: underline ;
+
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -171,6 +182,15 @@ h2{
     max-width: 250px;
     word-break: break-all;
   }
+  .user-name-link  {
+    color: green !important;
+    
+  }
+
+  .user-name-link:hover{
+    text-decoration: underline;
+  }
+
   .input-text {
     border-radius: 5px;
     width: 260px;
@@ -181,6 +201,17 @@ h2{
   }
 
 }
+
+.normal-link{
+  color: blue;
+  cursor: pointer; 
+}
+
+.normal-link:hover{
+  text-decoration: underline;
+}
+
+
 .userSocialLink{
   text-decoration: none;
   font-size: 14px;
@@ -214,6 +245,8 @@ h2{
   font-style: italic;
   color: #595959;
 }
+
+
 
 
 

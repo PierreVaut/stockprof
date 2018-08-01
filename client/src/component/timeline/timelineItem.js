@@ -7,6 +7,7 @@ import {
   sendComment as sendCommentAC,
   deleteTimelineItem as deleteTimelineItemAC,
 } from '../../actions/';
+import { NavLink } from 'react-router-dom';
 
 class TimelineItem extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class TimelineItem extends React.Component {
 
   render() {
     const {
-      timestamp, content, author, upvote, downvote, comments, handleSubmit, _id, account, sendComment, deleteTimelineItem,
+      timestamp, content, author, authorId, upvote, downvote, comments, handleSubmit, _id, account, sendComment, deleteTimelineItem,
     } = this.props;
     const initial = author.substr(0, 1);
     const isAdmin = account.name === 'admin' && account.email === 'admin';
@@ -35,7 +36,7 @@ class TimelineItem extends React.Component {
         </div>
 
         <div className="user-name">
-          {author}{' - '}{content}
+          <NavLink to={`/profile/${authorId}`}>{author}</NavLink>{' - '}{content}
 
           <div className="timeline-timestamp"><Moment fromNow>{ timestamp }</Moment></div>
           <div className="timeline-votes">

@@ -28,8 +28,8 @@ const Dashboard = props => {
         <div>Cash disponible: {cashAvailable} $</div><br />
         <div>Plus/moins-values: <CurrentBalance account={props.account} /></div><br />
         <div>Portefeuille: {JSON.stringify(position)}</div><br />
-        <div>Vous suivez: <FriendList inputList={friends} userList={props.userList} /></div><br />
-        <div>Vous êtes suivis par : {JSON.stringify(isFollowingYou)}</div>
+        <div><FriendList inputList={friends} userList={props.userList} listName="Vos contacts" /></div><br />
+        <div><FriendList inputList={isFollowingYou} userList={props.userList} listName="Vos Followers" /></div><br />
         <br /><br />
         <span role="img" aria-label="suppress account">🗑️</span><NavLink to="/suppressAccount"> Supprimer le compte</NavLink>
       </div>
