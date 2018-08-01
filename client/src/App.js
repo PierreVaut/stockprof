@@ -5,7 +5,8 @@ import './asset/css/Market.css';
 import './asset/css/button.css';
 
 import { Login, Register, Disconnect, Contact, Admin, Subheader, Header, About, NotFound, ResetPassword, SuppressAccount } from './component/common';
-import { Market, Dashboard } from './component/market/';
+import { Market } from './component/market/';
+import { Dashboard } from './component/profile/';
 import { UserTable } from './component/userlist';
 import { Timeline } from './component/timeline';
 import { Chat, ChatSession } from './component/chat/';
