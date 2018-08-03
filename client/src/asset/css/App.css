@@ -4,11 +4,6 @@
   padding: 0;
 }
 
-a{
-    text-decoration: none ;
-    color: white;
-    cursor:pointer ;
-}
 
 a:hover{
   text-decoration: underline ;
@@ -182,14 +177,8 @@ h2{
     max-width: 250px;
     word-break: break-all;
   }
-  .user-name-link  {
-    color: green !important;
-    
-  }
 
-  .user-name-link:hover{
-    text-decoration: underline;
-  }
+
 
   .input-text {
     border-radius: 5px;

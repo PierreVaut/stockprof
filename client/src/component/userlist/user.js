@@ -30,7 +30,7 @@ const User = (props) => {
         { isAdmin ?
           <div>
             <div className="userSocialLink" onClick={() => { suppressAccount('admin12345', targetId); }} >&#9760; Supprimer (Admin)</div>
-            <NavLink className="userSocialLink" to={`/admin/dashboard/${targetId}`} >&#9937; Voir le profil (Admin)</NavLink>
+            <NavLink className="userSocialLink" to={`/profile/${targetId}`} >&#9937; Voir le profil (Admin)</NavLink>
           </div>
           :
           isYourself ?
