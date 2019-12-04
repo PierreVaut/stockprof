@@ -118,6 +118,6 @@ export const ioServer = io.on('connection', (client) => {
   });
 
   // bug...
-  // cexioWS(client);
+  cexioWS(client);
 });
 
