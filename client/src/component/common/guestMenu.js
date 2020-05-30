@@ -1,14 +1,17 @@
 
-import { NavLink } from 'react-router-dom';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { Market } from '../market/';
+
 
 
 const GuestMenu = () => (
   <div>
-    <p>Ce Réseau social regroupe les amateurs de Crypto-monnaies <span role="img" aria-label="crypto-currencies">💵</span><br />
-    Retrouvez vos amis et échangez en direct <span role="img" aria-label="social">💁</span><br />
-    Constituez un portefeuille virtuel et comparez votre score en temps réel <span role="img" aria-label="real time">💹</span>
+    <p>Bienvenue sur notre plateforme de trading virtuel<span role="img" aria-label="crypto-currencies">💵</span><br />
+    Constituez un portefeuille de Crypto-monnaies (Bitcoin, Ethereum, Ripple...) <span role="img" aria-label="real time">💹</span><br />
+    Suivez des amis dans votre timeline et échangez en direct <span role="img" aria-label="social">💁</span><br />
     </p>
+    <Market/>
     <br />
     <p>Connectez-vous</p>
     <div className="menu-entry"><span role="img" aria-label="connection">🛂</span><NavLink to="/login">Login </NavLink></div><br />

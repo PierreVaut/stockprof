@@ -50,11 +50,12 @@ class Menu extends React.Component {
     const { account, session, error } = this.props;
     const { name, cashAvailable } = this.props.account;
     return (
-      <div className="menu" >
-        <h2>Bienvenue {account && name ? name : 'Guest' } !</h2>
 
+      <div className="menu" >
         {session && session.isLogged ?
             (
+              <React.Fragment>
+              <h2>Bienvenue {account && name ? name : 'Guest' } !</h2>
               <div>
                 <div>Cash disponible: {cashAvailable} $</div>
                 <div>Plus/moins-values: <Balance account={account} /></div>
@@ -72,7 +73,8 @@ class Menu extends React.Component {
                 <p>Votre compte</p>
                 <div className="menu-entry"><span role="img" aria-label="dashboard">💹 </span><NavLink to="/dashboard"> Dashboard</NavLink></div>
                 <br />
-              </div>)
+              </div>
+              </React.Fragment>)
 
             :
               <GuestMenu />

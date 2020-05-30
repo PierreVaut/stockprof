@@ -12,13 +12,9 @@ class Currency extends React.Component {
   }
 
   render() {
-    const { position } = this.props.account;
-    let detainedQty = 0;
-    for (const el in position) {
-      if (el === this.props.symbol1) {
-        detainedQty = position[el];
-      }
-    }
+    const { position = {} } = this.props.account;
+    let detainedQty = position[this.props.symbol1] || 0;
+
     return (
       <div className="currency">
         <div className="currency-name">
@@ -35,7 +31,7 @@ class Currency extends React.Component {
         </div>
 
         <div className="currency-price">
-          <p>Quantité : {detainedQty } </p>
+           {this.props.isLogged &&<p>Quantité : {detainedQty } </p>}
           <p>Prix de marché: {this.props.price}  $
 
                     {(this.props.price - this.props.open24 > 0) ?
@@ -54,11 +50,11 @@ class Currency extends React.Component {
                     timestamp: {new Date(this.props.timestamp).toLocaleString()}
         </div>
 
-        <BuySellButton
+        {this.props.isLogged && <BuySellButton
           symbol={this.props.symbol1}
           price={this.props.price}
           detainedQty={detainedQty}
-        />
+        />}
 
 
       </div>
