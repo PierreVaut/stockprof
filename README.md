@@ -1,5 +1,17 @@
 # StockProf API
 
+This webapp is a realtime crypto-currency trading simulator.
+
+Feature:
+- create account
+- get realtime price for a list of height crypto currencies (Bitcoin, Ethereum, XRP....)
+- buy/sell currencies
+- follow other users and see their updates in your timeline
+- chat with other users
+
+This App was started in 2018 as my final projects for Ifocop JS Bootcamp.
+
+
 
 ### Local
 
