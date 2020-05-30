@@ -5,7 +5,7 @@
 
 ```$ NPM run dev```
 
-* Do not forget to SET env variables!
+* Do not forget to `export`  env variables!
 
 * Removed  `"postinstall": "npm install --prefix client"` from package.json, so you'll need to run `npm install` in the client directory
 
