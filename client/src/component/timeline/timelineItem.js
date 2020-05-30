@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'react-moment';
 import { colors } from '../../config/color';
 
-export class TimelineItem extends React.Component {
+export default class TimelineItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

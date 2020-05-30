@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import { connect } from 'react-redux';
 import Currency from './currency';
 import Balance from './balance';
-import { GuestMenu, Loader } from '../common';
+import { Loader } from '../common';
 
 const Market = ({session, account, prices}) => {
   const { isLogged } = session;

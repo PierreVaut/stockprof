@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { TimelineItem } from './timelineItem';
+import TimelineItem from './timelineItem';
 import { GuestMenu, Loader, DoSomething } from '../common';
 import {
   getTimeline as getTimelineAC,
