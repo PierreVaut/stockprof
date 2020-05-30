@@ -8,7 +8,7 @@ const chalk = require('chalk');
 const io = require('socket.io')(server, { wsEngine: 'ws' });
 const WebSocket = require('ws');
 
-const cexioWS = client => {
+const cexioWS = (client) => {
   // Connect to CEX.io ws-APi
   console.log(chalk.green('[cexioWS] - initializing...'));
   const cexWS = new WebSocket('wss://ws.cex.io/ws/', { perMessageDeflate: false });
@@ -52,9 +52,9 @@ const cexioWS = client => {
     });
 
 
-    cexWS.on('open', el => console.log('[CEX.io] open: ', el));
-    cexWS.on('error', el => console.log('[CEX.io] error: ', el));
-    cexWS.on('close', el => console.log('[CEX.io] close: ', el));
+    cexWS.on('open', (el) => console.log('[CEX.io] open: ', el));
+    cexWS.on('error', (el) => console.log('[CEX.io] error: ', el));
+    cexWS.on('close', (el) => console.log('[CEX.io] close: ', el));
     cexWS.send(JSON.stringify(args));
 
     cexWS.send(JSON.stringify({
@@ -65,8 +65,8 @@ const cexioWS = client => {
 };
 
 
-const getUsers = client => {
-  db.getUsers(list => {
+const getUsers = (client) => {
+  db.getUsers((list) => {
     client.emit('userList', list);
     // console.log(chalk.blue('[WS-handler] Emitting UserList...'));
     setTimeout(() => {
@@ -77,18 +77,18 @@ const getUsers = client => {
 
 
 export const ioServer = io.on('connection', (client) => {
-  client.on('chatMessage', data => {
+  client.on('chatMessage', (data) => {
     console.log(chalk.blue(`New Channel (emitter) - ${JSON.stringify(data.emitterId)} `));
 
-    db.getChatHistory(data.emitterId, data.targetId, result => {
+    db.getChatHistory(data.emitterId, data.targetId, (result) => {
       const newObj = { history: result };
       client.emit(data.emitterId, newObj);
     });
 
-    client.on(data.emitterId, msg => {
+    client.on(data.emitterId, (msg) => {
       db.addChatHistory(msg, () => io.emit(data.emitterId, msg));
       io.emit(data.targetId, { item: msg });
-      db.getAccount(data.targetId, account => {
+      db.getAccount(data.targetId, (account) => {
         const notif = {
           status: 'new',
           authorId: data.targetId,
@@ -112,7 +112,7 @@ export const ioServer = io.on('connection', (client) => {
     priceDB.get((docs) => { io.emit('btc', docs); });
   });
 
-  client.on('notification', data => {
+  client.on('notification', (data) => {
     console.log(chalk.green('[Notifications] - open', data));
     // client.emit(id, `salut yy ${id} !`);
   });
@@ -120,4 +120,3 @@ export const ioServer = io.on('connection', (client) => {
   // bug...
   cexioWS(client);
 });
-

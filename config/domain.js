@@ -1,2 +1,1 @@
-
-export const domain = "stockprof-carb11.herokuapp.com";
+export const domain = 'stockprof-carb11.herokuapp.com';
