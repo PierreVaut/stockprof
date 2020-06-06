@@ -65,7 +65,7 @@ app.post('/disconnect', (req, res) => {
 
   // Set or retrieve cookie
   cookie.remove(req, res, data, (data) => {
-    session.disconnect(req, res, data, cb => {
+    session.disconnect(req, res, data, (cb) => {
       db.disconnect(req, res, data);
     });
   });
@@ -84,39 +84,39 @@ app.post('/market-operation', (req, res) => {
 
 app.post('/timeline/insert', (req, res) => {
   console.log(req.body);
-  db.insertTimeline(req.body, data => res.json(data));
+  db.insertTimeline(req.body, (data) => res.json(data));
 });
 
 app.post('/vote/:id', (req, res) => {
   const { id } = req.params;
-  db.updateTimelineItem(id, req.body, data => {
+  db.updateTimelineItem(id, req.body, (data) => {
     res.json(data);
   });
 });
 
 app.post('/follow', (req, res) => {
-  db.followUser(req.body, data => res.json(data));
+  db.followUser(req.body, (data) => res.json(data));
 });
 
 app.post('/unfollow', (req, res) => {
-  db.unfollowUser(req.body, data => res.json(data));
+  db.unfollowUser(req.body, (data) => res.json(data));
 });
 
 
 app.get('/timeline', (req, res) => {
-  db.getTimeline(data => {
+  db.getTimeline((data) => {
     res.json(data);
   });
 });
 
 app.get('/markAsRead/:id', (req, res) => {
   const { id } = req.params;
-  db.markAllNotificationsAsRead(id, result => res.json(result));
+  db.markAllNotificationsAsRead(id, (result) => res.json(result));
 });
 
 app.get('/flushNotifs/:id', (req, res) => {
   const { id } = req.params;
-  db.flushNotifs(id, result => res.json(result));
+  db.flushNotifs(id, (result) => res.json(result));
 });
 
 app.post('/chat/history/', (req, res) => {
@@ -127,6 +127,10 @@ app.post('/chat/history/', (req, res) => {
 });
 app.post('/chat/add/', (req) => {
   // db.addChatHistory(req.body);
+});
+
+app.get('/healthcheck/', (req, res) => {
+  res.send('ok !');
 });
 
 

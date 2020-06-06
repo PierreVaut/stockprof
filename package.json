@@ -5,14 +5,25 @@
   "main": "server.js",
   "homepage": "https://stocks-carb11.herokuapp.com/",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node server.js --presets env",
-    "dev": "concurrently \"nodemon server.js --exec babel-node --presets env\"  \"node start-client.js\" ",
-    "build": "npm run build --prefix client"
+    "build": "babel src -d dist --source-maps",
+    "build-client": "npm run build --prefix client",
+    "dev": "concurrently \"nodemon src/server.js --exec babel-node --presets env\"  \"node start-client.js\" ",
+    "serve": "node dist/server.js",
+    "start": "babel-node src/server.js",
+    "test": "jest --runInBand --verbose",
+    "coverage": "jest --coverage --runInBand --verbose",
+    "eslint": "eslint src/**/*.js --ignore-pattern \"node_modules/\""
+  },
+  "engines": {
+    "node": ">=8"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.1",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.1",
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "cookie-parser": "^1.4.5",

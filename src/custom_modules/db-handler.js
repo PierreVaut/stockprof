@@ -193,7 +193,7 @@ export const db = {
   insertTimeline(item) {
     const Timeline = mongoose.model('Timeline', timelineSchema);
     const newItem = new Timeline(item);
-    newItem.save(err => {
+    newItem.save((err) => {
       if (err) { console.log('[Timeline error]', err); }
     });
   },
@@ -294,7 +294,7 @@ export const db = {
         return err;
       }
       if (accountTarget && accountTarget.isFollowingYou && accountTarget.isFollowingYou.includes(_id)) {
-        const unfollowList = accountTarget.isFollowingYou.filter(id => id !== _id);
+        const unfollowList = accountTarget.isFollowingYou.filter((id) => id !== _id);
         accountTarget.isFollowingYou = unfollowList;
         accountTarget.save();
         console.log('Unfollow sounds OK1 - ', accountTarget.name);
@@ -307,7 +307,7 @@ export const db = {
         return err;
       }
       if (account && account.friends && account.friends.includes(targetId)) {
-        const newFriends = account.friends.filter(friend => friend !== targetId);
+        const newFriends = account.friends.filter((friend) => friend !== targetId);
         account.friends = newFriends;
         account.save();
         console.log('Unfollow sounds OK2 - ', account.name);
@@ -391,7 +391,7 @@ export const db = {
         console.error('[markAllNotificationsAsRead] Error fetching Account...', error);
         cb(error);
       }
-      const newNotifList = account.notifications.map(notif => {
+      const newNotifList = account.notifications.map((notif) => {
         notif.status = 'read';
         return notif;
       });
@@ -421,7 +421,7 @@ export const db = {
         { emitterId: id1, targetId: id2 },
         { emitterId: id2, targetId: id1 },
       ],
-    }).sort({ timestamp: -1 }).then(result => cb(result));
+    }).sort({ timestamp: -1 }).then((result) => cb(result));
   },
 
   addChatHistory(payload) {

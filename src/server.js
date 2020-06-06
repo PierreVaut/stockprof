@@ -6,6 +6,7 @@ import { db } from './custom_modules/db-handler';
 import { priceDB } from './custom_modules/price-handler';
 import { ioServer } from './custom_modules/ws-handler';
 
+ioServer();
 db.init();
 priceDB.init();
 
