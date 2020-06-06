@@ -3,7 +3,7 @@ const fs = require('fs');
 export const session = {
 
   handle(req, res, data, cb) {
-    const path = `${process.cwd()}/session/${data.cookie}`;
+    const path = `${process.cwd()}/src/session/${data.cookie}`;
 
     fs.readFile(path, (err, result) => {
       if (err || result === {}) {
@@ -18,9 +18,9 @@ export const session = {
         };
         console.log('[Session] New file.');
 
-        fs.writeFile(path, JSON.stringify(data.session), (err) => {
-          if (err) {
-            data.session = `[Session-handler] Write File error${err}`;
+        fs.writeFile(path, JSON.stringify(data.session), (fsError) => {
+          if (fsError) {
+            data.session = `[Session-handler] Write File error ${fsError}`;
             data.error = data.session;
             console.error(data.session);
             res.json(data);
@@ -37,13 +37,13 @@ export const session = {
         data.session.visitCount++;
         data.session.visitLast = (new Date()).getTime();
         if (!data.session.ip) { data.session.ip = []; }
-        if (req.ip !== data.session.ip[ (data.session.ip.length - 1) ]) {
+        if (req.ip !== data.session.ip[(data.session.ip.length - 1)]) {
           data.session.ip.push(req.ip);
         }
 
-        fs.writeFile(path, JSON.stringify(data.session), (err) => {
-          if (err) {
-            data.error = `[Session-handler] Write File error${error}`;
+        fs.writeFile(path, JSON.stringify(data.session), (fsError) => {
+          if (fsError) {
+            data.error = `[Session-handler] Write File error ${fsError}`;
             console.error(data.error);
             res.json(data);
           } else if (cb) {
@@ -58,7 +58,7 @@ export const session = {
   },
 
   register(req, res, data, cb) {
-    const path = `${process.cwd()}/session/${data.cookie}`;
+    const path = `${process.cwd()}/src/session/${data.cookie}`;
 
     fs.readFile(path, (err, result) => {
       // Create default session file
@@ -78,9 +78,9 @@ export const session = {
           data.session._id = 'No ID...';
         }
 
-        fs.writeFile(path, JSON.stringify(data.session), (err) => {
+        fs.writeFile(path, JSON.stringify(data.session), (fsError) => {
           if (err) {
-            data.session = `[Session-handler] Write File error${error}`;
+            data.session = `[Session-handler] Write File error ${fsError}`;
             data.error = data.session;
             console.error(data.session);
             res.json(data);
@@ -116,14 +116,14 @@ export const session = {
         data.session._id = data.account._id;
         data.error = false;
         if (!data.session.ip) { data.session.ip = []; }
-        if (req.ip !== data.session.ip[ (data.session.ip.length - 1) ]) {
+        if (req.ip !== data.session.ip[(data.session.ip.length - 1)]) {
           data.session.ip.push(req.ip);
         }
 
 
-        fs.writeFile(path, JSON.stringify(data.session), (err) => {
+        fs.writeFile(path, JSON.stringify(data.session), (fsError) => {
           if (err) {
-            data.session = `[Session-handler] Write File error${error}`;
+            data.session = `[Session-handler] Write File error ${fsError}`;
             data.error = data.session;
             console.error(data.session);
             res.json(data);
@@ -140,7 +140,7 @@ export const session = {
   },
 
   disconnect(req, res, data, cb) {
-    const path = `${process.cwd()}/session/${data.cookie}`;
+    const path = `${process.cwd()}/src/session/${data.cookie}`;
     data.cookie += ' (expired)';
 
     fs.readFile(path, (err, result) => {
@@ -158,13 +158,13 @@ export const session = {
         data.session.status = `Session Disconnected -${(new Date()).getTime()}`;
         data.session.visitLast = (new Date()).getTime();
         if (!data.session.ip) { data.session.ip = []; }
-        if (req.ip !== data.session.ip[ (data.session.ip.length - 1) ]) {
+        if (req.ip !== data.session.ip[(data.session.ip.length - 1)]) {
           data.session.ip.push(req.ip);
         }
 
-        fs.writeFile(path, JSON.stringify(data.session), (err) => {
+        fs.writeFile(path, JSON.stringify(data.session), (disconnectError) => {
           if (err) {
-            data.error = `[Session-disconnect] Write File error${error}`;
+            data.error = `[Session-disconnect] Write File error ${disconnectError}`;
             console.error(data.error);
             res.json(data);
           } else {
@@ -181,4 +181,3 @@ export const session = {
     });
   },
 };
-
