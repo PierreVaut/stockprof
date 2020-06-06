@@ -79,7 +79,7 @@ export const session = {
         }
 
         fs.writeFile(path, JSON.stringify(data.session), (fsError) => {
-          if (err) {
+          if (fsError) {
             data.session = `[Session-handler] Write File error ${fsError}`;
             data.error = data.session;
             console.error(data.session);

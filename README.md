@@ -11,17 +11,7 @@ Feature:
 
 This App was started in 2018 as my final projects for Ifocop JS Bootcamp.
 
-
-
-### Local
-
-```$ NPM run dev```
-
-* Do not forget to `export`  env variables!
-
-* Removed  `"postinstall": "npm install --prefix client"` from package.json, so you'll need to run `npm install` in the client directory
-
-### Deployment
+### Legacy deployment (June 2018)
 
 https://stocks-carb11.herokuapp.com/
 
@@ -29,3 +19,20 @@ https://stocks-carb11.herokuapp.com/
 
 * Do not forget to `$ heroku config:set NPM_CONFIG_PRODUCTION=false --app stocks-carb11`
 
+
+
+## May 2020 refactor !
+
+### Refactor
+- Fixed realtime currency pricing
+- Removed babel-node ontime compilation
+- Moved backend code and added Babel build logic
+
+### ECS Deployment !
+- Docker image pushed on ECR: 680637963852.dkr.ecr.us-east-1.amazonaws.com/stockprof
+- Deployed on ECS / Fargate
+
+
+### To do
+- Refactor completly outdated session logic based on fileSystem read/write 🙈🙈🙈
+- ...
