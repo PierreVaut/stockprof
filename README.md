@@ -21,18 +21,19 @@ https://stocks-carb11.herokuapp.com/
 
 
 
-## May 2020 refactor !
+## May-June 2020 refactor !
 
 ### Refactor
+- Dockerized !
 - Fixed realtime currency pricing
 - Removed babel-node ontime compilation
 - Moved backend code and added Babel build logic
 
 ### ECS Deployment !
-- Docker image pushed on ECR: 680637963852.dkr.ecr.us-east-1.amazonaws.com/stockprof
+- Docker image pushed on ECR: https://bit.ly/3eqGnfq
 - Deployed on ECS / Fargate
-
 
 ### To do
 - Refactor completly outdated session logic based on fileSystem read/write 🙈🙈🙈
+- Have Route 53 pointing to this project
 - ...
